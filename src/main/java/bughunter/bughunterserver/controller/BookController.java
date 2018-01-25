@@ -11,7 +11,7 @@ public class BookController {
     @RequestMapping("/my")
     public @ResponseBody
     String  myBooks(){
-        return "";
+        return "hello";
     }
 
 }
