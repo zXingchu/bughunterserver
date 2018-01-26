@@ -2,49 +2,72 @@ package bughunter.bughunterserver.controller;
 
 import bughunter.bughunterserver.vo.ResultMessage;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/app/bugInfo")
+@RequestMapping("/app/bug")
 public class BugInofController {
 
-    @RequestMapping("/bug")
+    @RequestMapping(value = "/{appId}/submit", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage getBugInfo(HttpServletRequest request, @RequestBody String jsonStr){
+    ResultMessage submitBug(HttpServletRequest request, @RequestBody String jsonStr){
         return null;
     }
 
-    @RequestMapping("/device")
+    @RequestMapping(value = "/{appId}/getSimilarity", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage  getDeviceInfo(HttpServletRequest request, @RequestBody String jsonStr){
+    ResultMessage  getBugSimilarity(HttpServletRequest request, @RequestBody String jsonStr){
         return null;
     }
 
-    @RequestMapping("/console")
+    @RequestMapping(value = "/{appId}/getAll", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage  getConsoleLog(HttpServletRequest request, @RequestBody String jsonStr){
+    ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int appId, @RequestBody String jsonStr){
         return null;
     }
 
-    @RequestMapping("/step")
+    @RequestMapping(value = "/{appId}/{bugId}/delete", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage  getOperateStep(HttpServletRequest request, @RequestBody String jsonStr){
+    ResultMessage deleteBug(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
         return null;
     }
 
-    @RequestMapping("/data")
+
+    @RequestMapping(value = "/{appId}/{bugId}/base", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage  getUserData(HttpServletRequest request, @RequestBody String jsonStr){
+    ResultMessage getBugBaseInfo(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
         return null;
     }
 
-    @RequestMapping("/network")
+    @RequestMapping(value = "/{appId}/{bugId}/device", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage  getNetworkRequest(HttpServletRequest request, @RequestBody String jsonStr){
+    ResultMessage  getBugDeviceInfo(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
+        return null;
+    }
+
+    @RequestMapping(value = "/{appId}/{bugId}/console", method = RequestMethod.POST)
+    public @ResponseBody
+    ResultMessage  getBugConsoleLog(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
+        return null;
+    }
+
+    @RequestMapping(value = "/{appId}/{bugId}/step", method = RequestMethod.POST)
+    public @ResponseBody
+    ResultMessage  getBugOperateStep(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
+        return null;
+    }
+
+    @RequestMapping(value = "/{appId}/{bugId}/data", method = RequestMethod.POST)
+    public @ResponseBody
+    ResultMessage  getBugUserData(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
+        return null;
+    }
+
+    @RequestMapping(value = "/{appId}/{bugId}/network", method = RequestMethod.POST)
+    public @ResponseBody
+    ResultMessage  getNetworkRequest(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
         return null;
     }
 

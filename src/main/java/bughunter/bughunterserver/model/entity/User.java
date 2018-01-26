@@ -5,8 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "app_tester")
-public class AppTester {
+@Entity(name = "user")
+public class User {
 
     private int id;
 
