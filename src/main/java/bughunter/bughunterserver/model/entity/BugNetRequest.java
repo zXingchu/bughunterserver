@@ -1,4 +1,6 @@
 package bughunter.bughunterserver.model.entity;
 
-public class ConsoleLog {
+public class BugNetRequest {
+
+
 }

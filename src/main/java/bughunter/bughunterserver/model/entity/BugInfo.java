@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "app_bug_info")
-public class AppBugInfo {
+public class BugInfo {
 
     private int id;
 
@@ -14,9 +14,9 @@ public class AppBugInfo {
 
     private String type;
 
-    private int developerId;
+    private int uId;
 
-    private Developer developer;
+    private User User;
 
     private int priority;
 
@@ -46,14 +46,6 @@ public class AppBugInfo {
         this.type = type;
     }
 
-    public int getDeveloperId() {
-        return developerId;
-    }
-
-    public void setDeveloperId(int developerId) {
-        this.developerId = developerId;
-    }
-
     public int getPriority() {
         return priority;
     }
@@ -62,11 +54,19 @@ public class AppBugInfo {
         this.priority = priority;
     }
 
-    public Developer getDeveloper() {
-        return developer;
+    public bughunter.bughunterserver.model.entity.User getUser() {
+        return User;
     }
 
-    public void setDeveloper(Developer developer) {
-        this.developer = developer;
+    public void setUser(bughunter.bughunterserver.model.entity.User user) {
+        User = user;
+    }
+
+    public int getuId() {
+        return uId;
+    }
+
+    public void setuId(int uId) {
+        this.uId = uId;
     }
 }
