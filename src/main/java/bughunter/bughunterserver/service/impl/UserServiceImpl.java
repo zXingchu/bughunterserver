@@ -16,31 +16,36 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Boolean testLogin(int id, String pwd) {
-        return null;
+        User user=userRepository.findOne(id);
+        if(user.getPwd().equals(pwd))
+            return true;
+        return false;
     }
 
     @Override
     public Boolean deleteUser(int id) {
+        userRepository.delete(id);
         return null;
     }
 
     @Override
     public int addUser(User user) {
-        return 0;
+        return userRepository.save(user).getId();
     }
 
     @Override
     public Boolean modifyUser(User user) {
+        userRepository.save(user);
         return null;
     }
 
     @Override
     public User findUser(int id) {
-        return null;
+        return userRepository.findOne(id);
     }
 
     @Override
     public List<User> findAllUsers() {
-        return null;
+        return userRepository.findAll();
     }
 }

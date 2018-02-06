@@ -16,6 +16,8 @@ public interface AppService {
 
     AppBaseInfo findApp(int id);
 
+    List<AppBaseInfo> findAllAppsByUserId(int uid);
+
     List<AppBaseInfo> findAllApps();
 
 

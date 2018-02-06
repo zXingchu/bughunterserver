@@ -16,7 +16,7 @@ public interface BugService {
 
     List<BugInfo> findAllBugByAppId(int appId);
 
-    List<AppBaseInfo> findAllBugs();
+    List<BugInfo> findAllBugs();
 
     BugConsoleLog findConsoleLogByBugId(int bugId);
 

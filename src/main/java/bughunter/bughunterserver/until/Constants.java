@@ -6,4 +6,41 @@ package bughunter.bughunterserver.until;
 public class Constants {
 
     public static final String PSW = "bughunter";
+
+    public static final String ERROR = "error";
+
+    public static final String OKSTR = "ok";
+
+    public static final String ID="id";
+
+    public static final String USER_ID="uid";
+
+    public static final String PWD="pwd";
+
+    public static final String NAME="name";
+
+    public static final String EMAIL="email";
+
+    public static final String TeleNumber="teleNumber";
+
+
+    public static final String APP_ID="appId";
+
+    public static final String TYPE="type";
+
+    public static final String CREATE_TIME= "createTime";
+
+    public static final String SDK_VERSION= "SDKVersion";
+
+    public static final String APP_KEY="appKey";
+
+    public static final String APP_Secret="appSecret";
+
+
+
+
+    public static final String BUG_ID="bugId";
+
+
+
 }

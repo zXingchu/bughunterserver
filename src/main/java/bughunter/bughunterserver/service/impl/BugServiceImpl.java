@@ -17,32 +17,37 @@ public class BugServiceImpl implements BugService{
 
     @Override
     public Boolean deleteBug(int id) {
+        bugRepository.delete(id);
         return null;
     }
 
     @Override
     public int addBug(BugInfo bugInfo) {
-        return 0;
+        bugInfo=bugRepository.save(bugInfo);
+        return bugInfo.getId();
     }
 
     @Override
     public Boolean modifyBug(BugInfo bugInfo) {
+        bugRepository.save(bugInfo);
         return null;
     }
 
     @Override
     public BugInfo findBug(int id) {
-        return null;
+
+        return bugRepository.findOne(id);
     }
 
     @Override
     public List<BugInfo> findAllBugByAppId(int appId) {
-        return null;
+
+        return bugRepository.findAllByAppId(appId);
     }
 
     @Override
-    public List<AppBaseInfo> findAllBugs() {
-        return null;
+    public List<BugInfo> findAllBugs() {
+        return bugRepository.findAll();
     }
 
     @Override

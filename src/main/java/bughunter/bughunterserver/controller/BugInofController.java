@@ -1,6 +1,8 @@
 package bughunter.bughunterserver.controller;
 
+import bughunter.bughunterserver.service.BugService;
 import bughunter.bughunterserver.vo.ResultMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/app/bug")
 public class BugInofController {
+
+    @Autowired
+    BugService bugService;
+
+    ResultMessage resultMessage;
 
     @RequestMapping(value = "/{appId}/submit", method = RequestMethod.POST)
     public @ResponseBody
@@ -28,18 +35,31 @@ public class BugInofController {
         return null;
     }
 
+    @RequestMapping(value = "/{appId}/{bugId}/get", method = RequestMethod.POST)
+    public @ResponseBody
+    ResultMessage  getBugById(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
+        return null;
+    }
+
+    @RequestMapping(value = "/{appId}/{bugId}/modify", method = RequestMethod.POST)
+    public @ResponseBody
+    ResultMessage modifyBug(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
+        return null;
+    }
+
     @RequestMapping(value = "/{appId}/{bugId}/delete", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage deleteBug(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
         return null;
     }
 
-
     @RequestMapping(value = "/{appId}/{bugId}/base", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage getBugBaseInfo(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
         return null;
     }
+
+
 
     @RequestMapping(value = "/{appId}/{bugId}/device", method = RequestMethod.POST)
     public @ResponseBody
@@ -70,7 +90,5 @@ public class BugInofController {
     ResultMessage  getNetworkRequest(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
         return null;
     }
-
-
 
 }

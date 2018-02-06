@@ -18,7 +18,7 @@ public class AppBaseInfo {
 
     private Date createTime;
 
-    private String SDKVersion;
+    private double SDKVersion;
 
     private String appKey;
 
@@ -58,11 +58,11 @@ public class AppBaseInfo {
         this.createTime = createTime;
     }
 
-    public String getSDKVersion() {
+    public double getSDKVersion() {
         return SDKVersion;
     }
 
-    public void setSDKVersion(String SDKVersion) {
+    public void setSDKVersion(double SDKVersion) {
         this.SDKVersion = SDKVersion;
     }
 

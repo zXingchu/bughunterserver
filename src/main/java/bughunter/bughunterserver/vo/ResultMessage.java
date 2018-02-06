@@ -16,6 +16,12 @@ public class ResultMessage {
         this.message = message;
     }
 
+    public ResultMessage(int errno, String message, Object data) {
+        this.error = errno;
+        this.message = message;
+        this.data=data;
+    }
+
     public ResultMessage(Object data) {
         this(0, "");
         this.data = data;
