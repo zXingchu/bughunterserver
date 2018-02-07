@@ -1,5 +1,6 @@
 package bughunter.bughunterserver.controller;
 
+import bughunter.bughunterserver.factory.ResultMessageFactory;
 import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.service.UserService;
 import bughunter.bughunterserver.until.Constants;
@@ -30,12 +31,7 @@ public class UserController {
         user.setPwd(jsonObject.getString(Constants.PWD));
         user.setTeleNumber(jsonObject.getString(Constants.TeleNumber));
         int id=userService.addUser(user);
-        if(id>0){
-            resultMessage=new ResultMessage(0,"",id);
-        }else {
-            resultMessage=new ResultMessage(1,Constants.ERROR);
-        }
-        return resultMessage;
+        return ResultMessageFactory.getResultMessage(id);
     }
 
     @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)
@@ -48,32 +44,20 @@ public class UserController {
         user.setEmail(jsonObject.getString(Constants.EMAIL));
         if(jsonObject.has(Constants.PWD))
             user.setPwd(jsonObject.getString(Constants.PWD));
-        if(userService.modifyUser(user))
-            resultMessage=new ResultMessage(0);
-        else
-            resultMessage=new ResultMessage(1,Constants.ERROR);
-        return resultMessage;
+        return ResultMessageFactory.getResultMessage(userService.modifyUser(user));
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  deleteUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
-        if(userService.deleteUser(id))
-            resultMessage=new ResultMessage(0);
-        else
-            resultMessage=new ResultMessage(1,Constants.ERROR);
-        return resultMessage;
+        return ResultMessageFactory.getResultMessage(userService.deleteUser(id));
     }
 
     @RequestMapping(value = "/{id}/get", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
         User user=userService.findUser(id);
-        if(user==null)
-            resultMessage=new ResultMessage(1,Constants.ERROR);
-        else
-            resultMessage=new ResultMessage(0,Constants.OKSTR,user);
-        return resultMessage;
+        return ResultMessageFactory.getResultMessage(user);
     }
 
 }

@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.sql.Date;
 
 @Entity(name = "app_bug_info")
-public class BugInfo {
+public class BugBaseInfo {
 
     private int id;
 

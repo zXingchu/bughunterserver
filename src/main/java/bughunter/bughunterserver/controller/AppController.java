@@ -1,5 +1,6 @@
 package bughunter.bughunterserver.controller;
 
+import bughunter.bughunterserver.factory.ResultMessageFactory;
 import bughunter.bughunterserver.model.entity.AppBaseInfo;
 import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.service.AppService;
@@ -37,12 +38,7 @@ public class AppController {
         appBaseInfo.setAppKey(jsonObject.getString(Constants.APP_KEY));
         appBaseInfo.setAppSecret(jsonObject.getString(Constants.APP_Secret));
         int id=appService.addApp(appBaseInfo);
-        if(id>0){
-            resultMessage=new ResultMessage(0,"",id);
-        }else {
-            resultMessage=new ResultMessage(1,Constants.ERROR);
-        }
-        return resultMessage;
+        return ResultMessageFactory.getResultMessage(id);
     }
 
     @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)
@@ -52,43 +48,27 @@ public class AppController {
         JSONObject jsonObject=new JSONObject(jsonStr);
         appBaseInfo.setType(jsonObject.getString(Constants.TYPE));
         appBaseInfo.setName(jsonObject.getString(Constants.NAME));
-        if(appService.modifyApp(appBaseInfo))
-            resultMessage=new ResultMessage(0);
-        else
-            resultMessage=new ResultMessage(1,Constants.ERROR);
-        return resultMessage;
+        return ResultMessageFactory.getResultMessage(appService.modifyApp(appBaseInfo));
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  deleteApp(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
-        if(appService.deleteApp(id))
-            resultMessage=new ResultMessage(0);
-        else
-            resultMessage=new ResultMessage(1,Constants.ERROR);
-        return resultMessage;
+        return ResultMessageFactory.getResultMessage(appService.deleteApp(id));
     }
 
     @RequestMapping(value = "/{id}/get", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getApp(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
         AppBaseInfo appBaseInfo=appService.findApp(id);
-        if(appBaseInfo==null)
-            resultMessage=new ResultMessage(1,Constants.ERROR);
-        else
-            resultMessage=new ResultMessage(0,Constants.OKSTR,appBaseInfo);
-        return resultMessage;
+        return ResultMessageFactory.getResultMessage(appBaseInfo);
     }
 
     @RequestMapping(value = "/{developerId}/getAll", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int developerId, @RequestBody String jsonStr){
         List<AppBaseInfo> appBaseInfoList=appService.findAllAppsByUserId(developerId);
-        if(appBaseInfoList==null)
-            resultMessage=new ResultMessage(1,Constants.ERROR);
-        else
-            resultMessage=new ResultMessage(0,Constants.OKSTR,appBaseInfoList);
-        return resultMessage;
+        return ResultMessageFactory.getResultMessage(appBaseInfoList);
     }
 
 }

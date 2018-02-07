@@ -22,31 +22,31 @@ public class BugServiceImpl implements BugService{
     }
 
     @Override
-    public int addBug(BugInfo bugInfo) {
-        bugInfo=bugRepository.save(bugInfo);
-        return bugInfo.getId();
+    public int addBug(BugBaseInfo bugBaseInfo) {
+        bugBaseInfo =bugRepository.save(bugBaseInfo);
+        return bugBaseInfo.getId();
     }
 
     @Override
-    public Boolean modifyBug(BugInfo bugInfo) {
-        bugRepository.save(bugInfo);
+    public Boolean modifyBug(BugBaseInfo bugBaseInfo) {
+        bugRepository.save(bugBaseInfo);
         return null;
     }
 
     @Override
-    public BugInfo findBug(int id) {
+    public BugBaseInfo findBug(int id) {
 
         return bugRepository.findOne(id);
     }
 
     @Override
-    public List<BugInfo> findAllBugByAppId(int appId) {
+    public List<BugBaseInfo> findAllBugByAppId(int appId) {
 
         return bugRepository.findAllByAppId(appId);
     }
 
     @Override
-    public List<BugInfo> findAllBugs() {
+    public List<BugBaseInfo> findAllBugs() {
         return bugRepository.findAll();
     }
 

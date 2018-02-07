@@ -28,7 +28,7 @@ public class Constants {
 
     public static final String TYPE="type";
 
-    public static final String CREATE_TIME= "createTime";
+    public static final String CREATE_TIME= "cTime";
 
     public static final String SDK_VERSION= "SDKVersion";
 
@@ -37,10 +37,12 @@ public class Constants {
     public static final String APP_Secret="appSecret";
 
 
-
-
     public static final String BUG_ID="bugId";
 
+    public static final String STATUS = "status";
 
+    public static final String PRIORITY = "priority";
+
+    public static final String MODIFY_TIME = "mTime";
 
 }

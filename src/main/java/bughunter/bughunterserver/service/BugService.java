@@ -8,15 +8,15 @@ public interface BugService {
 
     Boolean deleteBug(int id);
 
-    int addBug(BugInfo bugInfo);
+    int addBug(BugBaseInfo bugBaseInfo);
 
-    Boolean modifyBug(BugInfo bugInfo);
+    Boolean modifyBug(BugBaseInfo bugBaseInfo);
 
-    BugInfo findBug(int id);
+    BugBaseInfo findBug(int id);
 
-    List<BugInfo> findAllBugByAppId(int appId);
+    List<BugBaseInfo> findAllBugByAppId(int appId);
 
-    List<BugInfo> findAllBugs();
+    List<BugBaseInfo> findAllBugs();
 
     BugConsoleLog findConsoleLogByBugId(int bugId);
 
