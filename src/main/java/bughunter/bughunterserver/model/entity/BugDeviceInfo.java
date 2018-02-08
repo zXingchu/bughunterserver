@@ -6,7 +6,9 @@ import javax.persistence.Entity;
 @Entity(name = "bug_device_info")
 public class BugDeviceInfo {
 
-    private int id;
+
+    private int bugId;
+//    private int id;
 
     //制造商
     private String manufacturer;
@@ -26,15 +28,13 @@ public class BugDeviceInfo {
     //TODO 截图，图片转string存放
     private String screenshot;
 
-    private int bugId;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getManufacturer() {
         return manufacturer;

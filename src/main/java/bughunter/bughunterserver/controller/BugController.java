@@ -88,31 +88,31 @@ public class BugController {
     public @ResponseBody
     ResultMessage  getBugDeviceInfo(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
 
-        return null;
+        return ResultMessageFactory.getResultMessage(bugService.findDeviceInfoByBugId(bugId));
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/console", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getBugConsoleLog(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        return null;
+        return ResultMessageFactory.getResultMessage(bugService.findConsoleLogByBugId(bugId));
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/step", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getBugOperateStep(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        return null;
+        return ResultMessageFactory.getResultMessage(bugService.findOperateStepByBugId(bugId));
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/data", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getBugUserData(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        return null;
+        return ResultMessageFactory.getResultMessage(bugService.findUserDataByBugId(bugId));
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/network", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getNetworkRequest(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        return null;
+        return ResultMessageFactory.getResultMessage(bugService.findNetRequestByBugId(bugId));
     }
 
 }

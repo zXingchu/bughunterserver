@@ -1,7 +1,7 @@
 package bughunter.bughunterserver.service.impl;
 
 import bughunter.bughunterserver.model.entity.*;
-import bughunter.bughunterserver.model.repository.BugRepository;
+import bughunter.bughunterserver.model.repository.*;
 import bughunter.bughunterserver.service.BugService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +13,21 @@ public class BugServiceImpl implements BugService{
 
     @Autowired
     BugRepository bugRepository;
+
+    @Autowired
+    BugDeviceRepository bugDeviceRepository;
+
+    @Autowired
+    BugConsoleLogRepository bugConsoleLogRepository;
+
+    @Autowired
+    BugOperateStepRepository bugOperateStepRepository;
+
+    @Autowired
+    BugUserDataRepository bugUserDataRepository;
+
+    @Autowired
+    BugNetRequestRepository bugNetRequestRepository;
 
 
     @Override
@@ -52,26 +67,30 @@ public class BugServiceImpl implements BugService{
 
     @Override
     public BugConsoleLog findConsoleLogByBugId(int bugId) {
-        return null;
+        return bugConsoleLogRepository.findOne(bugId);
     }
 
     @Override
     public BugDeviceInfo findDeviceInfoByBugId(int bugId) {
-        return null;
+
+        return bugDeviceRepository.findOne(bugId);
     }
 
     @Override
     public BugNetRequest findNetRequestByBugId(int bugId) {
-        return null;
+
+        return bugNetRequestRepository.findOne(bugId);
     }
 
     @Override
     public BugOperateStep findOperateStepByBugId(int bugId) {
-        return null;
+
+        return bugOperateStepRepository.findOne(bugId);
     }
 
     @Override
     public BugUserData findUserDataByBugId(int bugId) {
-        return null;
+
+        return bugUserDataRepository.findOne(bugId);
     }
 }
