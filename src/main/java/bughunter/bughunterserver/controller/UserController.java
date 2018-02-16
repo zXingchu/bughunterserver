@@ -5,6 +5,7 @@ import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.service.UserService;
 import bughunter.bughunterserver.until.Constants;
 import bughunter.bughunterserver.vo.ResultMessage;
+import bughunter.bughunterserver.vo.UserVO;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +58,8 @@ public class UserController {
     public @ResponseBody
     ResultMessage  getUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
         User user=userService.findUser(id);
-        return ResultMessageFactory.getResultMessage(user);
+        UserVO userVO=new UserVO(user);
+        return ResultMessageFactory.getResultMessage(userVO);
     }
 
 }

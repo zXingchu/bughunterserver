@@ -19,7 +19,7 @@ public class BugBaseInfo {
 
     private int uId;
 
-    private User User;
+    private User user;
 
     private int appId;
 
@@ -28,6 +28,8 @@ public class BugBaseInfo {
     private Date cTime;
 
     private Date mTime;
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,14 +63,6 @@ public class BugBaseInfo {
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    public bughunter.bughunterserver.model.entity.User getUser() {
-        return User;
-    }
-
-    public void setUser(bughunter.bughunterserver.model.entity.User user) {
-        User = user;
     }
 
     public int getuId() {
@@ -109,5 +103,13 @@ public class BugBaseInfo {
 
     public void setmTime(Date mTime) {
         this.mTime = mTime;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

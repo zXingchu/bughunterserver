@@ -6,6 +6,7 @@ import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.service.AppService;
 import bughunter.bughunterserver.service.UserService;
 import bughunter.bughunterserver.until.Constants;
+import bughunter.bughunterserver.vo.AppBaseInfoVO;
 import bughunter.bughunterserver.vo.ResultMessage;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,7 +30,6 @@ public class AppController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage addApp(HttpServletRequest request, @RequestBody String jsonStr){
-
         JSONObject jsonObject=new JSONObject(jsonStr);
         AppBaseInfo appBaseInfo=new AppBaseInfo();
         appBaseInfo.setName(jsonObject.getString(Constants.NAME));
@@ -61,14 +62,20 @@ public class AppController {
     public @ResponseBody
     ResultMessage  getApp(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
         AppBaseInfo appBaseInfo=appService.findApp(id);
-        return ResultMessageFactory.getResultMessage(appBaseInfo);
+        AppBaseInfoVO appBaseInfoVO=new AppBaseInfoVO(appBaseInfo);
+        return ResultMessageFactory.getResultMessage(appBaseInfoVO);
     }
 
     @RequestMapping(value = "/{developerId}/getAll", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int developerId, @RequestBody String jsonStr){
         List<AppBaseInfo> appBaseInfoList=appService.findAllAppsByUserId(developerId);
-        return ResultMessageFactory.getResultMessage(appBaseInfoList);
+        List<AppBaseInfoVO> appBaseInfoVOList=new ArrayList<AppBaseInfoVO>(appBaseInfoList.size());
+        for (AppBaseInfo appBaseInfo: appBaseInfoList) {
+            AppBaseInfoVO appBaseInfoVO=new AppBaseInfoVO(appBaseInfo);
+            appBaseInfoVOList.add(appBaseInfoVO);
+        }
+        return ResultMessageFactory.getResultMessage(appBaseInfoVOList);
     }
 
 }

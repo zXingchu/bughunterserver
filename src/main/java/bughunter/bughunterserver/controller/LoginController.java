@@ -1,5 +1,6 @@
 package bughunter.bughunterserver.controller;
 
+import bughunter.bughunterserver.factory.ResultMessageFactory;
 import bughunter.bughunterserver.service.UserService;
 import bughunter.bughunterserver.until.Constants;
 import bughunter.bughunterserver.vo.ResultMessage;
@@ -29,11 +30,7 @@ public class LoginController {
         String email=jsonObject.getString(Constants.EMAIL);
         String pwd=jsonObject.getString(Constants.PWD);
         ResultMessage resultMessage;
-        if(userService.testLogin(uid,pwd))
-            resultMessage=new ResultMessage(0);
-        else
-            resultMessage=new ResultMessage(1,"登录错误");
-        return resultMessage;
+        return ResultMessageFactory.getResultMessage(userService.testLogin(uid,pwd));
     }
 
 

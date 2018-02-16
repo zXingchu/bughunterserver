@@ -23,6 +23,15 @@ public class ResultMessageFactory {
         return resultMessage;
     }
 
+    public static ResultMessage getResultMessage(boolean flag,String msg){
+        ResultMessage resultMessage=new ResultMessage();
+        if(flag)
+            resultMessage=new ResultMessage(0);
+        else
+            resultMessage=new ResultMessage(1, msg);
+        return resultMessage;
+    }
+
     public static ResultMessage getResultMessage(int id){
         ResultMessage resultMessage=new ResultMessage();
         if(id>0)
