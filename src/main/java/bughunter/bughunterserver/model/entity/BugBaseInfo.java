@@ -29,8 +29,6 @@ public class BugBaseInfo {
 
     private Date mTime;
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {

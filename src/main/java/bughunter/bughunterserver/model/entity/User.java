@@ -18,6 +18,8 @@ public class User {
 
     private String teleNumber;
 
+    private int status;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
@@ -58,5 +60,13 @@ public class User {
 
     public void setTeleNumber(String teleNumber) {
         this.teleNumber = teleNumber;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

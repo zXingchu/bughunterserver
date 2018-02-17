@@ -1,20 +1,20 @@
 package bughunter.bughunterserver.vo;
 
 import bughunter.bughunterserver.model.entity.BugUserData;
+import org.json.JSONObject;
 
 public class BugUserDataVO {
 
     private int bugId;
 
-    private String dataString;
+    private JSONObject dataString;
 
     public BugUserDataVO(BugUserData bugUserData) {
         this.bugId = bugUserData.getBugId();
         this.dataString = bugUserData.getDataString();
-
     }
 
-    public BugUserDataVO(int bugId, String dataString) {
+    public BugUserDataVO(int bugId, JSONObject dataString) {
         this.bugId = bugId;
         this.dataString = dataString;
     }
@@ -27,11 +27,12 @@ public class BugUserDataVO {
         this.bugId = bugId;
     }
 
-    public String getDataString() {
+
+    public JSONObject getDataString() {
         return dataString;
     }
 
-    public void setDataString(String dataString) {
+    public void setDataString(JSONObject dataString) {
         this.dataString = dataString;
     }
 }

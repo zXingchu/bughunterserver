@@ -25,7 +25,6 @@ public class AppController {
     @Autowired
     AppService appService;
 
-    ResultMessage resultMessage;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody

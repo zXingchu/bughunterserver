@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public Boolean testLogin(int id, String pwd) {
         User user=userRepository.findOne(id);
+        //TODO
         if(user.getPwd().equals(pwd))
             return true;
         return false;
@@ -25,7 +26,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public Boolean deleteUser(int id) {
         userRepository.delete(id);
-        return null;
+        //TODO
+        return false;
     }
 
     @Override
@@ -36,7 +38,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public Boolean modifyUser(User user) {
         userRepository.save(user);
-        return null;
+        //TODO
+        return false;
     }
 
     @Override
@@ -47,5 +50,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public boolean sendActiveEmail(String email) {
+        //TODO
+        return false;
     }
 }

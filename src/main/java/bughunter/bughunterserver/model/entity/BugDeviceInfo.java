@@ -2,6 +2,9 @@ package bughunter.bughunterserver.model.entity;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity(name = "bug_device_info")
 public class BugDeviceInfo {
@@ -84,6 +87,7 @@ public class BugDeviceInfo {
         this.screenshot = screenshot;
     }
 
+    @Id
     public int getBugId() {
         return bugId;
     }

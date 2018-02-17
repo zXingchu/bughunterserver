@@ -23,8 +23,6 @@ public class BugController {
     @Autowired
     BugService bugService;
 
-    ResultMessage resultMessage;
-
     @RequestMapping(value = "/{appId}/getSimilarity", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getBugSimilarity(HttpServletRequest request, @RequestBody String jsonStr){

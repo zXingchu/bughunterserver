@@ -1,12 +1,16 @@
 package bughunter.bughunterserver.model.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity(name = "bug_operate_step")
 public class BugOperateStep {
 
     private int bugId;
 
     private String operateStep;
 
-
+    @Id
     public int getBugId() {
         return bugId;
     }

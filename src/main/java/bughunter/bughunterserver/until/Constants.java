@@ -23,6 +23,11 @@ public class Constants {
 
     public static final String TeleNumber="teleNumber";
 
+    public static final int STATUS_ACTIVE=0;
+
+    public static final int STATUS_NOT_ACTIVE=1;
+
+
 
     public static final String APP_ID="appId";
 
@@ -44,5 +49,6 @@ public class Constants {
     public static final String PRIORITY = "priority";
 
     public static final String MODIFY_TIME = "mTime";
+
 
 }

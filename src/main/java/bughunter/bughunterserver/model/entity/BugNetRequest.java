@@ -1,11 +1,14 @@
 package bughunter.bughunterserver.model.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity(name = "bug_net_request")
 public class BugNetRequest {
 
     private int bugId;
 
     private String netRequest;
-
 
     public String getNetRequest() {
         return netRequest;
@@ -15,6 +18,7 @@ public class BugNetRequest {
         this.netRequest = netRequest;
     }
 
+    @Id
     public int getBugId() {
         return bugId;
     }

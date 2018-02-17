@@ -33,7 +33,8 @@ public class BugServiceImpl implements BugService{
     @Override
     public Boolean deleteBug(int id) {
         bugRepository.delete(id);
-        return null;
+        //TODO
+        return false;
     }
 
     @Override
@@ -45,18 +46,17 @@ public class BugServiceImpl implements BugService{
     @Override
     public Boolean modifyBug(BugBaseInfo bugBaseInfo) {
         bugRepository.save(bugBaseInfo);
-        return null;
+        //TODO
+        return false;
     }
 
     @Override
     public BugBaseInfo findBug(int id) {
-
         return bugRepository.findOne(id);
     }
 
     @Override
     public List<BugBaseInfo> findAllBugByAppId(int appId) {
-
         return bugRepository.findAllByAppId(appId);
     }
 

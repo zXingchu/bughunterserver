@@ -20,8 +20,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    ResultMessage resultMessage;
-
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage addUser(HttpServletRequest request, @RequestBody String jsonStr){
@@ -31,8 +29,18 @@ public class UserController {
         user.setEmail(jsonObject.getString(Constants.EMAIL));
         user.setPwd(jsonObject.getString(Constants.PWD));
         user.setTeleNumber(jsonObject.getString(Constants.TeleNumber));
+        user.setStatus(Constants.STATUS_NOT_ACTIVE);
         int id=userService.addUser(user);
+        userService.sendActiveEmail(user.getEmail());
+        //TODO
         return ResultMessageFactory.getResultMessage(id);
+    }
+
+    @RequestMapping(value = "/active", method = RequestMethod.POST)
+    public @ResponseBody
+    ResultMessage activeUser(HttpServletRequest request, @RequestBody String jsonStr){
+        //TODO
+        return null;
     }
 
     @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)

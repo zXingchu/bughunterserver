@@ -18,6 +18,6 @@ public interface UserService {
 
     List<User> findAllUsers();
 
-
+    boolean sendActiveEmail(String email);
 
 }
