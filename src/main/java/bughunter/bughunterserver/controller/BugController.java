@@ -23,11 +23,16 @@ public class BugController {
     @Autowired
     BugService bugService;
 
-    @RequestMapping(value = "/{appId}/getSimilarity", method = RequestMethod.POST)
+    @RequestMapping(value = "/{appId}/{bugId}/getSimilarity", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage  getBugSimilarity(HttpServletRequest request, @RequestBody String jsonStr){
-
-        return null;
+    ResultMessage  getSimilarBug(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
+        List<BugBaseInfo> bugBaseInfoList=bugService.findSimilarBugs(bugService.findBug(bugId));
+        List<BugBaseInfoVO> bugBaseInfoVOList=new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
+        for (BugBaseInfo bugBaseInfo:bugBaseInfoList) {
+            BugBaseInfoVO bugBaseInfoVO=new BugBaseInfoVO(bugBaseInfo);
+            bugBaseInfoVOList.add(bugBaseInfoVO);
+        }
+        return ResultMessageFactory.getResultMessage(bugBaseInfoVOList);
     }
 
     @RequestMapping(value = "/{appId}/getAll", method = RequestMethod.POST)
@@ -38,7 +43,6 @@ public class BugController {
         for (BugBaseInfo bugBaseInfo:bugBaseInfoList) {
             BugBaseInfoVO bugBaseInfoVO=new BugBaseInfoVO(bugBaseInfo);
             bugBaseInfoVOList.add(bugBaseInfoVO);
-
         }
         return ResultMessageFactory.getResultMessage(bugBaseInfoVOList);
     }

@@ -7,14 +7,14 @@ public class BugUserDataVO {
 
     private int bugId;
 
-    private JSONObject dataString;
+    private String dataString;
 
     public BugUserDataVO(BugUserData bugUserData) {
         this.bugId = bugUserData.getBugId();
         this.dataString = bugUserData.getDataString();
     }
 
-    public BugUserDataVO(int bugId, JSONObject dataString) {
+    public BugUserDataVO(int bugId, String dataString) {
         this.bugId = bugId;
         this.dataString = dataString;
     }
@@ -28,11 +28,11 @@ public class BugUserDataVO {
     }
 
 
-    public JSONObject getDataString() {
+    public String getDataString() {
         return dataString;
     }
 
-    public void setDataString(JSONObject dataString) {
+    public void setDataString(String dataString) {
         this.dataString = dataString;
     }
 }

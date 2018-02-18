@@ -24,6 +24,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public Boolean testLogin(String email, String pwd) {
+        User user=userRepository.findUserByEmail(email);
+        //TODO
+        if(user.getPwd().equals(pwd))
+            return true;
+        return false;
+    }
+
+    @Override
     public Boolean deleteUser(int id) {
         userRepository.delete(id);
         //TODO
@@ -56,5 +65,10 @@ public class UserServiceImpl implements UserService{
     public boolean sendActiveEmail(String email) {
         //TODO
         return false;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 }

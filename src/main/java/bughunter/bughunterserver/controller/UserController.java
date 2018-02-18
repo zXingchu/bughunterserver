@@ -36,11 +36,12 @@ public class UserController {
         return ResultMessageFactory.getResultMessage(id);
     }
 
-    @RequestMapping(value = "/active", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/active", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage activeUser(HttpServletRequest request, @RequestBody String jsonStr){
-        //TODO
-        return null;
+    ResultMessage activeUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
+        User user=userService.findUser(id);
+        user.setStatus(Constants.STATUS_ACTIVE);
+        return ResultMessageFactory.getResultMessage(userService.modifyUser(user));
     }
 
     @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)

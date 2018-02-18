@@ -24,13 +24,22 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage login(HttpServletRequest request, @RequestBody String jsonStr){
-
+        //TODO
         JSONObject jsonObject=new JSONObject(jsonStr);
-        Integer uid= Integer.valueOf(jsonObject.getString(Constants.USER_ID));
+//        Integer uid= Integer.valueOf(jsonObject.getString(Constants.USER_ID));
         String email=jsonObject.getString(Constants.EMAIL);
         String pwd=jsonObject.getString(Constants.PWD);
         ResultMessage resultMessage;
-        return ResultMessageFactory.getResultMessage(userService.testLogin(uid,pwd));
+        return ResultMessageFactory.getResultMessage(userService.testLogin(email,pwd));
+    }
+
+    @RequestMapping(value = "/isExist", method = RequestMethod.POST)
+    public @ResponseBody
+    ResultMessage isExist(HttpServletRequest request, @RequestBody String jsonStr){
+        //TODO
+        JSONObject jsonObject=new JSONObject(jsonStr);
+        String emailAddr=jsonObject.getString(Constants.EMAIL);
+        return ResultMessageFactory.getResultMessage(userService.findByEmail(emailAddr)==null);
     }
 
 

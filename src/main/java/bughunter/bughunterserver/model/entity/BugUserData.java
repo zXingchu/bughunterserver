@@ -10,7 +10,7 @@ public class BugUserData {
 
     private int bugId;
 
-    private JSONObject dataString;
+    private String dataString;
 
     @Id
     public int getBugId() {
@@ -21,12 +21,11 @@ public class BugUserData {
         this.bugId = bugId;
     }
 
-
-    public JSONObject getDataString() {
+    public String getDataString() {
         return dataString;
     }
 
-    public void setDataString(JSONObject dataString) {
+    public void setDataString(String dataString) {
         this.dataString = dataString;
     }
 }

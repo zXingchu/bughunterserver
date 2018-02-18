@@ -1,9 +1,6 @@
 package bughunter.bughunterserver.model.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity(name = "app_bug_info")
@@ -71,6 +68,8 @@ public class BugBaseInfo {
         this.uId = uId;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "appId", insertable=false, updatable=false)
     public AppBaseInfo getAppBaseInfo() {
         return appBaseInfo;
     }
@@ -103,6 +102,8 @@ public class BugBaseInfo {
         this.mTime = mTime;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "uId", insertable=false, updatable=false)
     public User getUser() {
         return user;
     }

@@ -8,6 +8,8 @@ public interface UserService {
 
     Boolean testLogin(int id, String pwd);
 
+    Boolean testLogin(String email, String pwd);
+
     Boolean deleteUser(int id);
 
     int addUser(User user);
@@ -19,5 +21,7 @@ public interface UserService {
     List<User> findAllUsers();
 
     boolean sendActiveEmail(String email);
+
+    User findByEmail(String email);
 
 }

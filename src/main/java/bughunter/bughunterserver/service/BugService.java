@@ -18,6 +18,8 @@ public interface BugService {
 
     List<BugBaseInfo> findAllBugs();
 
+    List<BugBaseInfo> findSimilarBugs(BugBaseInfo bugBaseInfo);
+
     BugConsoleLog findConsoleLogByBugId(int bugId);
 
     BugDeviceInfo findDeviceInfoByBugId(int bugId);

@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Date;
 
-@Entity(name = "app_base")
+@Entity(name = "app_base_info")
 public class AppBaseInfo {
 
     private int id;

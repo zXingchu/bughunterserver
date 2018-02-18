@@ -66,6 +66,14 @@ public class BugServiceImpl implements BugService{
     }
 
     @Override
+    public List<BugBaseInfo> findSimilarBugs(BugBaseInfo bugBaseInfo) {
+        //TODO
+        if(bugBaseInfo==null)
+            return null;
+        return null;
+    }
+
+    @Override
     public BugConsoleLog findConsoleLogByBugId(int bugId) {
         return bugConsoleLogRepository.findOne(bugId);
     }
