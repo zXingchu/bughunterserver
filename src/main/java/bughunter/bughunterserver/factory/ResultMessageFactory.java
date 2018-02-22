@@ -6,7 +6,7 @@ import bughunter.bughunterserver.vo.ResultMessage;
 public class ResultMessageFactory {
 
     public static ResultMessage getResultMessage(Object data){
-        ResultMessage resultMessage=new ResultMessage();
+        ResultMessage resultMessage;
         if(data==null)
             resultMessage=new ResultMessage(1, Constants.ERROR);
         else
@@ -15,7 +15,7 @@ public class ResultMessageFactory {
     }
 
     public static ResultMessage getResultMessage(boolean flag){
-        ResultMessage resultMessage=new ResultMessage();
+        ResultMessage resultMessage;
         if(flag)
             resultMessage=new ResultMessage(0);
         else
@@ -24,7 +24,7 @@ public class ResultMessageFactory {
     }
 
     public static ResultMessage getResultMessage(boolean flag,String msg){
-        ResultMessage resultMessage=new ResultMessage();
+        ResultMessage resultMessage;
         if(flag)
             resultMessage=new ResultMessage(0);
         else
@@ -33,7 +33,7 @@ public class ResultMessageFactory {
     }
 
     public static ResultMessage getResultMessage(int id){
-        ResultMessage resultMessage=new ResultMessage();
+        ResultMessage resultMessage;
         if(id>0)
             resultMessage=new ResultMessage(0,"",id);
         else

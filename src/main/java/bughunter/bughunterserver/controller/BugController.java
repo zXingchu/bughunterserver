@@ -1,6 +1,7 @@
 package bughunter.bughunterserver.controller;
 
 import bughunter.bughunterserver.factory.ResultMessageFactory;
+import bughunter.bughunterserver.factory.VOFactory;
 import bughunter.bughunterserver.model.entity.BugBaseInfo;
 import bughunter.bughunterserver.model.entity.BugUserData;
 import bughunter.bughunterserver.service.BugService;
@@ -39,6 +40,8 @@ public class BugController {
     public @ResponseBody
     ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int appId, @RequestBody String jsonStr){
         List<BugBaseInfo> bugBaseInfoList=bugService.findAllBugByAppId(appId);
+        if(bugBaseInfoList==null)
+            return new ResultMessage(1,Constants.ERROR);
         List<BugBaseInfoVO> bugBaseInfoVOList=new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
         for (BugBaseInfo bugBaseInfo:bugBaseInfoList) {
             BugBaseInfoVO bugBaseInfoVO=new BugBaseInfoVO(bugBaseInfo);
@@ -65,7 +68,7 @@ public class BugController {
     public @ResponseBody
     ResultMessage  getBugById(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
         BugBaseInfo bugBaseInfo=bugService.findBug(bugId);
-        BugBaseInfoVO bugBaseInfoVO=new BugBaseInfoVO(bugBaseInfo);
+        BugBaseInfoVO bugBaseInfoVO= VOFactory.getBugBaseInfoVO(bugBaseInfo);
         return ResultMessageFactory.getResultMessage(bugBaseInfoVO);
     }
 
@@ -90,7 +93,7 @@ public class BugController {
     public @ResponseBody
     ResultMessage getBugBaseInfo(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
         BugBaseInfo bugBaseInfo=bugService.findBug(bugId);
-        BugBaseInfoVO bugBaseInfoVO=new BugBaseInfoVO(bugBaseInfo);
+        BugBaseInfoVO bugBaseInfoVO=VOFactory.getBugBaseInfoVO(bugBaseInfo);
         return ResultMessageFactory.getResultMessage(bugBaseInfoVO);
     }
 
@@ -99,35 +102,35 @@ public class BugController {
     @RequestMapping(value = "/{appId}/{bugId}/device", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getBugDeviceInfo(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        BugDeviceInfoVO bugDeviceInfoVO=new BugDeviceInfoVO(bugService.findDeviceInfoByBugId(bugId));
+        BugDeviceInfoVO bugDeviceInfoVO=VOFactory.getBugDeviceInfoVO(bugService.findDeviceInfoByBugId(bugId));
         return ResultMessageFactory.getResultMessage(bugDeviceInfoVO);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/console", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getBugConsoleLog(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        BugConsoleLogVO bugConsoleLogVO=new BugConsoleLogVO(bugService.findConsoleLogByBugId(bugId));
+        BugConsoleLogVO bugConsoleLogVO=VOFactory.getBugConsoleLogVO(bugService.findConsoleLogByBugId(bugId));
         return ResultMessageFactory.getResultMessage(bugConsoleLogVO);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/step", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getBugOperateStep(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        BugOperateStepVO bugOperateStepVO=new BugOperateStepVO(bugService.findOperateStepByBugId(bugId));
+        BugOperateStepVO bugOperateStepVO=VOFactory.getBugOperateStepVO(bugService.findOperateStepByBugId(bugId));
         return ResultMessageFactory.getResultMessage(bugOperateStepVO);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/data", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getBugUserData(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        BugUserDataVO bugUserDataVO=new BugUserDataVO(bugService.findUserDataByBugId(bugId));
+        BugUserDataVO bugUserDataVO=VOFactory.getBugUserDataVO(bugService.findUserDataByBugId(bugId));
         return ResultMessageFactory.getResultMessage(bugUserDataVO);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/network", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getNetworkRequest(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        BugNetRequestVO bugNetRequestVO=new BugNetRequestVO(bugService.findNetRequestByBugId(bugId));
+        BugNetRequestVO bugNetRequestVO=VOFactory.getBugNetRequestVO(bugService.findNetRequestByBugId(bugId));
         return ResultMessageFactory.getResultMessage(bugNetRequestVO);
     }
 

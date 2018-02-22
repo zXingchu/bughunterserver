@@ -1,6 +1,7 @@
 package bughunter.bughunterserver.controller;
 
 import bughunter.bughunterserver.factory.ResultMessageFactory;
+import bughunter.bughunterserver.factory.VOFactory;
 import bughunter.bughunterserver.model.entity.AppBaseInfo;
 import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.service.AppService;
@@ -61,7 +62,7 @@ public class AppController {
     public @ResponseBody
     ResultMessage  getApp(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
         AppBaseInfo appBaseInfo=appService.findApp(id);
-        AppBaseInfoVO appBaseInfoVO=new AppBaseInfoVO(appBaseInfo);
+        AppBaseInfoVO appBaseInfoVO= VOFactory.getAppBaseInfoVO(appBaseInfo);
         return ResultMessageFactory.getResultMessage(appBaseInfoVO);
     }
 
@@ -69,6 +70,8 @@ public class AppController {
     public @ResponseBody
     ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int developerId, @RequestBody String jsonStr){
         List<AppBaseInfo> appBaseInfoList=appService.findAllAppsByUserId(developerId);
+        if(appBaseInfoList==null)
+            return new ResultMessage(1,Constants.ERROR);
         List<AppBaseInfoVO> appBaseInfoVOList=new ArrayList<AppBaseInfoVO>(appBaseInfoList.size());
         for (AppBaseInfo appBaseInfo: appBaseInfoList) {
             AppBaseInfoVO appBaseInfoVO=new AppBaseInfoVO(appBaseInfo);

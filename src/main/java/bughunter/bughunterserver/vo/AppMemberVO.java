@@ -1,6 +1,8 @@
 package bughunter.bughunterserver.vo;
 
 
+import bughunter.bughunterserver.model.entity.AppMember;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +17,11 @@ public class AppMemberVO {
 
     private int uId;
 
+    public AppMemberVO(AppMember appMember) {
+        this.appId=appMember.getAppId();
+        this.uId=appMember.getuId();
+        this.id=appMember.getId();
+    }
 
 
     public int getId() {

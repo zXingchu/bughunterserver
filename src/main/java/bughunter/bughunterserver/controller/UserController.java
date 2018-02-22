@@ -1,6 +1,7 @@
 package bughunter.bughunterserver.controller;
 
 import bughunter.bughunterserver.factory.ResultMessageFactory;
+import bughunter.bughunterserver.factory.VOFactory;
 import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.service.UserService;
 import bughunter.bughunterserver.until.Constants;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/User")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
@@ -63,11 +64,11 @@ public class UserController {
         return ResultMessageFactory.getResultMessage(userService.deleteUser(id));
     }
 
-    @RequestMapping(value = "/{id}/get", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/get", method = RequestMethod.GET)
     public @ResponseBody
-    ResultMessage  getUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
+    ResultMessage  getUser(HttpServletRequest request, @PathVariable int id){
         User user=userService.findUser(id);
-        UserVO userVO=new UserVO(user);
+        UserVO userVO= VOFactory.getUserVO(user);
         return ResultMessageFactory.getResultMessage(userVO);
     }
 
