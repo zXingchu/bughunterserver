@@ -33,9 +33,11 @@ public class AppController {
         JSONObject jsonObject=new JSONObject(jsonStr);
         AppBaseInfo appBaseInfo=new AppBaseInfo();
         appBaseInfo.setName(jsonObject.getString(Constants.NAME));
-        appBaseInfo.setCreateTime(Date.valueOf(jsonObject.getString(Constants.CREATE_TIME)));
+        appBaseInfo.setcTime(new Date(new java.util.Date().getTime()));
+        appBaseInfo.setmTime(appBaseInfo.getcTime());
+//        appBaseInfo.setCreateTime(Date.valueOf(jsonObject.getString(Constants.CREATE_TIME)));
         appBaseInfo.setType(jsonObject.getString(Constants.TYPE));
-        appBaseInfo.setSDKVersion(Double.parseDouble(jsonObject.getString(Constants.SDK_VERSION)));
+        appBaseInfo.setSDKVersion(jsonObject.getDouble(Constants.SDK_VERSION));
         appBaseInfo.setAppKey(jsonObject.getString(Constants.APP_KEY));
         appBaseInfo.setAppSecret(jsonObject.getString(Constants.APP_Secret));
         int id=appService.addApp(appBaseInfo);
@@ -49,26 +51,29 @@ public class AppController {
         JSONObject jsonObject=new JSONObject(jsonStr);
         appBaseInfo.setType(jsonObject.getString(Constants.TYPE));
         appBaseInfo.setName(jsonObject.getString(Constants.NAME));
+        appBaseInfo.setSDKVersion(jsonObject.getDouble(Constants.SDK_VERSION));
+        appBaseInfo.setmTime(new Date(new java.util.Date().getTime()));
         return ResultMessageFactory.getResultMessage(appService.modifyApp(appBaseInfo));
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage  deleteApp(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
+    ResultMessage  deleteApp(HttpServletRequest request, @PathVariable int id){
         return ResultMessageFactory.getResultMessage(appService.deleteApp(id));
     }
 
-    @RequestMapping(value = "/{id}/get", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/get", method = RequestMethod.GET)
     public @ResponseBody
-    ResultMessage  getApp(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
+    ResultMessage  getApp(HttpServletRequest request, @PathVariable int id){
         AppBaseInfo appBaseInfo=appService.findApp(id);
         AppBaseInfoVO appBaseInfoVO= VOFactory.getAppBaseInfoVO(appBaseInfo);
         return ResultMessageFactory.getResultMessage(appBaseInfoVO);
     }
 
-    @RequestMapping(value = "/{developerId}/getAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/{developerId}/getAll", method = RequestMethod.GET)
     public @ResponseBody
-    ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int developerId, @RequestBody String jsonStr){
+    ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int developerId){
+        //TODO
         List<AppBaseInfo> appBaseInfoList=appService.findAllAppsByUserId(developerId);
         if(appBaseInfoList==null)
             return new ResultMessage(1,Constants.ERROR);

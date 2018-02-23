@@ -18,7 +18,9 @@ public class AppBaseInfoVO {
 
     private String type;
 
-    private Date createTime;
+    private Date cTime;
+
+    private Date mTime;
 
     private double SDKVersion;
 
@@ -30,7 +32,7 @@ public class AppBaseInfoVO {
         this.id=appBaseInfo.getId();
         this.name = appBaseInfo.getName();
         this.type = appBaseInfo.getType();
-        this.createTime = appBaseInfo.getCreateTime();
+        this.cTime = appBaseInfo.getcTime();
         this.SDKVersion = appBaseInfo.getSDKVersion();
         this.appKey = appBaseInfo.getAppKey();
         this.appSecret = appBaseInfo.getAppSecret();
@@ -40,7 +42,7 @@ public class AppBaseInfoVO {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.createTime = createTime;
+        this.cTime = createTime;
         this.SDKVersion = SDKVersion;
         this.appKey = appKey;
         this.appSecret = appSecret;
@@ -70,14 +72,6 @@ public class AppBaseInfoVO {
         this.type = type;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
     public double getSDKVersion() {
         return SDKVersion;
     }
@@ -100,5 +94,21 @@ public class AppBaseInfoVO {
 
     public void setAppSecret(String appSecret) {
         this.appSecret = appSecret;
+    }
+
+    public Date getcTime() {
+        return cTime;
+    }
+
+    public void setcTime(Date cTime) {
+        this.cTime = cTime;
+    }
+
+    public Date getmTime() {
+        return mTime;
+    }
+
+    public void setmTime(Date mTime) {
+        this.mTime = mTime;
     }
 }

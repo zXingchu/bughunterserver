@@ -55,13 +55,15 @@ public class UserController {
         user.setEmail(jsonObject.getString(Constants.EMAIL));
         if(jsonObject.has(Constants.PWD))
             user.setPwd(jsonObject.getString(Constants.PWD));
-        return ResultMessageFactory.getResultMessage(userService.modifyUser(user));
+        //TODO
+        return ResultMessageFactory.getResultMessage(userService.modifyUser(user),Constants.ERROR);
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage  deleteUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
-        return ResultMessageFactory.getResultMessage(userService.deleteUser(id));
+    ResultMessage  deleteUser(HttpServletRequest request, @PathVariable int id){
+        //TODO
+        return ResultMessageFactory.getResultMessage(userService.deleteUser(id),Constants.ERROR);
     }
 
     @RequestMapping(value = "/{id}/get", method = RequestMethod.GET)

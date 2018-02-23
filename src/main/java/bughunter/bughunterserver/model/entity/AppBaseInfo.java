@@ -16,7 +16,9 @@ public class AppBaseInfo {
 
     private String type;
 
-    private Date createTime;
+    private Date cTime;
+
+    private Date mTime;
 
     private double SDKVersion;
 
@@ -50,14 +52,6 @@ public class AppBaseInfo {
         this.type = type;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
     public double getSDKVersion() {
         return SDKVersion;
     }
@@ -80,5 +74,21 @@ public class AppBaseInfo {
 
     public void setAppSecret(String appSecret) {
         this.appSecret = appSecret;
+    }
+
+    public Date getcTime() {
+        return cTime;
+    }
+
+    public void setcTime(Date cTime) {
+        this.cTime = cTime;
+    }
+
+    public Date getmTime() {
+        return mTime;
+    }
+
+    public void setmTime(Date mTime) {
+        this.mTime = mTime;
     }
 }

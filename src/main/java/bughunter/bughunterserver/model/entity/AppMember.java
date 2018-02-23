@@ -15,6 +15,8 @@ public class AppMember {
 
     private int uId;
 
+    private String type;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
@@ -39,5 +41,13 @@ public class AppMember {
 
     public void setuId(int uId) {
         this.uId = uId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
