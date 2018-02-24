@@ -1,6 +1,8 @@
 package bughunter.bughunterserver.service;
 
 import bughunter.bughunterserver.model.entity.*;
+import bughunter.bughunterserver.vo.*;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -10,24 +12,26 @@ public interface BugService {
 
     int addBug(BugInfo bugInfo);
 
-    Boolean modifyBug(BugBaseInfo bugBaseInfo);
+    Boolean modifyBug(int bugId, JSONObject jsonObject);
 
-    BugBaseInfo findBug(int id);
+    BugBaseInfoVO findBugBaseInfo(int id);
 
-    List<BugBaseInfo> findAllBugByAppId(int appId);
+    BugInfoVO findWholeBug(int bugId);
 
-    List<BugBaseInfo> findAllBugs();
+    List<BugBaseInfoVO> findAllBugByAppId(int appId);
 
-    List<BugBaseInfo> findSimilarBugs(BugBaseInfo bugBaseInfo);
+    List<BugBaseInfoVO> findAllBugs();
 
-    BugConsoleLog findConsoleLogByBugId(int bugId);
+    List<BugBaseInfoVO> findSimilarBugs(int bugId);
 
-    BugDeviceInfo findDeviceInfoByBugId(int bugId);
+    BugConsoleLogVO findConsoleLogByBugId(int bugId);
 
-    BugNetRequest findNetRequestByBugId(int bugId);
+    BugDeviceInfoVO findDeviceInfoByBugId(int bugId);
 
-    BugOperateStep findOperateStepByBugId(int bugId);
+    BugNetRequestVO findNetRequestByBugId(int bugId);
 
-    BugUserData findUserDataByBugId(int bugId);
+    BugOperateStepVO findOperateStepByBugId(int bugId);
+
+    BugUserDataVO findUserDataByBugId(int bugId);
 
 }

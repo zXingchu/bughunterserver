@@ -1,7 +1,6 @@
 package bughunter.bughunterserver.controller;
 
 import bughunter.bughunterserver.factory.ResultMessageFactory;
-import bughunter.bughunterserver.factory.VOFactory;
 import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.service.UserService;
 import bughunter.bughunterserver.until.Constants;
@@ -39,26 +38,14 @@ public class UserController {
     @RequestMapping(value = "/{id}/active", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage activeUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
-        User user=userService.findUser(id);
-        if(user==null)
-            return new ResultMessage(1,Constants.ERROR_NO_EXIST);
-        user.setStatus(Constants.STATUS_ACTIVE);
-        return ResultMessageFactory.getResultMessage(userService.modifyUser(user),Constants.ERROR);
+        return ResultMessageFactory.getResultMessage(userService.activeUser(id),Constants.ERROR);
     }
 
     @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  modifyUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
-        User user=userService.findUser(id);
-        if(user==null)
-            return new ResultMessage(1,Constants.ERROR_NO_EXIST);
         JSONObject jsonObject=new JSONObject(jsonStr);
-        user.setName(jsonObject.getString(Constants.NAME));
-        user.setTeleNumber(jsonObject.getString(Constants.TeleNumber));
-        user.setEmail(jsonObject.getString(Constants.EMAIL));
-        if(jsonObject.has(Constants.PWD))
-            user.setPwd(jsonObject.getString(Constants.PWD));
-        return ResultMessageFactory.getResultMessage(userService.modifyUser(user),Constants.ERROR);
+        return ResultMessageFactory.getResultMessage(userService.modifyUser(id,jsonObject),Constants.ERROR);
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
@@ -70,9 +57,8 @@ public class UserController {
     @RequestMapping(value = "/{id}/get", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage  getUser(HttpServletRequest request, @PathVariable int id){
-        User user=userService.findUser(id);
-        UserVO userVO= VOFactory.getUserVO(user);
-        return ResultMessageFactory.getResultMessage(userVO);
+        UserVO user=userService.findUser(id);
+        return ResultMessageFactory.getResultMessage(user);
     }
 
 }

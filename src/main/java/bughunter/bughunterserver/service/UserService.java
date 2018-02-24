@@ -1,6 +1,8 @@
 package bughunter.bughunterserver.service;
 
 import bughunter.bughunterserver.model.entity.User;
+import bughunter.bughunterserver.vo.UserVO;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -12,16 +14,18 @@ public interface UserService {
 
     Boolean deleteUser(int id);
 
+    Boolean activeUser(int id);
+
     int addUser(User user);
 
-    Boolean modifyUser(User user);
+    Boolean modifyUser(int id, JSONObject jsonObject);
 
-    User findUser(int id);
+    UserVO findUser(int id);
 
-    List<User> findAllUsers();
+    List<UserVO> findAllUsers();
 
     boolean sendActiveEmail(String email);
 
-    User findByEmail(String email);
+    UserVO findByEmail(String email);
 
 }

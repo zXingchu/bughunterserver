@@ -1,22 +1,16 @@
 package bughunter.bughunterserver.controller;
 
 import bughunter.bughunterserver.factory.ResultMessageFactory;
-import bughunter.bughunterserver.factory.VOFactory;
-import bughunter.bughunterserver.model.entity.BugBaseInfo;
 import bughunter.bughunterserver.model.entity.BugInfo;
-import bughunter.bughunterserver.model.entity.BugUserData;
 import bughunter.bughunterserver.service.BugService;
 import bughunter.bughunterserver.until.Constants;
 import bughunter.bughunterserver.vo.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,27 +23,15 @@ public class BugController {
     @RequestMapping(value = "/{appId}/{bugId}/getSimilarity", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  getSimilarBug(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        List<BugBaseInfo> bugBaseInfoList=bugService.findSimilarBugs(bugService.findBug(bugId));
-        List<BugBaseInfoVO> bugBaseInfoVOList=new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
-        for (BugBaseInfo bugBaseInfo:bugBaseInfoList) {
-            BugBaseInfoVO bugBaseInfoVO=new BugBaseInfoVO(bugBaseInfo);
-            bugBaseInfoVOList.add(bugBaseInfoVO);
-        }
-        return ResultMessageFactory.getResultMessage(bugBaseInfoVOList);
+        List<BugBaseInfoVO> bugBaseInfoList=bugService.findSimilarBugs(bugId);
+        return ResultMessageFactory.getResultMessage(bugBaseInfoList);
     }
 
     @RequestMapping(value = "/{appId}/getAll", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int appId){
-        List<BugBaseInfo> bugBaseInfoList=bugService.findAllBugByAppId(appId);
-        if(bugBaseInfoList==null)
-            return new ResultMessage(1,Constants.ERROR);
-        List<BugBaseInfoVO> bugBaseInfoVOList=new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
-        for (BugBaseInfo bugBaseInfo:bugBaseInfoList) {
-            BugBaseInfoVO bugBaseInfoVO=new BugBaseInfoVO(bugBaseInfo);
-            bugBaseInfoVOList.add(bugBaseInfoVO);
-        }
-        return ResultMessageFactory.getResultMessage(bugBaseInfoVOList);
+        List<BugBaseInfoVO> bugBaseInfoList=bugService.findAllBugByAppId(appId);
+        return ResultMessageFactory.getResultMessage(bugBaseInfoList);
     }
 
     @RequestMapping(value = "/{appId}/submit", method = RequestMethod.POST)
@@ -64,22 +46,15 @@ public class BugController {
     @RequestMapping(value = "/{appId}/{bugId}/get", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage  getBugById(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId){
-        BugBaseInfo bugBaseInfo=bugService.findBug(bugId);
-        BugBaseInfoVO bugBaseInfoVO= VOFactory.getBugBaseInfoVO(bugBaseInfo);
-        return ResultMessageFactory.getResultMessage(bugBaseInfoVO);
+        BugInfoVO bugInfo=bugService.findWholeBug(bugId);
+        return ResultMessageFactory.getResultMessage(bugInfo);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/modify", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage modifyBug(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        BugBaseInfo bugBaseInfo=bugService.findBug(bugId);
-        if(bugBaseInfo==null)
-            return new ResultMessage(1,Constants.ERROR_NO_EXIST);
         JSONObject jsonObject=new JSONObject(jsonStr);
-        bugBaseInfo.setType(jsonObject.getString(Constants.TYPE));
-        bugBaseInfo.setStatus(jsonObject.getString(Constants.STATUS));
-        bugBaseInfo.setmTime(Date.valueOf(jsonObject.getString(Constants.MODIFY_TIME)));
-        return ResultMessageFactory.getResultMessage(bugService.modifyBug(bugBaseInfo),Constants.ERROR);
+        return ResultMessageFactory.getResultMessage(bugService.modifyBug(bugId, jsonObject),Constants.ERROR);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/delete", method = RequestMethod.POST)
@@ -91,9 +66,8 @@ public class BugController {
     @RequestMapping(value = "/{appId}/{bugId}/base", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage getBugBaseInfo(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId){
-        BugBaseInfo bugBaseInfo=bugService.findBug(bugId);
-        BugBaseInfoVO bugBaseInfoVO=VOFactory.getBugBaseInfoVO(bugBaseInfo);
-        return ResultMessageFactory.getResultMessage(bugBaseInfoVO);
+        BugBaseInfoVO bugBaseInfo=bugService.findBugBaseInfo(bugId);
+        return ResultMessageFactory.getResultMessage(bugBaseInfo);
     }
 
 
@@ -101,36 +75,36 @@ public class BugController {
     @RequestMapping(value = "/{appId}/{bugId}/device", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage  getBugDeviceInfo(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId){
-        BugDeviceInfoVO bugDeviceInfoVO=VOFactory.getBugDeviceInfoVO(bugService.findDeviceInfoByBugId(bugId));
-        return ResultMessageFactory.getResultMessage(bugDeviceInfoVO);
+        BugDeviceInfoVO bugDeviceInfo=bugService.findDeviceInfoByBugId(bugId);
+        return ResultMessageFactory.getResultMessage(bugDeviceInfo);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/console", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage  getBugConsoleLog(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId){
-        BugConsoleLogVO bugConsoleLogVO=VOFactory.getBugConsoleLogVO(bugService.findConsoleLogByBugId(bugId));
-        return ResultMessageFactory.getResultMessage(bugConsoleLogVO);
+        BugConsoleLogVO bugConsoleLog=bugService.findConsoleLogByBugId(bugId);
+        return ResultMessageFactory.getResultMessage(bugConsoleLog);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/step", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage  getBugOperateStep(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId){
-        BugOperateStepVO bugOperateStepVO=VOFactory.getBugOperateStepVO(bugService.findOperateStepByBugId(bugId));
-        return ResultMessageFactory.getResultMessage(bugOperateStepVO);
+        BugOperateStepVO bugOperateStep=bugService.findOperateStepByBugId(bugId);
+        return ResultMessageFactory.getResultMessage(bugOperateStep);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/data", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage  getBugUserData(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId){
-        BugUserDataVO bugUserDataVO=VOFactory.getBugUserDataVO(bugService.findUserDataByBugId(bugId));
-        return ResultMessageFactory.getResultMessage(bugUserDataVO);
+        BugUserDataVO bugUserData=bugService.findUserDataByBugId(bugId);
+        return ResultMessageFactory.getResultMessage(bugUserData);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/network", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage  getNetworkRequest(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId){
-        BugNetRequestVO bugNetRequestVO=VOFactory.getBugNetRequestVO(bugService.findNetRequestByBugId(bugId));
-        return ResultMessageFactory.getResultMessage(bugNetRequestVO);
+        BugNetRequestVO bugNetRequest=bugService.findNetRequestByBugId(bugId);
+        return ResultMessageFactory.getResultMessage(bugNetRequest);
     }
 
 }

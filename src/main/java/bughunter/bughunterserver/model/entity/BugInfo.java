@@ -88,4 +88,28 @@ public class BugInfo {
     public Integer getBugId() {
         return bugId;
     }
+
+    public void setBugBaseInfo(BugBaseInfo bugBaseInfo) {
+        this.bugBaseInfo = bugBaseInfo;
+    }
+
+    public void setBugConsoleLog(BugConsoleLog bugConsoleLog) {
+        this.bugConsoleLog = bugConsoleLog;
+    }
+
+    public void setBugDeviceInfo(BugDeviceInfo bugDeviceInfo) {
+        this.bugDeviceInfo = bugDeviceInfo;
+    }
+
+    public void setBugNetRequest(BugNetRequest bugNetRequest) {
+        this.bugNetRequest = bugNetRequest;
+    }
+
+    public void setBugOperateStep(BugOperateStep bugOperateStep) {
+        this.bugOperateStep = bugOperateStep;
+    }
+
+    public void setBugUserData(BugUserData bugUserData) {
+        this.bugUserData = bugUserData;
+    }
 }
