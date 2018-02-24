@@ -3,7 +3,9 @@ package bughunter.bughunterserver.service.impl;
 import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.model.repository.UserRepository;
 import bughunter.bughunterserver.service.UserService;
+import bughunter.bughunterserver.until.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,28 +17,40 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepository;
 
     @Override
-    public Boolean testLogin(int id, String pwd) {
+    public int testLogin(int id, String pwd) {
         User user=userRepository.findOne(id);
-        //TODO
-        if(user.getPwd().equals(pwd))
-            return true;
-        return false;
+        if(user==null)
+            return -2;
+        if(user.getStatus()== Constants.STATUS_NOT_ACTIVE)
+            return -1;
+        if(!user.getPwd().equals(pwd))
+            return 0;
+        else
+            return 1;
     }
 
     @Override
-    public Boolean testLogin(String email, String pwd) {
+    public int testLogin(String email, String pwd) {
         User user=userRepository.findUserByEmail(email);
-        //TODO
-        if(user.getPwd().equals(pwd))
-            return true;
-        return false;
+        if(user==null)
+            return -2;
+        if(user.getStatus()== Constants.STATUS_NOT_ACTIVE)
+            return -1;
+        if(!user.getPwd().equals(pwd))
+            return 0;
+        else
+            return 1;
     }
 
     @Override
     public Boolean deleteUser(int id) {
-        userRepository.delete(id);
-        //TODO
-        return false;
+        try {
+            userRepository.delete(id);
+            return true;
+        }catch (EmptyResultDataAccessException e){
+            System.out.println(e.toString());
+            return false;
+        }
     }
 
     @Override
@@ -46,9 +60,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Boolean modifyUser(User user) {
-        userRepository.save(user);
-        //TODO
-        return false;
+        try {
+            userRepository.save(user);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
     }
 
     @Override

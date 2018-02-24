@@ -33,7 +33,6 @@ public class UserController {
         user.setStatus(Constants.STATUS_NOT_ACTIVE);
         int id=userService.addUser(user);
         userService.sendActiveEmail(user.getEmail());
-        //TODO
         return ResultMessageFactory.getResultMessage(id);
     }
 
@@ -41,29 +40,31 @@ public class UserController {
     public @ResponseBody
     ResultMessage activeUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
         User user=userService.findUser(id);
+        if(user==null)
+            return new ResultMessage(1,Constants.ERROR_NO_EXIST);
         user.setStatus(Constants.STATUS_ACTIVE);
-        return ResultMessageFactory.getResultMessage(userService.modifyUser(user));
+        return ResultMessageFactory.getResultMessage(userService.modifyUser(user),Constants.ERROR);
     }
 
     @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  modifyUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
         User user=userService.findUser(id);
+        if(user==null)
+            return new ResultMessage(1,Constants.ERROR_NO_EXIST);
         JSONObject jsonObject=new JSONObject(jsonStr);
         user.setName(jsonObject.getString(Constants.NAME));
         user.setTeleNumber(jsonObject.getString(Constants.TeleNumber));
         user.setEmail(jsonObject.getString(Constants.EMAIL));
         if(jsonObject.has(Constants.PWD))
             user.setPwd(jsonObject.getString(Constants.PWD));
-        //TODO
         return ResultMessageFactory.getResultMessage(userService.modifyUser(user),Constants.ERROR);
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  deleteUser(HttpServletRequest request, @PathVariable int id){
-        //TODO
-        return ResultMessageFactory.getResultMessage(userService.deleteUser(id),Constants.ERROR);
+        return ResultMessageFactory.getResultMessage(userService.deleteUser(id),Constants.ERROR_NO_EXIST);
     }
 
     @RequestMapping(value = "/{id}/get", method = RequestMethod.GET)

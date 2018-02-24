@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface UserService {
 
-    Boolean testLogin(int id, String pwd);
+    int testLogin(int id, String pwd);
 
-    Boolean testLogin(String email, String pwd);
+    int testLogin(String email, String pwd);
 
     Boolean deleteUser(int id);
 

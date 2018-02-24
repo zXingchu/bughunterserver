@@ -8,7 +8,7 @@ public interface BugService {
 
     Boolean deleteBug(int id);
 
-    int addBug(BugBaseInfo bugBaseInfo);
+    int addBug(BugInfo bugInfo);
 
     Boolean modifyBug(BugBaseInfo bugBaseInfo);
 

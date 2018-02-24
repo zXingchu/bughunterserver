@@ -32,22 +32,34 @@ public class BugServiceImpl implements BugService{
 
     @Override
     public Boolean deleteBug(int id) {
-        bugRepository.delete(id);
-        //TODO
-        return false;
+        try {
+            bugRepository.delete(id);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     @Override
-    public int addBug(BugBaseInfo bugBaseInfo) {
-        bugBaseInfo =bugRepository.save(bugBaseInfo);
-        return bugBaseInfo.getId();
+    public int addBug(BugInfo bugInfo) {
+        bugInfo.setBugId(bugRepository.save(bugInfo.getBugBaseInfo()).getId());
+        bugUserDataRepository.save(bugInfo.getBugUserData());
+        bugNetRequestRepository.save(bugInfo.getBugNetRequest());
+        bugDeviceRepository.save(bugInfo.getBugDeviceInfo());
+        bugConsoleLogRepository.save(bugInfo.getBugConsoleLog());
+        bugOperateStepRepository.save(bugInfo.getBugOperateStep());
+        return bugInfo.getBugId();
     }
 
     @Override
     public Boolean modifyBug(BugBaseInfo bugBaseInfo) {
-        bugRepository.save(bugBaseInfo);
-        //TODO
-        return false;
+        try {
+            bugRepository.save(bugBaseInfo);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
     }
 
     @Override
@@ -80,25 +92,21 @@ public class BugServiceImpl implements BugService{
 
     @Override
     public BugDeviceInfo findDeviceInfoByBugId(int bugId) {
-
         return bugDeviceRepository.findOne(bugId);
     }
 
     @Override
     public BugNetRequest findNetRequestByBugId(int bugId) {
-
         return bugNetRequestRepository.findOne(bugId);
     }
 
     @Override
     public BugOperateStep findOperateStepByBugId(int bugId) {
-
         return bugOperateStepRepository.findOne(bugId);
     }
 
     @Override
     public BugUserData findUserDataByBugId(int bugId) {
-
         return bugUserDataRepository.findOne(bugId);
     }
 }

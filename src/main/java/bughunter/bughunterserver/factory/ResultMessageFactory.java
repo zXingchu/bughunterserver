@@ -14,14 +14,6 @@ public class ResultMessageFactory {
         return resultMessage;
     }
 
-    public static ResultMessage getResultMessage(boolean flag){
-        ResultMessage resultMessage;
-        if(flag)
-            resultMessage=new ResultMessage(0);
-        else
-            resultMessage=new ResultMessage(1, Constants.ERROR);
-        return resultMessage;
-    }
 
     public static ResultMessage getResultMessage(boolean flag,String msg){
         ResultMessage resultMessage;

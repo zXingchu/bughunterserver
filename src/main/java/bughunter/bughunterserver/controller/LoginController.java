@@ -24,22 +24,31 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage login(HttpServletRequest request, @RequestBody String jsonStr){
-        //TODO
         JSONObject jsonObject=new JSONObject(jsonStr);
 //        Integer uid= Integer.valueOf(jsonObject.getString(Constants.USER_ID));
         String email=jsonObject.getString(Constants.EMAIL);
         String pwd=jsonObject.getString(Constants.PWD);
         ResultMessage resultMessage;
-        return ResultMessageFactory.getResultMessage(userService.testLogin(email,pwd));
+        switch (userService.testLogin(email,pwd)) {
+            case -2:
+                return new ResultMessage(1,Constants.ERROR_NO_EXIST);
+            case -1:
+                return new ResultMessage(2,Constants.ERROR_NO_ACTIVE);
+            case 0:
+                return new ResultMessage(3,Constants.ERROR_PWD);
+            case 1:
+                return new ResultMessage(0);
+            default:
+                return new ResultMessage(4,Constants.ERROR);
+        }
     }
 
     @RequestMapping(value = "/isExist", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage isExist(HttpServletRequest request, @RequestBody String jsonStr){
-        //TODO
         JSONObject jsonObject=new JSONObject(jsonStr);
         String emailAddr=jsonObject.getString(Constants.EMAIL);
-        return ResultMessageFactory.getResultMessage(userService.findByEmail(emailAddr)==null);
+        return ResultMessageFactory.getResultMessage(userService.findByEmail(emailAddr)!=null,Constants.ERROR_NO_EXIST);
     }
 
 

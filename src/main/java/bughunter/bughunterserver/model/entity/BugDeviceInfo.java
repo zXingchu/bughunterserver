@@ -25,10 +25,9 @@ public class BugDeviceInfo {
     //分辨率
     private String resolution;
 
-    //TODO 用电量（百分数表示为好）
     private String electricity;
 
-    //TODO 截图，图片转string存放
+    //截图，图片转string存放
     private String screenshot;
 
 //    public int getId() {

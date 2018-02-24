@@ -48,18 +48,20 @@ public class AppController {
     public @ResponseBody
     ResultMessage  modifyApp(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
         AppBaseInfo appBaseInfo=appService.findApp(id);
+        if(appBaseInfo==null)
+            return new ResultMessage(1,Constants.ERROR_NO_EXIST);
         JSONObject jsonObject=new JSONObject(jsonStr);
         appBaseInfo.setType(jsonObject.getString(Constants.TYPE));
         appBaseInfo.setName(jsonObject.getString(Constants.NAME));
         appBaseInfo.setSDKVersion(jsonObject.getDouble(Constants.SDK_VERSION));
         appBaseInfo.setmTime(new Date(new java.util.Date().getTime()));
-        return ResultMessageFactory.getResultMessage(appService.modifyApp(appBaseInfo));
+        return ResultMessageFactory.getResultMessage(appService.modifyApp(appBaseInfo),Constants.ERROR);
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage  deleteApp(HttpServletRequest request, @PathVariable int id){
-        return ResultMessageFactory.getResultMessage(appService.deleteApp(id));
+        return ResultMessageFactory.getResultMessage(appService.deleteApp(id),Constants.ERROR_NO_EXIST);
     }
 
     @RequestMapping(value = "/{id}/get", method = RequestMethod.GET)
@@ -73,7 +75,6 @@ public class AppController {
     @RequestMapping(value = "/{developerId}/getAll", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int developerId){
-        //TODO
         List<AppBaseInfo> appBaseInfoList=appService.findAllAppsByUserId(developerId);
         if(appBaseInfoList==null)
             return new ResultMessage(1,Constants.ERROR);

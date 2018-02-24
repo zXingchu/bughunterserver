@@ -3,10 +3,12 @@ package bughunter.bughunterserver.controller;
 import bughunter.bughunterserver.factory.ResultMessageFactory;
 import bughunter.bughunterserver.factory.VOFactory;
 import bughunter.bughunterserver.model.entity.BugBaseInfo;
+import bughunter.bughunterserver.model.entity.BugInfo;
 import bughunter.bughunterserver.model.entity.BugUserData;
 import bughunter.bughunterserver.service.BugService;
 import bughunter.bughunterserver.until.Constants;
 import bughunter.bughunterserver.vo.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,14 +55,9 @@ public class BugController {
     @RequestMapping(value = "/{appId}/submit", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage submitBug(HttpServletRequest request, @RequestBody String jsonStr){
-        BugBaseInfo bugBaseInfo=new BugBaseInfo();
         JSONObject jsonObject=new JSONObject(jsonStr);
-        bugBaseInfo.setAppId(Integer.parseInt(jsonObject.getString(Constants.APP_ID)));
-        bugBaseInfo.setPriority(Integer.parseInt(jsonObject.getString(Constants.PRIORITY)));
-        bugBaseInfo.setStatus(jsonObject.getString(Constants.STATUS));
-        bugBaseInfo.setType(jsonObject.getString(Constants.TYPE));
-        bugBaseInfo.setuId(Integer.parseInt(jsonObject.getString(Constants.USER_ID)));
-        int id=bugService.addBug(bugBaseInfo);
+        BugInfo bugInfo=new BugInfo(jsonObject);
+        int id=bugService.addBug(bugInfo);
         return ResultMessageFactory.getResultMessage(id);
     }
 
@@ -76,17 +73,19 @@ public class BugController {
     public @ResponseBody
     ResultMessage modifyBug(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
         BugBaseInfo bugBaseInfo=bugService.findBug(bugId);
+        if(bugBaseInfo==null)
+            return new ResultMessage(1,Constants.ERROR_NO_EXIST);
         JSONObject jsonObject=new JSONObject(jsonStr);
         bugBaseInfo.setType(jsonObject.getString(Constants.TYPE));
         bugBaseInfo.setStatus(jsonObject.getString(Constants.STATUS));
         bugBaseInfo.setmTime(Date.valueOf(jsonObject.getString(Constants.MODIFY_TIME)));
-        return ResultMessageFactory.getResultMessage(bugService.modifyBug(bugBaseInfo));
+        return ResultMessageFactory.getResultMessage(bugService.modifyBug(bugBaseInfo),Constants.ERROR);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/delete", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage deleteBug(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId, @RequestBody String jsonStr){
-        return ResultMessageFactory.getResultMessage(bugService.deleteBug(bugId));
+        return ResultMessageFactory.getResultMessage(bugService.deleteBug(bugId),Constants.ERROR_NO_EXIST);
     }
 
     @RequestMapping(value = "/{appId}/{bugId}/base", method = RequestMethod.GET)

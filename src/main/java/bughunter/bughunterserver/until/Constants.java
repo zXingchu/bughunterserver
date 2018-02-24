@@ -51,4 +51,28 @@ public class Constants {
     public static final String MODIFY_TIME = "mTime";
 
 
+    public static final String ERROR_NO_EXIST = "no exist";
+
+    public static final String ERROR_NO_ACTIVE = "no active";
+
+    public static final String ERROR_PWD = "pwd error";
+
+    public static String BUG_BASE_INFO = "BugBaseInfo";
+    public static String BUG_CONSOLE_LOG="BugConsoleLog";
+    public static String BUG_DEVICE_INFO="BugDeviceInfo";
+    public static String BUG_NET_REQUEST="BugNetRequest";
+    public static String BUG_OPERATE_STEP="BugOperateStep";
+    public static String BUG_USER_DATA="BugUserData";
+
+    public static String LOG_STRING="logString";
+    public static String NET_REQUEST="netRequest";
+    public static String OPERATE_STEP="operateStep";
+    public static String DATA_STRING="dataString";
+
+    public static String DEVICEMODEL="deviceModel";
+    public static String ELECTRICITY="electricity";
+    public static String MANUFACTURER="manufacturer";
+    public static String OPERATOR="operator";
+    public static String RESOLUTION="resolution";
+    public static String SCREENSHOT="screenshot";
 }
