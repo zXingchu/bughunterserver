@@ -13,11 +13,6 @@ public class BugNetRequestVO {
         this.netRequest = bugNetRequest.getNetRequest();
     }
 
-    public BugNetRequestVO(int bugId, String netRequest) {
-        this.bugId = bugId;
-        this.netRequest = netRequest;
-    }
-
     public String getNetRequest() {
         return netRequest;
     }

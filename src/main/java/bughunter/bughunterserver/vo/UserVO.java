@@ -28,13 +28,6 @@ public class UserVO {
         this.teleNumber = user.getTeleNumber();
     }
 
-    public UserVO(int id, String name, String pwd, String email, String teleNumber) {
-        this.id = id;
-        this.name = name;
-        this.pwd = pwd;
-        this.email = email;
-        this.teleNumber = teleNumber;
-    }
 
     public int getId() {
         return id;

@@ -38,16 +38,6 @@ public class AppBaseInfoVO {
         this.appSecret = appBaseInfo.getAppSecret();
     }
 
-    public AppBaseInfoVO(int id, String name, String type, Date createTime, double SDKVersion, String appKey, String appSecret) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.cTime = createTime;
-        this.SDKVersion = SDKVersion;
-        this.appKey = appKey;
-        this.appSecret = appSecret;
-    }
-
     public int getId() {
         return id;
     }

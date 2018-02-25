@@ -35,9 +35,19 @@ public class UserController {
         return ResultMessageFactory.getResultMessage(id);
     }
 
+    @RequestMapping(value = "/{id}/sendActiveEmail", method = RequestMethod.POST)
+    public @ResponseBody
+    ResultMessage sendActiveEmail(HttpServletRequest request, @PathVariable int id){
+        //TODO 保存验证码
+        //Verification Code
+        String vc=userService.sendActiveEmail(userService.findUser(id).getEmail());
+        return new ResultMessage(0,vc);
+    }
+
     @RequestMapping(value = "/{id}/active", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage activeUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
+        //TODO 读取用户输入的验证码，与保存的验证码对比
         return ResultMessageFactory.getResultMessage(userService.activeUser(id),Constants.ERROR);
     }
 

@@ -47,15 +47,6 @@ public class BugDeviceInfoVO {
         this.screenshot = bugDeviceInfo.getScreenshot();
     }
 
-    public BugDeviceInfoVO(int bugId, String manufacturer, String deviceModel, String operator, String resolution, String electricity, String screenshot) {
-        this.bugId = bugId;
-        this.manufacturer = manufacturer;
-        this.deviceModel = deviceModel;
-        this.operator = operator;
-        this.resolution = resolution;
-        this.electricity = electricity;
-        this.screenshot = screenshot;
-    }
 
     public String getManufacturer() {
         return manufacturer;

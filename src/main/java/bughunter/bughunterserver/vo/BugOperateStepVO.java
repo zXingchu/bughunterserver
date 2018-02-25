@@ -13,10 +13,6 @@ public class BugOperateStepVO {
         this.operateStep=bugOperateStep.getOperateStep();
     }
 
-    public BugOperateStepVO(int bugId, String operateStep) {
-        this.bugId = bugId;
-        this.operateStep = operateStep;
-    }
 
     public int getBugId() {
         return bugId;

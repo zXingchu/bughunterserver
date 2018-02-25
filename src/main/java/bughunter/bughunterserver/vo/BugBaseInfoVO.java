@@ -18,6 +18,8 @@ public class BugBaseInfoVO {
 
     private String type;
 
+    private String describe;
+
     private int priority;
 
     private UserVO user;
@@ -35,19 +37,9 @@ public class BugBaseInfoVO {
         this.priority = bugBaseInfo.getPriority();
         this.cTime = bugBaseInfo.getcTime();
         this.mTime = bugBaseInfo.getmTime();
+        this.describe=bugBaseInfo.getDescribe();
         this.user = new UserVO(bugBaseInfo.getUser());
         this.appBaseInfo = new AppBaseInfoVO(bugBaseInfo.getAppBaseInfo());
-    }
-
-    public BugBaseInfoVO(int id, String status, String type, int priority, UserVO user, AppBaseInfoVO appBaseInfo, Date cTime, Date mTime) {
-        this.id = id;
-        this.status = status;
-        this.type = type;
-        this.priority = priority;
-        this.user = user;
-        this.appBaseInfo = appBaseInfo;
-        this.cTime = cTime;
-        this.mTime = mTime;
     }
 
     public int getId() {
@@ -113,5 +105,13 @@ public class BugBaseInfoVO {
 
     public void setAppBaseInfo(AppBaseInfoVO appBaseInfo) {
         this.appBaseInfo = appBaseInfo;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 }

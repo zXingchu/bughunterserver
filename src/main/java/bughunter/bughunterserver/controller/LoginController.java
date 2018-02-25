@@ -23,11 +23,10 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage login(HttpServletRequest request, @RequestBody String jsonStr){
-        JSONObject jsonObject=new JSONObject(jsonStr);
+    ResultMessage login(HttpServletRequest request){
 //        Integer uid= Integer.valueOf(jsonObject.getString(Constants.USER_ID));
-        String email=jsonObject.getString(Constants.EMAIL);
-        String pwd=jsonObject.getString(Constants.PWD);
+        String email=request.getHeader(Constants.EMAIL);
+        String pwd=request.getHeader(Constants.PWD);
         ResultMessage resultMessage;
         switch (userService.testLogin(email,pwd)) {
             case -2:
@@ -45,9 +44,8 @@ public class LoginController {
 
     @RequestMapping(value = "/isExist", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage isExist(HttpServletRequest request, @RequestBody String jsonStr){
-        JSONObject jsonObject=new JSONObject(jsonStr);
-        String emailAddr=jsonObject.getString(Constants.EMAIL);
+    ResultMessage isExist(HttpServletRequest request){
+        String emailAddr=request.getHeader(Constants.EMAIL);
         return ResultMessageFactory.getResultMessage(userService.findByEmail(emailAddr)!=null,Constants.ERROR_NO_EXIST);
     }
 

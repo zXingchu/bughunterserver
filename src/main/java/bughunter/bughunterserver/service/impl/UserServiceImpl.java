@@ -9,6 +9,8 @@ import bughunter.bughunterserver.vo.UserVO;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +21,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Override
     public int testLogin(int id, String pwd) {
@@ -111,9 +116,16 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean sendActiveEmail(String email) {
-        //TODO
-        return false;
+    public String sendActiveEmail(String email) {
+        //TODO 发送验证邮件，返回验证码
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(Constants.SEND_EMAIL_FROM);//发送者.
+        message.setTo(email);//接收者.
+        message.setSubject("测试邮件（邮件主题）");//邮件主题.
+        String vc="sd4a2s";
+        message.setText("这是邮件内容"+vc);//邮件内容.
+        mailSender.send(message);//发送邮件
+        return vc;
     }
 
     @Override

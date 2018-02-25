@@ -14,10 +14,6 @@ public class BugUserDataVO {
         this.dataString = bugUserData.getDataString();
     }
 
-    public BugUserDataVO(int bugId, String dataString) {
-        this.bugId = bugId;
-        this.dataString = dataString;
-    }
 
     public int getBugId() {
         return bugId;

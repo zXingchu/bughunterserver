@@ -38,7 +38,13 @@ public class BugServiceImpl implements BugService{
     @Override
     public Boolean deleteBug(int id) {
         try {
+            //TODO 使用级联删除
             bugRepository.delete(id);
+            bugOperateStepRepository.delete(id);
+            bugConsoleLogRepository.delete(id);
+            bugDeviceRepository.delete(id);
+            bugNetRequestRepository.delete(id);
+            bugUserDataRepository.delete(id);
             return true;
         }catch (Exception e){
             return false;
@@ -123,9 +129,10 @@ public class BugServiceImpl implements BugService{
 
     @Override
     public List<BugBaseInfoVO> findSimilarBugs(int bugId) {
-        //TODO
+        //TODO 实现返回相似bug
         if(!bugRepository.exists(bugId))
             return null;
+        BugBaseInfo bugBaseInfo=bugRepository.findOne(bugId);
         return null;
     }
 

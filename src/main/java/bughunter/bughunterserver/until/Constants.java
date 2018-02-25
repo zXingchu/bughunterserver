@@ -75,4 +75,7 @@ public class Constants {
     public static String OPERATOR="operator";
     public static String RESOLUTION="resolution";
     public static String SCREENSHOT="screenshot";
+
+    public static String SEND_EMAIL_FROM="141250196@smail.nju.edu.cn";
+
 }

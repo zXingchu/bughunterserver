@@ -12,6 +12,8 @@ public class BugBaseInfo {
 
     private String type;
 
+    private String describe;
+
     private int priority;
 
     private int uId;
@@ -110,5 +112,13 @@ public class BugBaseInfo {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
     }
 }

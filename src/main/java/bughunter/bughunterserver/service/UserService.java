@@ -24,7 +24,7 @@ public interface UserService {
 
     List<UserVO> findAllUsers();
 
-    boolean sendActiveEmail(String email);
+    String sendActiveEmail(String email);
 
     UserVO findByEmail(String email);
 

@@ -14,10 +14,6 @@ public class BugConsoleLogVO {
         this.logString = bugConsoleLog.getLogString();
     }
 
-    public BugConsoleLogVO(int bugId, String logString) {
-        this.bugId = bugId;
-        this.logString = logString;
-    }
 
     public int getBugId() {
         return bugId;

@@ -63,13 +63,16 @@ public class BugController {
         return ResultMessageFactory.getResultMessage(bugService.deleteBug(bugId),Constants.ERROR_NO_EXIST);
     }
 
+
+
+
+
     @RequestMapping(value = "/{appId}/{bugId}/base", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage getBugBaseInfo(HttpServletRequest request, @PathVariable int appId, @PathVariable int bugId){
         BugBaseInfoVO bugBaseInfo=bugService.findBugBaseInfo(bugId);
         return ResultMessageFactory.getResultMessage(bugBaseInfo);
     }
-
 
 
     @RequestMapping(value = "/{appId}/{bugId}/device", method = RequestMethod.GET)
