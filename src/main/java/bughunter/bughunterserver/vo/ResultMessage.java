@@ -5,7 +5,11 @@ package bughunter.bughunterserver.vo;
  */
 public class ResultMessage {
 
-    public ResultMessage() { }
+    public ResultMessage(int errno, String message, Object data) {
+        this.error = errno;
+        this.message = message;
+        this.data = data;
+    }
 
     public ResultMessage(int errno) {
         this.error = errno;

@@ -38,16 +38,21 @@ public class UserController {
     @RequestMapping(value = "/{id}/sendActiveEmail", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage sendActiveEmail(HttpServletRequest request, @PathVariable int id){
-        //TODO 保存验证码
+        String email=request.getHeader(Constants.EMAIL);
+        if(!userService.findUser(id).equals(email))
+            return new ResultMessage(1,Constants.ERROR_EMAIL);
         //Verification Code
-        String vc=userService.sendActiveEmail(userService.findUser(id).getEmail());
+        String vc=userService.sendActiveEmail(email);
+        request.getSession().setAttribute(Constants.VERIFICATION_CODE,vc);
         return new ResultMessage(0,vc);
     }
 
     @RequestMapping(value = "/{id}/active", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage activeUser(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
-        //TODO 读取用户输入的验证码，与保存的验证码对比
+    ResultMessage activeUser(HttpServletRequest request, @PathVariable int id){
+        String vc=request.getHeader(Constants.VERIFICATION_CODE);
+        if(!vc.equals(request.getSession().getAttribute(Constants.VERIFICATION_CODE)))
+            return new ResultMessage(1,Constants.ERROR_VERIFICATION_CODE);
         return ResultMessageFactory.getResultMessage(userService.activeUser(id),Constants.ERROR);
     }
 

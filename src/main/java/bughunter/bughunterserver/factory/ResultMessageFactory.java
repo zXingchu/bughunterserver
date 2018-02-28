@@ -18,7 +18,7 @@ public class ResultMessageFactory {
     public static ResultMessage getResultMessage(boolean flag,String msg){
         ResultMessage resultMessage;
         if(flag)
-            resultMessage=new ResultMessage(0);
+            resultMessage=new ResultMessage(0,Constants.NO_ERROR);
         else
             resultMessage=new ResultMessage(1, msg);
         return resultMessage;
@@ -27,7 +27,7 @@ public class ResultMessageFactory {
     public static ResultMessage getResultMessage(int id){
         ResultMessage resultMessage;
         if(id>0)
-            resultMessage=new ResultMessage(0,"",id);
+            resultMessage=new ResultMessage(0,Constants.NO_ERROR,id);
         else
             resultMessage=new ResultMessage(1, Constants.ERROR);
         return resultMessage;

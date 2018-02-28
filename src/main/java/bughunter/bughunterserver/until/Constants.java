@@ -57,6 +57,8 @@ public class Constants {
 
     public static final String ERROR_PWD = "pwd error";
 
+    public static final String NO_ERROR = "no error";
+
     public static String BUG_BASE_INFO = "BugBaseInfo";
     public static String BUG_CONSOLE_LOG="BugConsoleLog";
     public static String BUG_DEVICE_INFO="BugDeviceInfo";
@@ -76,6 +78,12 @@ public class Constants {
     public static String RESOLUTION="resolution";
     public static String SCREENSHOT="screenshot";
 
-    public static String SEND_EMAIL_FROM="141250196@smail.nju.edu.cn";
+    public static String SEND_EMAIL_FROM="18260067905@163.com";
+
+    public static String VERIFICATION_CODE = "verification_code";
+
+    public static String ERROR_EMAIL="email do not match id";
+
+    public static String ERROR_VERIFICATION_CODE="verification code is error";
 
 }

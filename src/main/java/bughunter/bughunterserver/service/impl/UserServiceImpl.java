@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String sendActiveEmail(String email) {
-        //TODO 发送验证邮件，返回验证码
+        //TODO 生成验证码和发送内容待改善
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(Constants.SEND_EMAIL_FROM);//发送者.
         message.setTo(email);//接收者.
