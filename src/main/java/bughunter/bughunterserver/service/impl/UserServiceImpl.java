@@ -4,6 +4,7 @@ import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.model.repository.UserRepository;
 import bughunter.bughunterserver.service.UserService;
 import bughunter.bughunterserver.until.Constants;
+import bughunter.bughunterserver.until.RandonNumberUtils;
 import bughunter.bughunterserver.vo.ResultMessage;
 import bughunter.bughunterserver.vo.UserVO;
 import org.json.JSONObject;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepository;
@@ -27,12 +28,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int testLogin(int id, String pwd) {
-        User user=userRepository.findOne(id);
-        if(user==null)
+        User user = userRepository.findOne(id);
+        if (user == null)
             return -2;
-        if(user.getStatus()== Constants.STATUS_NOT_ACTIVE)
+        if (user.getStatus() == Constants.STATUS_NOT_ACTIVE)
             return -1;
-        if(!user.getPwd().equals(pwd))
+        if (!user.getPwd().equals(pwd))
             return 0;
         else
             return 1;
@@ -40,12 +41,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public int testLogin(String email, String pwd) {
-        User user=userRepository.findUserByEmail(email);
-        if(user==null)
+        User user = userRepository.findUserByEmail(email);
+        if (user == null)
             return -2;
-        if(user.getStatus()== Constants.STATUS_NOT_ACTIVE)
+        if (user.getStatus() == Constants.STATUS_NOT_ACTIVE)
             return -1;
-        if(!user.getPwd().equals(pwd))
+        if (!user.getPwd().equals(pwd))
             return 0;
         else
             return 1;
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService{
         try {
             userRepository.delete(id);
             return true;
-        }catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             System.out.println(e.toString());
             return false;
         }
@@ -64,9 +65,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Boolean activeUser(int id) {
-        if(!userRepository.exists(id))
+        if (!userRepository.exists(id))
             return false;
-        User user=userRepository.findOne(id);
+        User user = userRepository.findOne(id);
         user.setStatus(Constants.STATUS_ACTIVE);
         userRepository.save(user);
         return true;
@@ -80,17 +81,17 @@ public class UserServiceImpl implements UserService{
     @Override
     public Boolean modifyUser(int id, JSONObject jsonObject) {
         try {
-            User user=userRepository.findOne(id);
-            if(user==null)
+            User user = userRepository.findOne(id);
+            if (user == null)
                 return false;
             user.setName(jsonObject.getString(Constants.NAME));
             user.setTeleNumber(jsonObject.getString(Constants.TeleNumber));
             user.setEmail(jsonObject.getString(Constants.EMAIL));
-            if(jsonObject.has(Constants.PWD))
+            if (jsonObject.has(Constants.PWD))
                 user.setPwd(jsonObject.getString(Constants.PWD));
             userRepository.save(user);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
             return false;
         }
@@ -98,7 +99,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserVO findUser(int id) {
-        if(!userRepository.exists(id))
+        if (!userRepository.exists(id))
             return null;
         User user = userRepository.findOne(id);
         return new UserVO(user);
@@ -106,10 +107,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserVO> findAllUsers() {
-        List<User> userList=userRepository.findAll();
-        List<UserVO> userVOList=new ArrayList<UserVO>(userList.size());
+        List<User> userList = userRepository.findAll();
+        List<UserVO> userVOList = new ArrayList<UserVO>(userList.size());
         for (User user : userList) {
-            UserVO userVO=new UserVO(user);
+            UserVO userVO = new UserVO(user);
             userVOList.add(userVO);
         }
         return userVOList;
@@ -117,13 +118,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String sendActiveEmail(String email) {
-        //TODO 生成验证码和发送内容待改善
+        //TODO 发送内容待改善
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(Constants.SEND_EMAIL_FROM);//发送者.
         message.setTo(email);//接收者.
         message.setSubject("测试邮件（邮件主题）");//邮件主题.
-        String vc="sd4a2s";
-        message.setText("这是邮件内容"+vc);//邮件内容.
+        String vc = RandonNumberUtils.getRandonString(6);
+        message.setText("这是邮件内容" + vc);//邮件内容.
         mailSender.send(message);//发送邮件
         return vc;
     }
@@ -131,7 +132,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserVO findByEmail(String email) {
         User user = userRepository.findUserByEmail(email);
-        if(user==null)
+        if (user == null)
             return null;
         return new UserVO(user);
     }

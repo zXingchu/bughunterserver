@@ -27,6 +27,14 @@ public class BugController {
         return ResultMessageFactory.getResultMessage(bugBaseInfoList);
     }
 
+    @RequestMapping(value = "/{appId}/{bugId}/getCurrentActivityBug", method = RequestMethod.GET)
+    public @ResponseBody
+    ResultMessage  getCurrentActivityBug(HttpServletRequest request, @PathVariable int appId){
+        //TODO
+        return null;
+    }
+
+
     @RequestMapping(value = "/{appId}/getAll", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int appId){
