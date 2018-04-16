@@ -8,30 +8,28 @@ import java.util.List;
 
 public interface BugService {
 
-    Boolean deleteBug(int id);
+    Boolean deleteBug(BugInfoKeys bugInfoKeys);
 
     int addBug(BugInfo bugInfo);
 
-    Boolean modifyBug(int bugId, JSONObject jsonObject);
+    Boolean modifyBug(BugInfoKeys bugInfoKeys, JSONObject jsonObject);
 
-    BugBaseInfoVO findBugBaseInfo(int id);
+    BugBaseInfoVO findBugBaseInfo(BugInfoKeys bugInfoKeys);
 
-    BugInfoVO findWholeBug(int bugId);
+    BugInfoVO findWholeBug(BugInfoKeys bugInfoKeys);
+
+    BugConsoleLogVO findConsoleLogByBugId(BugInfoKeys bugInfoKeys);
+
+    BugDeviceInfoVO findDeviceInfoByBugId(BugInfoKeys bugInfoKeys);
+
+    BugOperateStepVO findOperateStepByBugId(BugInfoKeys bugInfoKeys);
+
+    List<BugBaseInfoVO> findSimilarBugs(BugInfoKeys bugInfoKeys);
 
     List<BugBaseInfoVO> findAllBugByAppId(int appId);
 
     List<BugBaseInfoVO> findAllBugs();
 
-    List<BugBaseInfoVO> findSimilarBugs(int bugId);
-
-    BugConsoleLogVO findConsoleLogByBugId(int bugId);
-
-    BugDeviceInfoVO findDeviceInfoByBugId(int bugId);
-
-    BugNetRequestVO findNetRequestByBugId(int bugId);
-
-    BugOperateStepVO findOperateStepByBugId(int bugId);
-
-    BugUserDataVO findUserDataByBugId(int bugId);
+    public List<BugBaseInfoVO> findCurrentBugs(String current);
 
 }

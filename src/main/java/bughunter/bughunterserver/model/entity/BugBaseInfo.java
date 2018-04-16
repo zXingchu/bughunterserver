@@ -4,9 +4,14 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity(name = "app_bug_info")
+@IdClass(BugInfoKeys.class)
 public class BugBaseInfo {
 
-    private int id;
+    private int bugId;
+
+    private int appId;
+
+    private AppBaseInfo appBaseInfo;
 
     private String status;
 
@@ -20,22 +25,28 @@ public class BugBaseInfo {
 
     private User user;
 
-    private int appId;
-
-    private AppBaseInfo appBaseInfo;
-
     private Date cTime;
 
     private Date mTime;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
-        return id;
+    public int getBugId() {
+        return bugId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBugId(int bugId) {
+        this.bugId = bugId;
+    }
+
+
+    @Id
+    public int getAppId() {
+        return appId;
+    }
+
+    public void setAppId(int appId) {
+        this.appId = appId;
     }
 
     public String getStatus() {
@@ -80,14 +91,6 @@ public class BugBaseInfo {
         this.appBaseInfo = appBaseInfo;
     }
 
-    public int getAppId() {
-        return appId;
-    }
-
-    public void setAppId(int appId) {
-        this.appId = appId;
-    }
-
     public Date getcTime() {
         return cTime;
     }
@@ -121,4 +124,6 @@ public class BugBaseInfo {
     public void setDescribe(String describe) {
         this.describe = describe;
     }
+
+
 }

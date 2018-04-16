@@ -16,11 +16,7 @@ public class BugInfo {
 
     private BugDeviceInfo bugDeviceInfo;
 
-    private BugNetRequest bugNetRequest;
-
     private BugOperateStep bugOperateStep;
-
-    private BugUserData bugUserData;
 
     public BugInfo(JSONObject jsonObject){
         JSONObject bugBaseInfoJSON=jsonObject.getJSONObject(Constants.BUG_BASE_INFO);
@@ -37,10 +33,13 @@ public class BugInfo {
         JSONObject bugNetRequestJSON=jsonObject.getJSONObject(Constants.BUG_NET_REQUEST);
         JSONObject bugOperateStepJSON=jsonObject.getJSONObject(Constants.BUG_OPERATE_STEP);
         JSONObject bugUserDataJSON=jsonObject.getJSONObject(Constants.BUG_USER_DATA);
+
+        bugConsoleLog.setAppId(Integer.parseInt(bugBaseInfoJSON.getString(Constants.APP_ID)));
+        bugOperateStep.setAppId(Integer.parseInt(bugBaseInfoJSON.getString(Constants.APP_ID)));
+        bugDeviceInfo.setAppId(Integer.parseInt(bugBaseInfoJSON.getString(Constants.APP_ID)));
+
         this.bugConsoleLog.setLogString(bugConsoleLogJSON.getString(Constants.LOG_STRING));
-        this.bugNetRequest.setNetRequest(bugNetRequestJSON.getString(Constants.NET_REQUEST));
         this.bugOperateStep.setOperateStep(bugOperateStepJSON.getString(Constants.OPERATE_STEP));
-        this.bugUserData.setDataString(bugUserDataJSON.getString(Constants.DATA_STRING));
 
         this.bugDeviceInfo.setDeviceModel(bugDeviceInfoJSON.getString(Constants.DEVICEMODEL));
         this.bugDeviceInfo.setElectricity(bugDeviceInfoJSON.getString(Constants.ELECTRICITY));
@@ -63,26 +62,17 @@ public class BugInfo {
         return bugDeviceInfo;
     }
 
-    public BugNetRequest getBugNetRequest() {
-        return bugNetRequest;
-    }
-
 
     public BugOperateStep getBugOperateStep() {
         return bugOperateStep;
     }
 
 
-    public BugUserData getBugUserData() {
-        return bugUserData;
-    }
 
     public void setBugId(int bugId) {
         this.bugConsoleLog.setBugId(bugId);
         this.bugDeviceInfo.setBugId(bugId);
-        this.bugNetRequest.setBugId(bugId);
         this.bugOperateStep.setBugId(bugId);
-        this.bugUserData.setBugId(bugId);
     }
 
     public Integer getBugId() {
@@ -101,15 +91,8 @@ public class BugInfo {
         this.bugDeviceInfo = bugDeviceInfo;
     }
 
-    public void setBugNetRequest(BugNetRequest bugNetRequest) {
-        this.bugNetRequest = bugNetRequest;
-    }
-
     public void setBugOperateStep(BugOperateStep bugOperateStep) {
         this.bugOperateStep = bugOperateStep;
     }
 
-    public void setBugUserData(BugUserData bugUserData) {
-        this.bugUserData = bugUserData;
-    }
 }

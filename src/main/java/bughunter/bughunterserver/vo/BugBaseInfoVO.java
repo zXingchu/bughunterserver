@@ -31,7 +31,7 @@ public class BugBaseInfoVO {
     private Date mTime;
 
     public BugBaseInfoVO(BugBaseInfo bugBaseInfo) {
-        this.id = bugBaseInfo.getId();
+        this.id = bugBaseInfo.getBugId();
         this.status = bugBaseInfo.getStatus();
         this.type = bugBaseInfo.getType();
         this.priority = bugBaseInfo.getPriority();

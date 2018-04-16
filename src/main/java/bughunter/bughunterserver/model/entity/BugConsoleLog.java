@@ -2,9 +2,13 @@ package bughunter.bughunterserver.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity(name = "bug_console_log")
+@IdClass(BugInfoKeys.class)
 public class BugConsoleLog {
+
+    private int appId;
 
     private int bugId;
 
@@ -19,6 +23,15 @@ public class BugConsoleLog {
         this.bugId = bugId;
     }
 
+    @Id
+    public int getAppId() {
+        return appId;
+    }
+
+    public void setAppId(int appId) {
+        this.appId = appId;
+    }
+
     public String getLogString() {
         return logString;
     }
@@ -26,4 +39,6 @@ public class BugConsoleLog {
     public void setLogString(String logString) {
         this.logString = logString;
     }
+
+
 }

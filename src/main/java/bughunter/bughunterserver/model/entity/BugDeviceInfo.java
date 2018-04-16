@@ -1,17 +1,16 @@
 package bughunter.bughunterserver.model.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "bug_device_info")
+@IdClass(BugInfoKeys.class)
 public class BugDeviceInfo {
 
 
     private int bugId;
-//    private int id;
+
+    private int appId;
 
     //制造商
     private String manufacturer;
@@ -93,5 +92,14 @@ public class BugDeviceInfo {
 
     public void setBugId(int bugId) {
         this.bugId = bugId;
+    }
+
+    @Id
+    public int getAppId() {
+        return appId;
+    }
+
+    public void setAppId(int appId) {
+        this.appId = appId;
     }
 }

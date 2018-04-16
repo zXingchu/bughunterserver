@@ -28,23 +28,15 @@ public class BugServiceImpl implements BugService{
     @Autowired
     BugOperateStepRepository bugOperateStepRepository;
 
-    @Autowired
-    BugUserDataRepository bugUserDataRepository;
-
-    @Autowired
-    BugNetRequestRepository bugNetRequestRepository;
-
 
     @Override
-    public Boolean deleteBug(int id) {
+    public Boolean deleteBug(BugInfoKeys bugInfoKeys) {
         try {
             //TODO 使用级联删除
-            bugRepository.delete(id);
-            bugOperateStepRepository.delete(id);
-            bugConsoleLogRepository.delete(id);
-            bugDeviceRepository.delete(id);
-            bugNetRequestRepository.delete(id);
-            bugUserDataRepository.delete(id);
+            bugRepository.delete(bugInfoKeys);
+            bugOperateStepRepository.delete(bugInfoKeys);
+            bugConsoleLogRepository.delete(bugInfoKeys);
+            bugDeviceRepository.delete(bugInfoKeys);
             return true;
         }catch (Exception e){
             return false;
@@ -53,9 +45,8 @@ public class BugServiceImpl implements BugService{
 
     @Override
     public int addBug(BugInfo bugInfo) {
-        bugInfo.setBugId(bugRepository.save(bugInfo.getBugBaseInfo()).getId());
-        bugUserDataRepository.save(bugInfo.getBugUserData());
-        bugNetRequestRepository.save(bugInfo.getBugNetRequest());
+        //TODO 联合主键很有问题
+        bugInfo.setBugId(bugRepository.save(bugInfo.getBugBaseInfo()).getBugId());
         bugDeviceRepository.save(bugInfo.getBugDeviceInfo());
         bugConsoleLogRepository.save(bugInfo.getBugConsoleLog());
         bugOperateStepRepository.save(bugInfo.getBugOperateStep());
@@ -63,9 +54,10 @@ public class BugServiceImpl implements BugService{
     }
 
     @Override
-    public Boolean modifyBug(int bugId, JSONObject jsonObject) {
+    public Boolean modifyBug(BugInfoKeys bugInfoKeys, JSONObject jsonObject) {
+        //TODO 更多的修改
         try {
-            BugBaseInfo bugBaseInfo=bugRepository.findOne(bugId);
+            BugBaseInfo bugBaseInfo=bugRepository.findOne(bugInfoKeys);
             if(bugBaseInfo==null)
                 return false;
             bugBaseInfo.setType(jsonObject.getString(Constants.TYPE));
@@ -80,7 +72,7 @@ public class BugServiceImpl implements BugService{
     }
 
     @Override
-    public BugBaseInfoVO findBugBaseInfo(int id) {
+    public BugBaseInfoVO findBugBaseInfo(BugInfoKeys id) {
         if(!bugRepository.exists(id))
             return null;
         BugBaseInfo bugBaseInfo = bugRepository.findOne(id);
@@ -88,17 +80,39 @@ public class BugServiceImpl implements BugService{
     }
 
     @Override
-    public BugInfoVO findWholeBug(int bugId) {
+    public BugInfoVO findWholeBug(BugInfoKeys bugId) {
         if(!bugRepository.exists(bugId))
             return null;
         BugInfoVO bugInfo=new BugInfoVO();
         bugInfo.setBugBaseInfo(bugRepository.findOne(bugId));
         bugInfo.setBugConsoleLog(bugConsoleLogRepository.findOne(bugId));
         bugInfo.setBugDeviceInfo(bugDeviceRepository.findOne(bugId));
-        bugInfo.setBugNetRequest(bugNetRequestRepository.findOne(bugId));
         bugInfo.setBugOperateStep(bugOperateStepRepository.findOne(bugId));
-        bugInfo.setBugUserData(bugUserDataRepository.findOne(bugId));
         return bugInfo;
+    }
+
+    @Override
+    public BugConsoleLogVO findConsoleLogByBugId(BugInfoKeys bugInfoKeys) {
+        if(!bugRepository.exists(bugInfoKeys))
+            return null;
+        BugConsoleLog bugConsoleLog = bugConsoleLogRepository.findOne(bugInfoKeys);
+        return new BugConsoleLogVO(bugConsoleLog);
+    }
+
+    @Override
+    public BugDeviceInfoVO findDeviceInfoByBugId(BugInfoKeys bugInfoKeys) {
+        if(!bugRepository.exists(bugInfoKeys))
+            return null;
+        BugDeviceInfo bugDeviceInfo = bugDeviceRepository.findOne(bugInfoKeys);
+        return new BugDeviceInfoVO(bugDeviceInfo);
+    }
+
+    @Override
+    public BugOperateStepVO findOperateStepByBugId(BugInfoKeys bugInfoKeys) {
+        if(!bugRepository.exists(bugInfoKeys))
+            return null;
+        BugOperateStep bugOperateStep = bugOperateStepRepository.findOne(bugInfoKeys);
+        return new BugOperateStepVO(bugOperateStep);
     }
 
     @Override
@@ -128,51 +142,18 @@ public class BugServiceImpl implements BugService{
     }
 
     @Override
-    public List<BugBaseInfoVO> findSimilarBugs(int bugId) {
+    public List<BugBaseInfoVO> findSimilarBugs(BugInfoKeys bugInfoKeys) {
         //TODO 实现返回相似bug
-        if(!bugRepository.exists(bugId))
+        if(!bugRepository.exists(bugInfoKeys))
             return null;
-        BugBaseInfo bugBaseInfo=bugRepository.findOne(bugId);
+        BugBaseInfo bugBaseInfo=bugRepository.findOne(bugInfoKeys);
         return null;
     }
 
     @Override
-    public BugConsoleLogVO findConsoleLogByBugId(int bugId) {
-        if(!bugRepository.exists(bugId))
-            return null;
-        BugConsoleLog bugConsoleLog = bugConsoleLogRepository.findOne(bugId);
-        return new BugConsoleLogVO(bugConsoleLog);
+    public List<BugBaseInfoVO> findCurrentBugs(String current) {
+        //TODO 实现返回当前界面Bug
+        return null;
     }
 
-    @Override
-    public BugDeviceInfoVO findDeviceInfoByBugId(int bugId) {
-        if(!bugRepository.exists(bugId))
-            return null;
-        BugDeviceInfo bugDeviceInfo = bugDeviceRepository.findOne(bugId);
-        return new BugDeviceInfoVO(bugDeviceInfo);
-    }
-
-    @Override
-    public BugNetRequestVO findNetRequestByBugId(int bugId) {
-        if(!bugRepository.exists(bugId))
-            return null;
-        BugNetRequest bugNetRequest = bugNetRequestRepository.findOne(bugId);
-        return new BugNetRequestVO(bugNetRequest);
-    }
-
-    @Override
-    public BugOperateStepVO findOperateStepByBugId(int bugId) {
-        if(!bugRepository.exists(bugId))
-            return null;
-        BugOperateStep bugOperateStep = bugOperateStepRepository.findOne(bugId);
-        return new BugOperateStepVO(bugOperateStep);
-    }
-
-    @Override
-    public BugUserDataVO findUserDataByBugId(int bugId) {
-        if(!bugRepository.exists(bugId))
-            return null;
-        BugUserData bugUserData = bugUserDataRepository.findOne(bugId);
-        return new BugUserDataVO(bugUserData);
-    }
 }

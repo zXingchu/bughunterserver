@@ -6,11 +6,7 @@ public class BugInfoVO {
 
     private BugBaseInfoVO bugBaseInfo;
 
-    private BugUserDataVO bugUserData;
-
     private BugOperateStepVO bugOperateStep;
-
-    private BugNetRequestVO bugNetRequest;
 
     private BugDeviceInfoVO bugDeviceInfo;
 
@@ -26,13 +22,6 @@ public class BugInfoVO {
         this.bugBaseInfo = new BugBaseInfoVO(bugBaseInfo);
     }
 
-    public BugUserDataVO getBugUserData() {
-        return bugUserData;
-    }
-
-    public void setBugUserData(BugUserData bugUserData) {
-        this.bugUserData = new BugUserDataVO(bugUserData);
-    }
 
     public BugOperateStepVO getBugOperateStep() {
         return bugOperateStep;
@@ -40,14 +29,6 @@ public class BugInfoVO {
 
     public void setBugOperateStep(BugOperateStep bugOperateStep) {
         this.bugOperateStep = new BugOperateStepVO(bugOperateStep);
-    }
-
-    public BugNetRequestVO getBugNetRequest() {
-        return bugNetRequest;
-    }
-
-    public void setBugNetRequest(BugNetRequest bugNetRequest) {
-        this.bugNetRequest = new BugNetRequestVO(bugNetRequest);
     }
 
     public BugDeviceInfoVO getBugDeviceInfo() {

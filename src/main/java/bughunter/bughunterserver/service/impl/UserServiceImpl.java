@@ -122,9 +122,9 @@ public class UserServiceImpl implements UserService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(Constants.SEND_EMAIL_FROM);//发送者.
         message.setTo(email);//接收者.
-        message.setSubject("测试邮件（邮件主题）");//邮件主题.
+        message.setSubject("BugHunter验证码（邮件主题）");//邮件主题.
         String vc = RandonNumberUtils.getRandonString(6);
-        message.setText("这是邮件内容" + vc);//邮件内容.
+        message.setText("您的验证码：" + vc);//邮件内容.
         mailSender.send(message);//发送邮件
         return vc;
     }
