@@ -1,6 +1,7 @@
 package bughunter.bughunterserver.service;
 
 import bughunter.bughunterserver.model.entity.AppBaseInfo;
+import bughunter.bughunterserver.model.entity.AppMember;
 import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.vo.AppBaseInfoVO;
 import org.json.JSONObject;
@@ -10,17 +11,22 @@ import java.util.List;
 public interface AppService {
 
 
-    Boolean deleteApp(int id);
+    Boolean deleteApp(String appKey);
 
-    int addApp(AppBaseInfo appBaseInfo);
+    String addApp(AppBaseInfo appBaseInfo,int uId);
 
-    Boolean modifyApp(int id, JSONObject jsonObject);
+    Boolean modifyApp(String appKey, JSONObject jsonObject);
 
-    AppBaseInfoVO findApp(int id);
+    AppBaseInfoVO findApp(String appKey);
 
-    List<AppBaseInfoVO> findAllAppsByUserId(int uid);
+    List<AppBaseInfoVO> findAllAppsByUserId(int uappKey);
 
     List<AppBaseInfoVO> findAllApps();
 
+    Boolean deleteMember(String appkey,int uId);
+
+    Boolean addMember(AppMember appMember);
+
+    List<String> findAppVersionByAppKey(String appKey);
 
 }

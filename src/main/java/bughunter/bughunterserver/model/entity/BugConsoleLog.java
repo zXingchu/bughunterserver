@@ -8,29 +8,21 @@ import javax.persistence.IdClass;
 @IdClass(BugInfoKeys.class)
 public class BugConsoleLog {
 
-    private int appId;
+    private String appKey;
 
-    private int bugId;
+    private String bugId;
 
     private String logString;
 
     @Id
-    public int getBugId() {
+    public String getBugId() {
         return bugId;
     }
 
-    public void setBugId(int bugId) {
+    public void setBugId(String bugId) {
         this.bugId = bugId;
     }
 
-    @Id
-    public int getAppId() {
-        return appId;
-    }
-
-    public void setAppId(int appId) {
-        this.appId = appId;
-    }
 
     public String getLogString() {
         return logString;
@@ -41,4 +33,12 @@ public class BugConsoleLog {
     }
 
 
+    @Id
+    public String getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
+    }
 }

@@ -4,7 +4,7 @@ import bughunter.bughunterserver.model.entity.BugConsoleLog;
 
 public class BugConsoleLogVO {
 
-    private int bugId;
+    private String bugId;
 
     private String logString;
 
@@ -15,11 +15,11 @@ public class BugConsoleLogVO {
     }
 
 
-    public int getBugId() {
+    public String getBugId() {
         return bugId;
     }
 
-    public void setBugId(int bugId) {
+    public void setBugId(String bugId) {
         this.bugId = bugId;
     }
 

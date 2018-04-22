@@ -1,14 +1,15 @@
 package bughunter.bughunterserver.model.repository;
 
 import bughunter.bughunterserver.model.entity.AppMember;
+import bughunter.bughunterserver.model.entity.AppMemberKeys;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface AppMemberRepository extends JpaRepository<AppMember, Integer>{
+@Repository
+public interface AppMemberRepository extends JpaRepository<AppMember, AppMemberKeys>{
 
-    List<AppMember> findByUId(Integer uId);
-
-    List<AppMember> findAllByUId(int uId);
+    List<AppMember> findAllByUserId(int userId);
 
 }

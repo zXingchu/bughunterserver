@@ -4,7 +4,7 @@ import bughunter.bughunterserver.model.entity.BugOperateStep;
 
 public class BugOperateStepVO {
 
-    private int bugId;
+    private String bugId;
 
     private String operateStep;
 
@@ -13,12 +13,11 @@ public class BugOperateStepVO {
         this.operateStep=bugOperateStep.getOperateStep();
     }
 
-
-    public int getBugId() {
+    public String getBugId() {
         return bugId;
     }
 
-    public void setBugId(int bugId) {
+    public void setBugId(String bugId) {
         this.bugId = bugId;
     }
 

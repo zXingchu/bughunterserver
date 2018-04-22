@@ -9,18 +9,18 @@ import javax.persistence.IdClass;
 public class BugOperateStep {
 
 
-    private int bugId;
+    private String bugId;
 
-    private int appId;
+    private String appKey;
 
     private String operateStep;
 
     @Id
-    public int getBugId() {
+    public String getBugId() {
         return bugId;
     }
 
-    public void setBugId(int bugId) {
+    public void setBugId(String bugId) {
         this.bugId = bugId;
     }
 
@@ -33,11 +33,12 @@ public class BugOperateStep {
     }
 
     @Id
-    public int getAppId() {
-        return appId;
+    public String getAppKey() {
+        return appKey;
     }
 
-    public void setAppId(int appId) {
-        this.appId = appId;
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
     }
+
 }

@@ -1,17 +1,18 @@
 package bughunter.bughunterserver.model.entity;
 
+
 import javax.persistence.*;
 import java.sql.Date;
 
-@Entity(name = "app_bug_info")
-@IdClass(BugInfoKeys.class)
-public class BugBaseInfo {
+
+@Entity(name = "old_app_bug_info")
+public class OldBugBaseInfo {
+
+    private int oldId;
 
     private String bugId;
 
     private String appKey;
-
-    private String appVersion;
 
     private String status;
 
@@ -31,10 +32,16 @@ public class BugBaseInfo {
 
     private Date mTime;
 
-    //截图，图片存储地址
-    private String screenshotAdr;
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getOldId() {
+        return oldId;
+    }
+
+    public void setOldId(int oldId) {
+        this.oldId = oldId;
+    }
+
     public String getBugId() {
         return bugId;
     }
@@ -44,7 +51,6 @@ public class BugBaseInfo {
     }
 
 
-    @Id
     public String getAppKey() {
         return appKey;
     }
@@ -129,19 +135,5 @@ public class BugBaseInfo {
         this.userId = userId;
     }
 
-    public String getScreenshotAdr() {
-        return screenshotAdr;
-    }
 
-    public void setScreenshotAdr(String screenshotAdr) {
-        this.screenshotAdr = screenshotAdr;
-    }
-
-    public String getAppVersion() {
-        return appVersion;
-    }
-
-    public void setAppVersion(String appVersion) {
-        this.appVersion = appVersion;
-    }
 }

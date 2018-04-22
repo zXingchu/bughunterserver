@@ -1,20 +1,15 @@
 package bughunter.bughunterserver.vo;
 
-import bughunter.bughunterserver.model.entity.AppBaseInfo;
 import bughunter.bughunterserver.model.entity.BugBaseInfo;
-import bughunter.bughunterserver.model.entity.User;
+import bughunter.bughunterserver.model.entity.OldBugBaseInfo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.sql.Date;
 
-public class BugBaseInfoVO {
+public class OldBugBaseInfoVO {
+
+    private int oldId;
 
     private String bugId;
-
-    private String appVersion;
 
     private String status;
 
@@ -32,17 +27,17 @@ public class BugBaseInfoVO {
 
     private Date mTime;
 
-    public BugBaseInfoVO(BugBaseInfo bugBaseInfo) {
-        this.bugId = bugBaseInfo.getBugId();
-        this.appVersion = bugBaseInfo.getAppVersion();
-        this.status = bugBaseInfo.getStatus();
-        this.type = bugBaseInfo.getType();
-        this.current = bugBaseInfo.getCurrent();
-        this.priority = bugBaseInfo.getPriority();
-        this.cTime = bugBaseInfo.getcTime();
-        this.mTime = bugBaseInfo.getmTime();
-        this.describe = bugBaseInfo.getBugDescribe();
-        this.user = new UserVO(bugBaseInfo.getUser());
+    public OldBugBaseInfoVO(OldBugBaseInfo oldBugBaseInfo) {
+        this.oldId = oldBugBaseInfo.getOldId();
+        this.bugId = oldBugBaseInfo.getBugId();
+        this.status = oldBugBaseInfo.getStatus();
+        this.type = oldBugBaseInfo.getType();
+        this.current = oldBugBaseInfo.getCurrent();
+        this.priority = oldBugBaseInfo.getPriority();
+        this.cTime = oldBugBaseInfo.getcTime();
+        this.mTime = oldBugBaseInfo.getmTime();
+        this.describe = oldBugBaseInfo.getBugDescribe();
+        this.user = new UserVO(oldBugBaseInfo.getUser());
     }
 
     public String getStatus() {
@@ -117,11 +112,12 @@ public class BugBaseInfoVO {
         this.bugId = bugId;
     }
 
-    public String getAppVersion() {
-        return appVersion;
+
+    public int getOldId() {
+        return oldId;
     }
 
-    public void setAppVersion(String appVersion) {
-        this.appVersion = appVersion;
+    public void setOldId(int oldId) {
+        this.oldId = oldId;
     }
 }

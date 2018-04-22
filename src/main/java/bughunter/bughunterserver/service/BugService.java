@@ -10,7 +10,7 @@ public interface BugService {
 
     Boolean deleteBug(BugInfoKeys bugInfoKeys);
 
-    int addBug(BugInfo bugInfo);
+    BugInfoKeys addBug(BugInfo bugInfo);
 
     Boolean modifyBug(BugInfoKeys bugInfoKeys, JSONObject jsonObject);
 
@@ -26,10 +26,13 @@ public interface BugService {
 
     List<BugBaseInfoVO> findSimilarBugs(BugInfoKeys bugInfoKeys);
 
-    List<BugBaseInfoVO> findAllBugByAppId(int appId);
+    List<BugBaseInfoVO> findAllBugByAppId(String appKey);
 
     List<BugBaseInfoVO> findAllBugs();
 
-    public List<BugBaseInfoVO> findCurrentBugs(String current);
+    //public List<BugBaseInfoVO> findCurrentBugs(int appKey, String current);
 
+    public List<BugInfoVO> findCurrentBugs(String appKey, String current);
+
+    List<OldBugBaseInfoVO> findOldBug(String appKey, String bugId);
 }

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AppBaseRepository extends JpaRepository<AppBaseInfo, Integer> {
+public interface AppBaseRepository extends JpaRepository<AppBaseInfo, String> {
 
 
 }

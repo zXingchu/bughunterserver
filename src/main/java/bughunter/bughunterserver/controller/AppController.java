@@ -2,6 +2,7 @@ package bughunter.bughunterserver.controller;
 
 import bughunter.bughunterserver.factory.ResultMessageFactory;
 import bughunter.bughunterserver.model.entity.AppBaseInfo;
+import bughunter.bughunterserver.model.entity.AppMember;
 import bughunter.bughunterserver.service.AppService;
 import bughunter.bughunterserver.until.Constants;
 import bughunter.bughunterserver.vo.AppBaseInfoVO;
@@ -25,45 +26,59 @@ public class AppController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage addApp(HttpServletRequest request, @RequestBody String jsonStr){
-        JSONObject jsonObject=new JSONObject(jsonStr);
-        AppBaseInfo appBaseInfo=new AppBaseInfo();
+    ResultMessage addApp(HttpServletRequest request, @RequestBody String jsonStr) {
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        AppBaseInfo appBaseInfo = new AppBaseInfo();
         appBaseInfo.setName(jsonObject.getString(Constants.NAME));
         appBaseInfo.setcTime(new Date(new java.util.Date().getTime()));
         appBaseInfo.setmTime(appBaseInfo.getcTime());
-//        appBaseInfo.setCreateTime(Date.valueOf(jsonObject.getString(Constants.CREATE_TIME)));
         appBaseInfo.setType(jsonObject.getString(Constants.TYPE));
         appBaseInfo.setSDKVersion(jsonObject.getDouble(Constants.SDK_VERSION));
-        appBaseInfo.setAppKey(jsonObject.getString(Constants.APP_KEY));
-        appBaseInfo.setAppSecret(jsonObject.getString(Constants.APP_Secret));
-        int id=appService.addApp(appBaseInfo);
-        return ResultMessageFactory.getResultMessage(id);
+        String appKey = appService.addApp(appBaseInfo, jsonObject.getInt(Constants.USER_ID));
+        return ResultMessageFactory.getResultMessage(appKey);
     }
 
-    @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)
+    @RequestMapping(value = "/{appKey}/modify", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage  modifyApp(HttpServletRequest request, @PathVariable int id, @RequestBody String jsonStr){
-        JSONObject jsonObject=new JSONObject(jsonStr);
-        return ResultMessageFactory.getResultMessage(appService.modifyApp(id,jsonObject),Constants.ERROR);
+    ResultMessage modifyApp(HttpServletRequest request, @PathVariable String appKey, @RequestBody String jsonStr) {
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        return ResultMessageFactory.getResultMessage(appService.modifyApp(appKey, jsonObject), Constants.ERROR);
     }
 
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/{appKey}/delete", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage  deleteApp(HttpServletRequest request, @PathVariable int id){
-        return ResultMessageFactory.getResultMessage(appService.deleteApp(id),Constants.ERROR_NO_EXIST);
+    ResultMessage deleteApp(HttpServletRequest request, @PathVariable String appKey) {
+        return ResultMessageFactory.getResultMessage(appService.deleteApp(appKey), Constants.ERROR_NO_EXIST);
     }
 
-    @RequestMapping(value = "/{id}/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/{appKey}/get", method = RequestMethod.GET)
     public @ResponseBody
-    ResultMessage  getApp(HttpServletRequest request, @PathVariable int id){
-        AppBaseInfoVO appBaseInfo=appService.findApp(id);
+    ResultMessage getApp(HttpServletRequest request, @PathVariable String appKey) {
+        AppBaseInfoVO appBaseInfo = appService.findApp(appKey);
         return ResultMessageFactory.getResultMessage(appBaseInfo);
+    }
+
+    @RequestMapping(value = "/addMember", method = RequestMethod.POST)
+    public @ResponseBody
+    ResultMessage addMember(HttpServletRequest request, @RequestBody String jsonStr) {
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        AppMember appMember = new AppMember();
+        appMember.setAppKey(jsonObject.getString(Constants.APP_KEY));
+        appMember.setType(jsonObject.getString(Constants.TYPE));
+        appMember.setUserId(jsonObject.getInt(Constants.USER_ID));
+        return ResultMessageFactory.getResultMessage(appService.addMember(appMember), Constants.ERROR_EXIST);
+    }
+
+    @RequestMapping(value = "/{appKey}/{uId}/deleteMember", method = RequestMethod.GET)
+    public @ResponseBody
+    ResultMessage deleteMember(HttpServletRequest request, @PathVariable String appKey, @PathVariable int uId) {
+        return ResultMessageFactory.getResultMessage(appService.deleteMember(appKey, uId), Constants.ERROR_NO_EXIST);
     }
 
     @RequestMapping(value = "/{developerId}/getAll", method = RequestMethod.GET)
     public @ResponseBody
-    ResultMessage  getAllApps(HttpServletRequest request, @PathVariable int developerId){
-        List<AppBaseInfoVO> appBaseInfoList=appService.findAllAppsByUserId(developerId);
+    ResultMessage getAllApps(HttpServletRequest request, @PathVariable int developerId) {
+        List<AppBaseInfoVO> appBaseInfoList = appService.findAllAppsByUserId(developerId);
         return ResultMessageFactory.getResultMessage(appBaseInfoList);
     }
 

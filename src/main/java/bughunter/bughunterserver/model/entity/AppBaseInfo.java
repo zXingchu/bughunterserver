@@ -10,8 +10,6 @@ import java.sql.Date;
 @Entity(name = "app_base_info")
 public class AppBaseInfo {
 
-    private int id;
-
     private String name;
 
     private String type;
@@ -25,16 +23,6 @@ public class AppBaseInfo {
     private String appKey;
 
     private String appSecret;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -60,6 +48,7 @@ public class AppBaseInfo {
         this.SDKVersion = SDKVersion;
     }
 
+    @Id
     public String getAppKey() {
         return appKey;
     }

@@ -2,17 +2,17 @@ package bughunter.bughunterserver.model.entity;
 
 import java.io.Serializable;
 
-public class BugInfoKeys implements Serializable {
+public class AppMemberKeys implements Serializable {
 
     private String appKey;
 
-    private String bugId;
+    private Integer userId;
 
-    public BugInfoKeys(){}
+    public AppMemberKeys(){}
 
-    public BugInfoKeys(String appKey, String bugId) {
+    public AppMemberKeys(String appKey, Integer userId) {
         this.appKey = appKey;
-        this.bugId = bugId;
+        this.userId = userId;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class BugInfoKeys implements Serializable {
         final int PRIME = 31;
         int result = 1;
         result = PRIME * result + ((appKey == null) ? 0 : appKey.hashCode());
-        result = PRIME * result + ((bugId == null) ? 0 : bugId.hashCode());
+        result = PRIME * result + ((userId == null) ? 0 : userId.hashCode());
         return result;
     }
 
@@ -36,7 +36,7 @@ public class BugInfoKeys implements Serializable {
             return false;
         }
 
-        final BugInfoKeys other = (BugInfoKeys) obj;
+        final AppMemberKeys other = (AppMemberKeys) obj;
         if (appKey == null) {
             if (other.appKey != null) {
                 return false;
@@ -44,11 +44,11 @@ public class BugInfoKeys implements Serializable {
         } else if (!appKey.equals(other.appKey)) {
             return false;
         }
-        if (bugId == null) {
-            if (other.bugId != null) {
+        if (userId == null) {
+            if (other.userId != null) {
                 return false;
             }
-        } else if (!bugId.equals(other.bugId)) {
+        } else if (!userId.equals(other.userId)) {
             return false;
         }
 
@@ -63,11 +63,11 @@ public class BugInfoKeys implements Serializable {
         this.appKey = appKey;
     }
 
-    public String getBugId() {
-        return bugId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setBugId(String bugId) {
-        this.bugId = bugId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

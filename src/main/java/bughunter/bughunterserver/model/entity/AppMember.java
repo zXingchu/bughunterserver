@@ -1,47 +1,27 @@
 package bughunter.bughunterserver.model.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "app_member")
+@IdClass(AppMemberKeys.class)
 public class AppMember {
 
-    private int id;
+    private String appKey;
 
-    private int appId;
-
-    private int uId;
+    private int userId;
 
     private String type;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
-        return id;
+    public String getAppKey() {
+        return appKey;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
     }
 
-    public int getAppId() {
-        return appId;
-    }
-
-    public void setAppId(int appId) {
-        this.appId = appId;
-    }
-
-    public int getuId() {
-        return uId;
-    }
-
-    public void setuId(int uId) {
-        this.uId = uId;
-    }
 
     public String getType() {
         return type;
@@ -49,5 +29,15 @@ public class AppMember {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+
+    @Id
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

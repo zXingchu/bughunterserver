@@ -8,57 +8,86 @@ import javax.persistence.*;
 public class BugDeviceInfo {
 
 
-    private int bugId;
+    private String bugId;
 
-    private int appId;
+    private String appKey;
 
-    //制造商
-    private String manufacturer;
-
-    //设备型号
-    private String deviceModel;
-
-    //运营商
-    private String operator;
-
-    //分辨率
+    // 当前手机系统语言
+    private String systemLanguage;
+    //当前手机系统版本号
+    private String systemVersion;
+    // 手机型号
+    private String systemModel;
+    // 手机厂商
+    private String deviceBrand;
+    // 手机服务商信息
+    private String providersName;
+    // 屏幕分辨率格式：1024*798
     private String resolution;
+    // android当前可用内存大小
+    private String availMemory;
+    // 系统内存的大小
+    private String totalMemory;
+    // 手机网络状态
+    private String networkType;
 
-    private String electricity;
 
-    //截图，图片转string存放
-    private String screenshot;
-
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-
-    public String getManufacturer() {
-        return manufacturer;
+    @Id
+    public String getBugId() {
+        return bugId;
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    public void setBugId(String bugId) {
+        this.bugId = bugId;
     }
 
-    public String getDeviceModel() {
-        return deviceModel;
+    @Id
+    public String getAppKey() {
+        return appKey;
     }
 
-    public void setDeviceModel(String deviceModel) {
-        this.deviceModel = deviceModel;
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
     }
 
-    public String getOperator() {
-        return operator;
+    public String getSystemLanguage() {
+        return systemLanguage;
     }
 
-    public void setOperator(String operator) {
-        this.operator = operator;
+    public void setSystemLanguage(String systemLanguage) {
+        this.systemLanguage = systemLanguage;
+    }
+
+    public String getSystemVersion() {
+        return systemVersion;
+    }
+
+    public void setSystemVersion(String systemVersion) {
+        this.systemVersion = systemVersion;
+    }
+
+    public String getSystemModel() {
+        return systemModel;
+    }
+
+    public void setSystemModel(String systemModel) {
+        this.systemModel = systemModel;
+    }
+
+    public String getDeviceBrand() {
+        return deviceBrand;
+    }
+
+    public void setDeviceBrand(String deviceBrand) {
+        this.deviceBrand = deviceBrand;
+    }
+
+    public String getProvidersName() {
+        return providersName;
+    }
+
+    public void setProvidersName(String providersName) {
+        this.providersName = providersName;
     }
 
     public String getResolution() {
@@ -69,37 +98,28 @@ public class BugDeviceInfo {
         this.resolution = resolution;
     }
 
-    public String getElectricity() {
-        return electricity;
+    public String getAvailMemory() {
+        return availMemory;
     }
 
-    public void setElectricity(String electricity) {
-        this.electricity = electricity;
+    public void setAvailMemory(String availMemory) {
+        this.availMemory = availMemory;
     }
 
-    public String getScreenshot() {
-        return screenshot;
+    public String getTotalMemory() {
+        return totalMemory;
     }
 
-    public void setScreenshot(String screenshot) {
-        this.screenshot = screenshot;
+    public void setTotalMemory(String totalMemory) {
+        this.totalMemory = totalMemory;
     }
 
-    @Id
-    public int getBugId() {
-        return bugId;
+    public String getNetworkType() {
+        return networkType;
     }
 
-    public void setBugId(int bugId) {
-        this.bugId = bugId;
+    public void setNetworkType(String networkType) {
+        this.networkType = networkType;
     }
 
-    @Id
-    public int getAppId() {
-        return appId;
-    }
-
-    public void setAppId(int appId) {
-        this.appId = appId;
-    }
 }

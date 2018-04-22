@@ -12,8 +12,6 @@ import java.sql.Date;
 
 public class AppBaseInfoVO {
 
-    private int id;
-
     private String name;
 
     private String type;
@@ -29,21 +27,12 @@ public class AppBaseInfoVO {
     private String appSecret;
 
     public AppBaseInfoVO(AppBaseInfo appBaseInfo) {
-        this.id=appBaseInfo.getId();
         this.name = appBaseInfo.getName();
         this.type = appBaseInfo.getType();
         this.cTime = appBaseInfo.getcTime();
         this.SDKVersion = appBaseInfo.getSDKVersion();
         this.appKey = appBaseInfo.getAppKey();
         this.appSecret = appBaseInfo.getAppSecret();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
