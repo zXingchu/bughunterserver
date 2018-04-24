@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -186,6 +187,35 @@ public class BugServiceImpl implements BugService {
     }
 
     @Override
+    public List<BugBaseInfoVO> findAllBugByScreen(String appKey, JSONObject jsonObject) {
+        String[] statuss = jsonObject.getString(Constants.STATUS).split(",");
+        String[] types = jsonObject.getString(Constants.TYPE).split(",");
+        String[] prioritys = jsonObject.getString(Constants.PRIORITY).split(",");
+        Collection<String> statusList = new LinkedList<String>();
+        for (int i = 0; i < statuss.length; i++) {
+            statusList.add(statuss[i]);
+        }
+        Collection<String> typeList = new LinkedList<String>();
+        for (int i = 0; i < types.length; i++) {
+            typeList.add(types[i]);
+        }
+        Collection<String> priorityList = new LinkedList<String>();
+        for (int i = 0; i < prioritys.length; i++) {
+            priorityList.add(prioritys[i]);
+        }
+
+        List<BugBaseInfo> bugBaseInfoList = bugRepository.findByAppKeyAndStatusInAndTypeInAndPriorityIn(appKey, statusList, typeList, priorityList);
+        if (bugBaseInfoList.size() == 0)
+            return null;
+        List<BugBaseInfoVO> bugBaseInfoVOList = new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
+        for (BugBaseInfo bugBaseInfo : bugBaseInfoList) {
+            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo);
+            bugBaseInfoVOList.add(bugBaseInfoVO);
+        }
+        return bugBaseInfoVOList;
+    }
+
+    @Override
     public List<BugBaseInfoVO> findAllBugs() {
         List<BugBaseInfo> bugBaseInfoList = bugRepository.findAll();
         if (bugBaseInfoList.size() == 0)
@@ -234,6 +264,19 @@ public class BugServiceImpl implements BugService {
             oldBugBaseInfoVOList.add(oldBugBaseInfoVO);
         }
         return oldBugBaseInfoVOList;
+    }
+
+    @Override
+    public List<BugBaseInfoVO> findAllBugByAppKeyAndVersion(String appKey, String appVersion) {
+        List<BugBaseInfo> bugBaseInfoList = bugRepository.findByAppKeyAndAppVersion(appKey, appVersion);
+        if (bugBaseInfoList.size() == 0)
+            return null;
+        List<BugBaseInfoVO> bugBaseInfoVOList = new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
+        for (BugBaseInfo bugBaseInfo : bugBaseInfoList) {
+            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo);
+            bugBaseInfoVOList.add(bugBaseInfoVO);
+        }
+        return bugBaseInfoVOList;
     }
 
 }

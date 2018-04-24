@@ -27,9 +27,9 @@ public class TestController {
     ResultMessage getStringList(HttpServletRequest request) {
 
         List<String> list=new LinkedList<String>();
-//        list.add("dsfd");
-//        list.add("sfsddgd");
-//        list.add("iojmnk");
+        list.add("dsfd");
+        list.add("sfsddgd");
+        list.add("iojmnk");
         return new ResultMessage(list);
     }
 }

@@ -9,12 +9,16 @@ import bughunter.bughunterserver.until.Constants;
 import bughunter.bughunterserver.vo.*;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,6 +28,13 @@ public class BugController {
 
     @Autowired
     BugService bugService;
+
+    private final ResourceLoader resourceLoader;
+
+    @Autowired
+    public BugController(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
 //    @RequestMapping(value = "/{appKey}/{bugId}/getSimilarity", method = RequestMethod.POST)
 //    public @ResponseBody
@@ -42,27 +53,33 @@ public class BugController {
 
     @RequestMapping(value = "/{appKey}/getAll", method = RequestMethod.GET)
     public @ResponseBody
-    ResultMessage getAllApps(HttpServletRequest request, @PathVariable String appKey) {
+    ResultMessage getAllBugByAppKey(HttpServletRequest request, @PathVariable String appKey) {
         List<BugBaseInfoVO> bugBaseInfoList = bugService.findAllBugByAppId(appKey);
+        return ResultMessageFactory.getResultMessage(bugBaseInfoList);
+    }
+
+    @RequestMapping(value = "/{appKey}/{appVersion}/getAllByAppVersion", method = RequestMethod.GET)
+    public @ResponseBody
+    ResultMessage getAllByAppVersion(HttpServletRequest request, @PathVariable String appKey, @PathVariable String appVersion) {
+        List<BugBaseInfoVO> bugBaseInfoList = bugService.findAllBugByAppKeyAndVersion(appKey,appVersion);
         return ResultMessageFactory.getResultMessage(bugBaseInfoList);
     }
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage submitBug(@RequestParam("bug") String jsonStr, @RequestParam(value = "file", required = false) MultipartFile file) {
-        String screenshotAdr = Constants.SCREENSHOT_NO_EXIST;
+    ResultMessage submitBug(@RequestParam(name = "bug") String jsonStr, @RequestParam(name = "screenshot", required = false) MultipartFile file) {
+        String screenshotName = Constants.SCREENSHOT_NO_EXIST;
         if (file != null && !file.isEmpty()) {
             try {
                 File logoSaveFile = new File(Constants.SCREENSHOT_BASE_URL);
                 if (!logoSaveFile.exists()) {
                     logoSaveFile.mkdirs();
                 }
-                String filenameString = file.getOriginalFilename();
+                screenshotName = file.getOriginalFilename();
                 String suffix = file.getOriginalFilename().substring
                         (file.getOriginalFilename().lastIndexOf("."));
-                String screenshotFileName = Constants.SCREENSHOT_BASE_URL + File.separator + filenameString;
+                String screenshotFileName = Constants.SCREENSHOT_BASE_URL + File.separator + screenshotName;
                 File screenshotFile = new File(screenshotFileName);
-                screenshotAdr = screenshotFile.getName();
                 file.transferTo(screenshotFile);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -73,7 +90,7 @@ public class BugController {
             }
         }
         JSONObject jsonObject = new JSONObject(jsonStr);
-        BugInfo bugInfo = new BugInfo(jsonObject, screenshotAdr);
+        BugInfo bugInfo = new BugInfo(jsonObject, screenshotName);
         BugInfoKeys bugInfoKey = bugService.addBug(bugInfo);
         return ResultMessageFactory.getResultMessage(bugInfoKey);
     }
@@ -82,9 +99,25 @@ public class BugController {
     @RequestMapping(value = "/{appKey}/{bugId}/get", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage getBugById(HttpServletRequest request, @PathVariable String appKey, @PathVariable String bugId) {
-        //TODO 下载图片
         BugInfoVO bugInfo = bugService.findWholeBug(getBugInfoKeys(appKey, bugId));
         return ResultMessageFactory.getResultMessage(bugInfo);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/screenshot/{filename:.+}")
+    public @ResponseBody
+    ResponseEntity<?> getScreenshot(@PathVariable String filename) {
+        try {
+            return ResponseEntity.ok(resourceLoader.getResource("file:" + Paths.get(Constants.SCREENSHOT_BASE_URL, filename).toString()));
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @RequestMapping(value = "/{appKey}/getAfterScreen", method = RequestMethod.GET)
+    public @ResponseBody
+    ResultMessage getAllBugByScreen(HttpServletRequest request, @PathVariable String appKey, @RequestParam(name = "screenCondition") String jsonStr) {
+        List<BugBaseInfoVO> bugBaseInfoList = bugService.findAllBugByScreen(appKey, new JSONObject(jsonStr));
+        return ResultMessageFactory.getResultMessage(bugBaseInfoList);
     }
 
     @RequestMapping(value = "/{appKey}/{bugId}/oldGet", method = RequestMethod.GET)
@@ -110,7 +143,6 @@ public class BugController {
     @RequestMapping(value = "/{appKey}/{bugId}/base", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage getBugBaseInfo(HttpServletRequest request, @PathVariable String appKey, @PathVariable String bugId) {
-        //TODO 下载图片
         BugBaseInfoVO bugBaseInfo = bugService.findBugBaseInfo(getBugInfoKeys(appKey, bugId));
         return ResultMessageFactory.getResultMessage(bugBaseInfo);
     }
@@ -135,6 +167,7 @@ public class BugController {
         BugOperateStepVO bugOperateStep = bugService.findOperateStepByBugId(getBugInfoKeys(appKey, bugId));
         return ResultMessageFactory.getResultMessage(bugOperateStep);
     }
+
 
     private static BugInfoKeys getBugInfoKeys(String appKey, String bugId) {
         return new BugInfoKeys(appKey, bugId);

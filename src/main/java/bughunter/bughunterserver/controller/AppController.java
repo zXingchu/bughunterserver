@@ -82,4 +82,11 @@ public class AppController {
         return ResultMessageFactory.getResultMessage(appBaseInfoList);
     }
 
+    @RequestMapping(value = "/{appKey}/getVersions", method = RequestMethod.GET)
+    public @ResponseBody
+    ResultMessage getVersions(HttpServletRequest request, @PathVariable String appKey) {
+        List<String> versionList = appService.findAppVersionByAppKey(appKey);
+        return ResultMessageFactory.getResultMessage(versionList);
+    }
+
 }

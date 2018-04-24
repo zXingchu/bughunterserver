@@ -28,6 +28,9 @@ public interface BugService {
 
     List<BugBaseInfoVO> findAllBugByAppId(String appKey);
 
+    //TODO
+    List<BugBaseInfoVO> findAllBugByScreen(String appKey, JSONObject jsonObject);
+
     List<BugBaseInfoVO> findAllBugs();
 
     //public List<BugBaseInfoVO> findCurrentBugs(int appKey, String current);
@@ -35,4 +38,6 @@ public interface BugService {
     public List<BugInfoVO> findCurrentBugs(String appKey, String current);
 
     List<OldBugBaseInfoVO> findOldBug(String appKey, String bugId);
+
+    List<BugBaseInfoVO> findAllBugByAppKeyAndVersion(String appKey, String appVersion);
 }
