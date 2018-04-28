@@ -61,7 +61,7 @@ public class BugController {
     @RequestMapping(value = "/{appKey}/{appVersion}/getAllByAppVersion", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage getAllByAppVersion(HttpServletRequest request, @PathVariable String appKey, @PathVariable String appVersion) {
-        List<BugBaseInfoVO> bugBaseInfoList = bugService.findAllBugByAppKeyAndVersion(appKey,appVersion);
+        List<BugBaseInfoVO> bugBaseInfoList = bugService.findAllBugByAppKeyAndVersion(appKey, appVersion);
         return ResultMessageFactory.getResultMessage(bugBaseInfoList);
     }
 
@@ -113,9 +113,9 @@ public class BugController {
         }
     }
 
-    @RequestMapping(value = "/{appKey}/getAfterScreen", method = RequestMethod.GET)
+    @RequestMapping(value = "/{appKey}/getAfterScreen", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage getAllBugByScreen(HttpServletRequest request, @PathVariable String appKey, @RequestParam(name = "screenCondition") String jsonStr) {
+    ResultMessage getAllBugByScreen(HttpServletRequest request, @PathVariable String appKey, @RequestBody String jsonStr) {
         List<BugBaseInfoVO> bugBaseInfoList = bugService.findAllBugByScreen(appKey, new JSONObject(jsonStr));
         return ResultMessageFactory.getResultMessage(bugBaseInfoList);
     }
@@ -166,6 +166,12 @@ public class BugController {
     ResultMessage getBugOperateStep(HttpServletRequest request, @PathVariable String appKey, @PathVariable String bugId) {
         BugOperateStepVO bugOperateStep = bugService.findOperateStepByBugId(getBugInfoKeys(appKey, bugId));
         return ResultMessageFactory.getResultMessage(bugOperateStep);
+    }
+
+    @RequestMapping(value = "/{appKey}/{appVersion}/getStatisticInfo", method = RequestMethod.GET)
+    public @ResponseBody
+    ResultMessage getStatisticInfo(HttpServletRequest request, @PathVariable String appKey, @PathVariable String appVersion) {
+        return ResultMessageFactory.getResultMessage(bugService.getStatisticInfo(appKey, appVersion));
     }
 
 

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class BugInfo {
 
@@ -42,7 +43,7 @@ public class BugInfo {
 
         bugBaseInfo.setBugDescribe(bugBaseInfoJSON.getString(Constants.DESCRIBE));
         bugBaseInfo.setCurrent(bugBaseInfoJSON.getString(Constants.CURRENT_ACTIVITY));
-        bugBaseInfo.setcTime(new Date(new java.util.Date().getTime()));
+        bugBaseInfo.setcTime(new Timestamp(System.currentTimeMillis()));
         bugBaseInfo.setmTime(bugBaseInfo.getcTime());
         if (bugBaseInfoJSON.has(Constants.USER_ID))
             bugBaseInfo.setUserId(bugBaseInfoJSON.getInt(Constants.USER_ID));

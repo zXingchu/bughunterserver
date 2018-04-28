@@ -7,9 +7,11 @@ import bughunter.bughunterserver.model.entity.AppVersion;
 import bughunter.bughunterserver.model.repository.AppBaseRepository;
 import bughunter.bughunterserver.model.repository.AppMemberRepository;
 import bughunter.bughunterserver.model.repository.AppVerRepository;
+import bughunter.bughunterserver.model.repository.BugRepository;
 import bughunter.bughunterserver.service.AppService;
 import bughunter.bughunterserver.until.Constants;
 import bughunter.bughunterserver.vo.AppBaseInfoVO;
+import bughunter.bughunterserver.vo.BugStatisticInfo;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -32,6 +34,9 @@ public class AppServiceImpl implements AppService {
 
     @Autowired
     AppVerRepository appVerRepository;
+
+    @Autowired
+    BugRepository bugRepository;
 
     @Override
     public Boolean deleteApp(String appKey) {
@@ -112,6 +117,8 @@ public class AppServiceImpl implements AppService {
         List<AppBaseInfoVO> appBaseInfoVOList = new ArrayList<AppBaseInfoVO>(appBaseInfoList.size());
         for (AppBaseInfo appBaseInfo : appBaseInfoList) {
             AppBaseInfoVO appBaseInfoVO = new AppBaseInfoVO(appBaseInfo);
+            appBaseInfoVO.setBugSubmitAmount(bugRepository.countAllByAppKey(appBaseInfo.getAppKey()));
+            appBaseInfoVO.setVersionAmount(appVerRepository.countAllByAppKey(appBaseInfo.getAppKey()));
             appBaseInfoVOList.add(appBaseInfoVO);
         }
         return appBaseInfoVOList;
@@ -140,11 +147,13 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public List<String> findAppVersionByAppKey(String appKey) {
-        List<String> list=new LinkedList<String>();
+        List<String> list = new LinkedList<String>();
         for (AppVersion appVersion : appVerRepository.findAllByAppKey(appKey)) {
             list.add(appVersion.getAppVersion());
         }
         return list;
     }
+
+    
 
 }

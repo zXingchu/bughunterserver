@@ -4,6 +4,7 @@ import bughunter.bughunterserver.model.entity.BugBaseInfo;
 import bughunter.bughunterserver.model.entity.OldBugBaseInfo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class OldBugBaseInfoVO {
 
@@ -23,9 +24,9 @@ public class OldBugBaseInfoVO {
 
     private UserVO user;
 
-    private Date cTime;
+    private Timestamp cTime;
 
-    private Date mTime;
+    private Timestamp mTime;
 
     public OldBugBaseInfoVO(OldBugBaseInfo oldBugBaseInfo) {
         this.oldId = oldBugBaseInfo.getOldId();
@@ -62,22 +63,6 @@ public class OldBugBaseInfoVO {
 
     public void setPriority(String priority) {
         this.priority = priority;
-    }
-
-    public Date getcTime() {
-        return cTime;
-    }
-
-    public void setcTime(Date cTime) {
-        this.cTime = cTime;
-    }
-
-    public Date getmTime() {
-        return mTime;
-    }
-
-    public void setmTime(Date mTime) {
-        this.mTime = mTime;
     }
 
     public UserVO getUser() {
@@ -119,5 +104,21 @@ public class OldBugBaseInfoVO {
 
     public void setOldId(int oldId) {
         this.oldId = oldId;
+    }
+
+    public Timestamp getcTime() {
+        return cTime;
+    }
+
+    public void setcTime(Timestamp cTime) {
+        this.cTime = cTime;
+    }
+
+    public Timestamp getmTime() {
+        return mTime;
+    }
+
+    public void setmTime(Timestamp mTime) {
+        this.mTime = mTime;
     }
 }

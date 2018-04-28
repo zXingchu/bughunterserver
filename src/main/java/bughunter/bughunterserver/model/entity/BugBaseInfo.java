@@ -2,6 +2,7 @@ package bughunter.bughunterserver.model.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity(name = "app_bug_info")
 @IdClass(BugInfoKeys.class)
@@ -27,9 +28,9 @@ public class BugBaseInfo {
 
     private User user;
 
-    private Date cTime;
+    private Timestamp cTime;
 
-    private Date mTime;
+    private Timestamp mTime;
 
     //截图，图片存储地址
     private String screenshotAdr;
@@ -77,21 +78,6 @@ public class BugBaseInfo {
         this.priority = priority;
     }
 
-    public Date getcTime() {
-        return cTime;
-    }
-
-    public void setcTime(Date cTime) {
-        this.cTime = cTime;
-    }
-
-    public Date getmTime() {
-        return mTime;
-    }
-
-    public void setmTime(Date mTime) {
-        this.mTime = mTime;
-    }
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", insertable = false, updatable = false)
@@ -143,5 +129,21 @@ public class BugBaseInfo {
 
     public void setAppVersion(String appVersion) {
         this.appVersion = appVersion;
+    }
+
+    public Timestamp getcTime() {
+        return cTime;
+    }
+
+    public void setcTime(Timestamp cTime) {
+        this.cTime = cTime;
+    }
+
+    public Timestamp getmTime() {
+        return mTime;
+    }
+
+    public void setmTime(Timestamp mTime) {
+        this.mTime = mTime;
     }
 }

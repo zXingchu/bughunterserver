@@ -1,6 +1,8 @@
 package bughunter.bughunterserver.service.impl;
 
 import bughunter.bughunterserver.model.entity.User;
+import bughunter.bughunterserver.model.repository.AppMemberRepository;
+import bughunter.bughunterserver.model.repository.BugRepository;
 import bughunter.bughunterserver.model.repository.UserRepository;
 import bughunter.bughunterserver.service.UserService;
 import bughunter.bughunterserver.until.Constants;
@@ -24,32 +26,23 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
+    BugRepository bugRepository;
+
+    @Autowired
+    AppMemberRepository appMemberRepository;
+
+    @Autowired
     private JavaMailSender mailSender;
 
     @Override
-    public int testLogin(int id, String pwd) {
-        User user = userRepository.findOne(id);
+    public UserVO testLogin(String email, String pwd) {
+        User user = userRepository.findFirstUserByEmail(email);
         if (user == null)
-            return -2;
-        if (user.getStatus() == Constants.STATUS_NOT_ACTIVE)
-            return -1;
+            return null;
         if (!user.getPwd().equals(pwd))
-            return 0;
+            return null;
         else
-            return 1;
-    }
-
-    @Override
-    public int testLogin(String email, String pwd) {
-        User user = userRepository.findUserByEmail(email);
-        if (user == null)
-            return -2;
-        if (user.getStatus() == Constants.STATUS_NOT_ACTIVE)
-            return -1;
-        if (!user.getPwd().equals(pwd))
-            return 0;
-        else
-            return 1;
+            return new UserVO(user.getId(), user.getStatus());
     }
 
     @Override
@@ -75,7 +68,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(User user) {
-        return userRepository.save(user).getId();
+        if (userRepository.findFirstUserByEmail(user.getEmail()) != null) {
+            return userRepository.save(user).getId();
+        }
+        return -1;
     }
 
     @Override
@@ -111,6 +107,8 @@ public class UserServiceImpl implements UserService {
         List<UserVO> userVOList = new ArrayList<UserVO>(userList.size());
         for (User user : userList) {
             UserVO userVO = new UserVO(user);
+            userVO.setBugSubmitAmount(bugRepository.countAllByUserId(userVO.getId()));
+            userVO.setAppAmount(appMemberRepository.countAllByUserIdAndType(userVO.getId(), Constants.CREATER));
             userVOList.add(userVO);
         }
         return userVOList;
@@ -131,7 +129,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVO findByEmail(String email) {
-        User user = userRepository.findUserByEmail(email);
+        User user = userRepository.findFirstUserByEmail(email);
         if (user == null)
             return null;
         return new UserVO(user);

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class BugBaseInfoVO {
 
@@ -28,9 +29,9 @@ public class BugBaseInfoVO {
 
     private UserVO user;
 
-    private Date cTime;
+    private Timestamp cTime;
 
-    private Date mTime;
+    private Timestamp mTime;
 
     public BugBaseInfoVO(BugBaseInfo bugBaseInfo) {
         this.bugId = bugBaseInfo.getBugId();
@@ -67,22 +68,6 @@ public class BugBaseInfoVO {
 
     public void setPriority(String priority) {
         this.priority = priority;
-    }
-
-    public Date getcTime() {
-        return cTime;
-    }
-
-    public void setcTime(Date cTime) {
-        this.cTime = cTime;
-    }
-
-    public Date getmTime() {
-        return mTime;
-    }
-
-    public void setmTime(Date mTime) {
-        this.mTime = mTime;
     }
 
     public UserVO getUser() {
@@ -123,5 +108,21 @@ public class BugBaseInfoVO {
 
     public void setAppVersion(String appVersion) {
         this.appVersion = appVersion;
+    }
+
+    public Timestamp getcTime() {
+        return cTime;
+    }
+
+    public void setcTime(Timestamp cTime) {
+        this.cTime = cTime;
+    }
+
+    public Timestamp getmTime() {
+        return mTime;
+    }
+
+    public void setmTime(Timestamp mTime) {
+        this.mTime = mTime;
     }
 }

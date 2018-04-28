@@ -3,6 +3,7 @@ package bughunter.bughunterserver.model.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 
 @Entity(name = "old_app_bug_info")
@@ -28,9 +29,9 @@ public class OldBugBaseInfo {
 
     private User user;
 
-    private Date cTime;
+    private Timestamp cTime;
 
-    private Date mTime;
+    private Timestamp mTime;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,22 +84,6 @@ public class OldBugBaseInfo {
         this.priority = priority;
     }
 
-    public Date getcTime() {
-        return cTime;
-    }
-
-    public void setcTime(Date cTime) {
-        this.cTime = cTime;
-    }
-
-    public Date getmTime() {
-        return mTime;
-    }
-
-    public void setmTime(Date mTime) {
-        this.mTime = mTime;
-    }
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId", insertable = false, updatable = false)
     public User getUser() {
@@ -136,4 +121,19 @@ public class OldBugBaseInfo {
     }
 
 
+    public Timestamp getcTime() {
+        return cTime;
+    }
+
+    public void setcTime(Timestamp cTime) {
+        this.cTime = cTime;
+    }
+
+    public Timestamp getmTime() {
+        return mTime;
+    }
+
+    public void setmTime(Timestamp mTime) {
+        this.mTime = mTime;
+    }
 }

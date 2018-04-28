@@ -8,9 +8,7 @@ import java.util.List;
 
 public interface UserService {
 
-    int testLogin(int id, String pwd);
-
-    int testLogin(String email, String pwd);
+    UserVO testLogin(String email, String pwd);
 
     Boolean deleteUser(int id);
 

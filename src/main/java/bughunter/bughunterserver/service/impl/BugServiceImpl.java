@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -104,7 +105,7 @@ public class BugServiceImpl implements BugService {
                 bugBaseInfo.setBugDescribe(jsonObject.getString(Constants.DESCRIBE));
             if (jsonObject.has(Constants.PRIORITY))
                 bugBaseInfo.setPriority(jsonObject.getString(Constants.PRIORITY));
-            bugBaseInfo.setmTime(Date.valueOf(jsonObject.getString(Constants.MODIFY_TIME)));
+            bugBaseInfo.setmTime(new Timestamp(System.currentTimeMillis()));
             bugBaseInfo.setUserId(jsonObject.getInt(Constants.USER_ID));
             bugRepository.save(bugBaseInfo);
             return true;
@@ -278,5 +279,51 @@ public class BugServiceImpl implements BugService {
         }
         return bugBaseInfoVOList;
     }
+
+    @Override
+    public BugStatisticInfo getStatisticInfo(String appKey, String appVersion) {
+        BugStatisticInfo bugStatisticInfo = new BugStatisticInfo();
+        bugStatisticInfo.setBugAmount(bugRepository.countAllByAppKeyAndAppVersion(appKey, appVersion));
+        bugStatisticInfo.setUserAmount(bugRepository.findUserByByAppKeyAndAppVersion(appKey, appVersion).size());
+        bugStatisticInfo.setBugSolve(bugRepository.countAllByAppKeyAndAppVersionAndStatus(appKey, appVersion, Constants.BUG_STATUS_SOLVE)
+                / (float) bugStatisticInfo.getBugAmount());
+        bugStatisticInfo.setCrashAmount(bugRepository.countAllByAppKeyAndAppVersionAndPriority(appKey, appVersion, Constants.BUG_PRIORITY_CRASH));
+        bugStatisticInfo.setCrashUserAmount(bugRepository.findUserByByAppKeyAndAppVersionAndPriority(appKey, appVersion, Constants.BUG_PRIORITY_CRASH).size());
+        bugStatisticInfo.setCrashDeviceAmount(bugDeviceRepository.findDeviceByByAppKeyAndAppVersion(appKey, appVersion, Constants.BUG_PRIORITY_CRASH).size());
+        List<BugBaseInfo> bugBaseInfoList = bugRepository.findByAppKeyAndAppVersion(appKey, appVersion);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        //TODO
+        timestamp = new Timestamp(timestamp.getYear(), timestamp.getMonth(), timestamp.getDate(), 0, 0, 0, 0);
+        int[] crashTwoWeeks = new int[14];
+        for (int i = 0; i < crashTwoWeeks.length; i++) {
+            crashTwoWeeks[i] = 0;
+        }
+        for (int i = 0; i < bugBaseInfoList.size(); i++) {
+            long timeDifference = (timestamp.getTime() - bugBaseInfoList.get(i).getcTime().getTime());
+            if (timeDifference < 0)
+                timeDifference = -86400000;
+            int index = 12 - (int) (timeDifference / 86400000);
+            if (index >= 0)
+                crashTwoWeeks[index]++;
+        }
+        bugStatisticInfo.setCrashTwoWeekAmount(crashTwoWeeks);
+        int[] bugStatus = {bugRepository.countAllByAppKeyAndAppVersionAndStatus(appKey, appVersion, Constants.BUG_STATUS_NEW),
+                bugRepository.countAllByAppKeyAndAppVersionAndStatus(appKey, appVersion, Constants.BUG_STATUS_PROCESS),
+                bugRepository.countAllByAppKeyAndAppVersionAndStatus(appKey, appVersion, Constants.BUG_STATUS_SOLVE),
+                bugRepository.countAllByAppKeyAndAppVersionAndStatus(appKey, appVersion, Constants.BUG_STATUS_CLOSE)};
+        bugStatisticInfo.setBugStatus(bugStatus);
+        int[] bugType = {bugRepository.countAllByAppKeyAndAppVersionAndType(appKey, appVersion, Constants.BUG_TYPE_FUNCTION),
+                bugRepository.countAllByAppKeyAndAppVersionAndType(appKey, appVersion, Constants.BUG_TYPE_INTERFACE),
+                bugRepository.countAllByAppKeyAndAppVersionAndType(appKey, appVersion, Constants.BUG_TYPE_SECURITY),
+                bugRepository.countAllByAppKeyAndAppVersionAndType(appKey, appVersion, Constants.BUG_TYPE_PERFORMANCE)};
+        bugStatisticInfo.setBugType(bugType);
+        int[] bugPriority = {bugRepository.countAllByAppKeyAndAppVersionAndPriority(appKey, appVersion, Constants.BUG_PRIORITY_SERIOUS),
+                bugRepository.countAllByAppKeyAndAppVersionAndPriority(appKey, appVersion, Constants.BUG_PRIORITY_COMMON),
+                bugRepository.countAllByAppKeyAndAppVersionAndPriority(appKey, appVersion, Constants.BUG_PRIORITY_CRASH),
+                bugRepository.countAllByAppKeyAndAppVersionAndPriority(appKey, appVersion, Constants.BUG_PRIORITY_INFERIOR)};
+        bugStatisticInfo.setBugPriority(bugPriority);
+        return bugStatisticInfo;
+    }
+
 
 }

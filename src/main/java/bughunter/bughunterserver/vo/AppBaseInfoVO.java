@@ -26,6 +26,10 @@ public class AppBaseInfoVO {
 
     private String appSecret;
 
+    private int versionAmount;
+
+    private int bugSubmitAmount;
+
     public AppBaseInfoVO(AppBaseInfo appBaseInfo) {
         this.name = appBaseInfo.getName();
         this.type = appBaseInfo.getType();
@@ -89,5 +93,21 @@ public class AppBaseInfoVO {
 
     public void setmTime(Date mTime) {
         this.mTime = mTime;
+    }
+
+    public int getVersionAmount() {
+        return versionAmount;
+    }
+
+    public void setVersionAmount(int versionAmount) {
+        this.versionAmount = versionAmount;
+    }
+
+    public int getBugSubmitAmount() {
+        return bugSubmitAmount;
+    }
+
+    public void setBugSubmitAmount(int bugSubmitAmount) {
+        this.bugSubmitAmount = bugSubmitAmount;
     }
 }

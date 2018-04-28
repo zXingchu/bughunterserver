@@ -64,6 +64,21 @@ public class Constants {
 
     public static final int USER_NO_EXIST_ID = 0;
 
+    public static final String BUG_STATUS_NEW = "新建";
+    public static final String BUG_STATUS_PROCESS = "进行";
+    public static final String BUG_STATUS_SOLVE = "解决";
+    public static final String BUG_STATUS_CLOSE = "关闭";
+
+    public static final String BUG_TYPE_FUNCTION = "功能错误";
+    public static final String BUG_TYPE_INTERFACE = "界面修改";
+    public static final String BUG_TYPE_SECURITY = "安全相关";
+    public static final String BUG_TYPE_PERFORMANCE = "性能压力";
+
+    public static final String BUG_PRIORITY_CRASH = "崩溃";
+    public static final String BUG_PRIORITY_SERIOUS = "严重";
+    public static final String BUG_PRIORITY_COMMON = "一般";
+    public static final String BUG_PRIORITY_INFERIOR = "次要";
+
     public static String BUG_BASE_INFO = "BugBaseInfo";
     public static String BUG_CONSOLE_LOG = "BugConsoleLog";
     public static String BUG_DEVICE_INFO = "BugDeviceInfo";
@@ -115,5 +130,5 @@ public class Constants {
 
     public static String SCREENSHOT_NO_EXIST = "no exist";
 
-    public static String APP_VERSION="appVersion";
+    public static String APP_VERSION = "appVersion";
 }

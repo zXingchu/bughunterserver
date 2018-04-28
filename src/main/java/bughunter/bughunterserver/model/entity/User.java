@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity(name = "user")
 public class User {
@@ -17,6 +19,8 @@ public class User {
     private String email;
 
     private String teleNumber;
+
+    private Timestamp createTime;
 
     private int status;
 
@@ -68,5 +72,14 @@ public class User {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
 }

@@ -8,8 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AppMemberRepository extends JpaRepository<AppMember, AppMemberKeys>{
+public interface AppMemberRepository extends JpaRepository<AppMember, AppMemberKeys> {
 
     List<AppMember> findAllByUserId(int userId);
+
+    Integer countAllByUserIdAndType(int userId, String type);
 
 }
