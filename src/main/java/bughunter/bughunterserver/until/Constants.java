@@ -126,7 +126,7 @@ public class Constants {
     public static String DESCRIBE = "describe";
     public static String CREATER = "创建者";
 
-    public static String SCREENSHOT_BASE_URL = "/home/bughunter/screenshot";
+    public static String SCREENSHOT_BASE_URL = "E:\\Screenshot";
 
     public static String SCREENSHOT_NO_EXIST = "no exist";
 

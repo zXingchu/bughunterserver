@@ -42,4 +42,7 @@ public interface BugService {
 
     BugStatisticInfo getStatisticInfo(String appKey, String appVersion);
 
+    List<BugBaseInfoVO> findAllByUserId(int userId);
+
+    Integer[] getSimpleStatistic(String appKey);
 }

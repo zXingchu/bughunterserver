@@ -12,6 +12,8 @@ public interface AppMemberRepository extends JpaRepository<AppMember, AppMemberK
 
     List<AppMember> findAllByUserId(int userId);
 
+    List<AppMember> findAllByAppKey(String appKey);
+
     Integer countAllByUserIdAndType(int userId, String type);
 
 }

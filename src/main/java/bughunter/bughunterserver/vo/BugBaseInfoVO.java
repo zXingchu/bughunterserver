@@ -29,21 +29,22 @@ public class BugBaseInfoVO {
 
     private UserVO user;
 
-    private Timestamp cTime;
+    private String cTime;
 
-    private Timestamp mTime;
+    private String mTime;
 
-    public BugBaseInfoVO(BugBaseInfo bugBaseInfo) {
+    public BugBaseInfoVO(BugBaseInfo bugBaseInfo, User user) {
         this.bugId = bugBaseInfo.getBugId();
         this.appVersion = bugBaseInfo.getAppVersion();
         this.status = bugBaseInfo.getStatus();
         this.type = bugBaseInfo.getType();
         this.current = bugBaseInfo.getCurrent();
         this.priority = bugBaseInfo.getPriority();
-        this.cTime = bugBaseInfo.getcTime();
-        this.mTime = bugBaseInfo.getmTime();
+        this.cTime = bugBaseInfo.getcTime().toString();
+        this.mTime = bugBaseInfo.getmTime().toString();
         this.describe = bugBaseInfo.getBugDescribe();
-        this.user = new UserVO(bugBaseInfo.getUser());
+        if (user != null)
+            this.user = new UserVO(user);
     }
 
     public String getStatus() {
@@ -110,19 +111,20 @@ public class BugBaseInfoVO {
         this.appVersion = appVersion;
     }
 
-    public Timestamp getcTime() {
+
+    public String getcTime() {
         return cTime;
     }
 
-    public void setcTime(Timestamp cTime) {
+    public void setcTime(String cTime) {
         this.cTime = cTime;
     }
 
-    public Timestamp getmTime() {
+    public String getmTime() {
         return mTime;
     }
 
-    public void setmTime(Timestamp mTime) {
+    public void setmTime(String mTime) {
         this.mTime = mTime;
     }
 }

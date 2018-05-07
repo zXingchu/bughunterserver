@@ -58,6 +58,12 @@ public class AppController {
         return ResultMessageFactory.getResultMessage(appBaseInfo);
     }
 
+    @RequestMapping(value = "/{appKey}/getMembers", method = RequestMethod.GET)
+    public @ResponseBody
+    ResultMessage getMembers(HttpServletRequest request, @PathVariable String appKey) {
+        return ResultMessageFactory.getResultMessage(appService.findAllMemberByAppKey(appKey));
+    }
+
     @RequestMapping(value = "/addMember", method = RequestMethod.POST)
     public @ResponseBody
     ResultMessage addMember(HttpServletRequest request, @RequestBody String jsonStr) {

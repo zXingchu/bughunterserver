@@ -10,13 +10,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.sql.Date;
 
 @Service
 public class BugServiceImpl implements BugService {
@@ -135,7 +132,7 @@ public class BugServiceImpl implements BugService {
         if (!bugRepository.exists(id))
             return null;
         BugBaseInfo bugBaseInfo = bugRepository.findOne(id);
-        return new BugBaseInfoVO(bugBaseInfo);
+        return new BugBaseInfoVO(bugBaseInfo, bugBaseInfo.getUser());
     }
 
     @Override
@@ -181,7 +178,7 @@ public class BugServiceImpl implements BugService {
             return null;
         List<BugBaseInfoVO> bugBaseInfoVOList = new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
         for (BugBaseInfo bugBaseInfo : bugBaseInfoList) {
-            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo);
+            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo, bugBaseInfo.getUser());
             bugBaseInfoVOList.add(bugBaseInfoVO);
         }
         return bugBaseInfoVOList;
@@ -210,7 +207,7 @@ public class BugServiceImpl implements BugService {
             return null;
         List<BugBaseInfoVO> bugBaseInfoVOList = new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
         for (BugBaseInfo bugBaseInfo : bugBaseInfoList) {
-            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo);
+            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo, bugBaseInfo.getUser());
             bugBaseInfoVOList.add(bugBaseInfoVO);
         }
         return bugBaseInfoVOList;
@@ -223,7 +220,7 @@ public class BugServiceImpl implements BugService {
             return null;
         List<BugBaseInfoVO> bugBaseInfoVOList = new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
         for (BugBaseInfo bugBaseInfo : bugBaseInfoList) {
-            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo);
+            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo, bugBaseInfo.getUser());
             bugBaseInfoVOList.add(bugBaseInfoVO);
         }
         return bugBaseInfoVOList;
@@ -274,7 +271,7 @@ public class BugServiceImpl implements BugService {
             return null;
         List<BugBaseInfoVO> bugBaseInfoVOList = new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
         for (BugBaseInfo bugBaseInfo : bugBaseInfoList) {
-            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo);
+            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo, bugBaseInfo.getUser());
             bugBaseInfoVOList.add(bugBaseInfoVO);
         }
         return bugBaseInfoVOList;
@@ -306,7 +303,12 @@ public class BugServiceImpl implements BugService {
             if (index >= 0)
                 crashTwoWeeks[index]++;
         }
-        bugStatisticInfo.setCrashTwoWeekAmount(crashTwoWeeks);
+        Map<String, Integer> map = new LinkedHashMap<String, Integer>();
+        for (int i = 0; i < crashTwoWeeks.length; i++) {
+            long temp = 86400000 * (crashTwoWeeks.length - i - 1);
+            map.put(new Date(timestamp.getTime() - temp).toString(), crashTwoWeeks[i]);
+        }
+        bugStatisticInfo.setBugRecentAmount(map);
         int[] bugStatus = {bugRepository.countAllByAppKeyAndAppVersionAndStatus(appKey, appVersion, Constants.BUG_STATUS_NEW),
                 bugRepository.countAllByAppKeyAndAppVersionAndStatus(appKey, appVersion, Constants.BUG_STATUS_PROCESS),
                 bugRepository.countAllByAppKeyAndAppVersionAndStatus(appKey, appVersion, Constants.BUG_STATUS_SOLVE),
@@ -323,6 +325,38 @@ public class BugServiceImpl implements BugService {
                 bugRepository.countAllByAppKeyAndAppVersionAndPriority(appKey, appVersion, Constants.BUG_PRIORITY_INFERIOR)};
         bugStatisticInfo.setBugPriority(bugPriority);
         return bugStatisticInfo;
+    }
+
+    @Override
+    public List<BugBaseInfoVO> findAllByUserId(int userId) {
+        List<BugBaseInfo> bugBaseInfoList = bugRepository.findAllByUserId(userId);
+        if (bugBaseInfoList.size() == 0)
+            return null;
+        List<BugBaseInfoVO> bugBaseInfoVOList = new ArrayList<BugBaseInfoVO>(bugBaseInfoList.size());
+        for (BugBaseInfo bugBaseInfo : bugBaseInfoList) {
+            BugBaseInfoVO bugBaseInfoVO = new BugBaseInfoVO(bugBaseInfo, null);
+            bugBaseInfoVOList.add(bugBaseInfoVO);
+        }
+        return bugBaseInfoVOList;
+    }
+
+    @Override
+    public Integer[] getSimpleStatistic(String appKey) {
+        System.out.println(appKey + bugRepository.countAllByAppKeyAndStatus(appKey, "新建"));
+        Integer[] simpleInfo = {bugRepository.countAllByAppKeyAndStatus(appKey, Constants.BUG_STATUS_NEW),
+                bugRepository.countAllByAppKeyAndStatus(appKey, Constants.BUG_STATUS_PROCESS),
+                bugRepository.countAllByAppKeyAndStatus(appKey, Constants.BUG_STATUS_SOLVE),
+                bugRepository.countAllByAppKeyAndStatus(appKey, Constants.BUG_STATUS_CLOSE),
+                bugRepository.countAllByAppKeyAndType(appKey, Constants.BUG_TYPE_FUNCTION),
+                bugRepository.countAllByAppKeyAndType(appKey, Constants.BUG_TYPE_INTERFACE),
+                bugRepository.countAllByAppKeyAndType(appKey, Constants.BUG_TYPE_SECURITY),
+                bugRepository.countAllByAppKeyAndType(appKey, Constants.BUG_TYPE_PERFORMANCE),
+                bugRepository.countAllByAppKeyAndPriority(appKey, Constants.BUG_PRIORITY_SERIOUS),
+                bugRepository.countAllByAppKeyAndPriority(appKey, Constants.BUG_PRIORITY_COMMON),
+                bugRepository.countAllByAppKeyAndPriority(appKey, Constants.BUG_PRIORITY_CRASH),
+                bugRepository.countAllByAppKeyAndPriority(appKey, Constants.BUG_PRIORITY_INFERIOR)
+        };
+        return simpleInfo;
     }
 
 

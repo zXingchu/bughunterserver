@@ -4,13 +4,11 @@ import bughunter.bughunterserver.model.entity.AppBaseInfo;
 import bughunter.bughunterserver.model.entity.AppMember;
 import bughunter.bughunterserver.model.entity.AppMemberKeys;
 import bughunter.bughunterserver.model.entity.AppVersion;
-import bughunter.bughunterserver.model.repository.AppBaseRepository;
-import bughunter.bughunterserver.model.repository.AppMemberRepository;
-import bughunter.bughunterserver.model.repository.AppVerRepository;
-import bughunter.bughunterserver.model.repository.BugRepository;
+import bughunter.bughunterserver.model.repository.*;
 import bughunter.bughunterserver.service.AppService;
 import bughunter.bughunterserver.until.Constants;
 import bughunter.bughunterserver.vo.AppBaseInfoVO;
+import bughunter.bughunterserver.vo.AppMemberVO;
 import bughunter.bughunterserver.vo.BugStatisticInfo;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +36,9 @@ public class AppServiceImpl implements AppService {
     @Autowired
     BugRepository bugRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     public Boolean deleteApp(String appKey) {
         try {
@@ -54,7 +55,7 @@ public class AppServiceImpl implements AppService {
         //TODO 生成setAppSecret,同步
         String appKey = UUID.randomUUID().toString().replaceAll("-", "");
         appBaseInfo.setAppKey(appKey);
-        appBaseInfo.setAppSecret(appKey);
+        appBaseInfo.setAppSecret(UUID.randomUUID().toString().replaceAll("-", ""));
         AppMember appMember = new AppMember();
         appMember.setAppKey(appKey);
         appMember.setUserId(uId);
@@ -154,6 +155,19 @@ public class AppServiceImpl implements AppService {
         return list;
     }
 
-    
+    @Override
+    public List<AppMemberVO> findAllMemberByAppKey(String appKey) {
+        List<AppMember> appMemberList = appMemberRepository.findAllByAppKey(appKey);
+        if (appMemberList.size() == 0)
+            return null;
+        List<AppMemberVO> appMemberVOList = new ArrayList<AppMemberVO>(appMemberList.size());
+
+        for (AppMember appMember : appMemberList) {
+            AppMemberVO appMemberVO = new AppMemberVO(appMember.getType(),userRepository.getOne(appMember.getUserId()));
+            appMemberVOList.add(appMemberVO);
+        }
+        return appMemberVOList;
+    }
+
 
 }

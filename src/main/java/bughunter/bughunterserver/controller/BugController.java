@@ -9,6 +9,7 @@ import bughunter.bughunterserver.until.Constants;
 import bughunter.bughunterserver.vo.*;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +59,12 @@ public class BugController {
         return ResultMessageFactory.getResultMessage(bugBaseInfoList);
     }
 
+    @RequestMapping(value = "/{userId}/getAllSubmit", method = RequestMethod.GET)
+    public @ResponseBody
+    ResultMessage getAllBugByUserId(HttpServletRequest request, @PathVariable int userId) {
+        return ResultMessageFactory.getResultMessage(bugService.findAllByUserId(userId));
+    }
+
     @RequestMapping(value = "/{appKey}/{appVersion}/getAllByAppVersion", method = RequestMethod.GET)
     public @ResponseBody
     ResultMessage getAllByAppVersion(HttpServletRequest request, @PathVariable String appKey, @PathVariable String appVersion) {
@@ -105,11 +112,11 @@ public class BugController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/screenshot/{filename:.+}")
     public @ResponseBody
-    ResponseEntity<?> getScreenshot(@PathVariable String filename) {
+    Resource getScreenshot(@PathVariable String filename) {
         try {
-            return ResponseEntity.ok(resourceLoader.getResource("file:" + Paths.get(Constants.SCREENSHOT_BASE_URL, filename).toString()));
+            return resourceLoader.getResource("file:" + Paths.get(Constants.SCREENSHOT_BASE_URL, filename).toString());
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            return null;
         }
     }
 
@@ -172,6 +179,12 @@ public class BugController {
     public @ResponseBody
     ResultMessage getStatisticInfo(HttpServletRequest request, @PathVariable String appKey, @PathVariable String appVersion) {
         return ResultMessageFactory.getResultMessage(bugService.getStatisticInfo(appKey, appVersion));
+    }
+
+    @RequestMapping(value = "/{appKey}/getSimpleStatistic", method = RequestMethod.GET)
+    public @ResponseBody
+    ResultMessage getSimpleStatistic(HttpServletRequest request, @PathVariable String appKey) {
+        return ResultMessageFactory.getResultMessage(bugService.getSimpleStatistic(appKey));
     }
 
 

@@ -4,6 +4,7 @@ import bughunter.bughunterserver.model.entity.AppBaseInfo;
 import bughunter.bughunterserver.model.entity.AppMember;
 import bughunter.bughunterserver.model.entity.User;
 import bughunter.bughunterserver.vo.AppBaseInfoVO;
+import bughunter.bughunterserver.vo.AppMemberVO;
 import bughunter.bughunterserver.vo.BugStatisticInfo;
 import org.json.JSONObject;
 
@@ -29,6 +30,6 @@ public interface AppService {
     Boolean addMember(AppMember appMember);
 
     List<String> findAppVersionByAppKey(String appKey);
-
-
+    
+    List<AppMemberVO> findAllMemberByAppKey(String appKey);
 }

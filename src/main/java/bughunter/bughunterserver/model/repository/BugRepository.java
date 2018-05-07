@@ -15,6 +15,8 @@ public interface BugRepository extends JpaRepository<BugBaseInfo, BugInfoKeys> {
 
     List<BugBaseInfo> findAllByAppKey(String appKey);
 
+    List<BugBaseInfo> findAllByUserId(int userId);
+
     List<BugBaseInfo> findByAppKeyAndAppVersion(String appKey, String appVersion);
 
     List<BugBaseInfo> findAllByAppKeyAndCurrent(String appKey, String current);
@@ -27,13 +29,17 @@ public interface BugRepository extends JpaRepository<BugBaseInfo, BugInfoKeys> {
 
     Integer countAllByAppKeyAndAppVersion(String appKey, String appVersion);
 
-    Integer countAllByAppKeyAndAppVersionAndUserId(String appKey, String appVersion, int userId);
-
     Integer countAllByAppKeyAndAppVersionAndStatus(String appKey, String appVersion, String status);
 
     Integer countAllByAppKeyAndAppVersionAndPriority(String appKey, String appVersion, String priority);
 
     Integer countAllByAppKeyAndAppVersionAndType(String appKey, String appVersion, String type);
+
+    Integer countAllByAppKeyAndStatus(String appKey, String status);
+
+    Integer countAllByAppKeyAndPriority(String appKey, String priority);
+
+    Integer countAllByAppKeyAndType(String appKey, String type);
 
     @Query(value = "select distinct user_id from app_bug_info b where b.app_key=?1 and b.app_version=?2", nativeQuery = true)
     List findUserByByAppKeyAndAppVersion(String appKey, String appVersion);

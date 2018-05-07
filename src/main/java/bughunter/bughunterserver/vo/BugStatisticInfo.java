@@ -1,5 +1,9 @@
 package bughunter.bughunterserver.vo;
 
+import org.json.JSONObject;
+
+import java.util.Map;
+
 public class BugStatisticInfo {
 
     //bug数量
@@ -21,7 +25,7 @@ public class BugStatisticInfo {
     private int crashDeviceAmount;
 
     //近两周崩溃统计
-    private int[] crashTwoWeekAmount = new int[14];
+    private Map<String, Integer> bugRecentAmount;
 
     //
     private int[] bugStatus = new int[4];
@@ -71,14 +75,6 @@ public class BugStatisticInfo {
         this.crashUserAmount = crashUserAmount;
     }
 
-    public int[] getCrashTwoWeekAmount() {
-        return crashTwoWeekAmount;
-    }
-
-    public void setCrashTwoWeekAmount(int[] crashTwoWeekAmount) {
-        this.crashTwoWeekAmount = crashTwoWeekAmount;
-    }
-
     public int[] getBugStatus() {
         return bugStatus;
     }
@@ -109,5 +105,13 @@ public class BugStatisticInfo {
 
     public void setCrashDeviceAmount(int crashDeviceAmount) {
         this.crashDeviceAmount = crashDeviceAmount;
+    }
+
+    public Map<String, Integer> getBugRecentAmount() {
+        return bugRecentAmount;
+    }
+
+    public void setBugRecentAmount(Map<String, Integer> bugRecentAmount) {
+        this.bugRecentAmount = bugRecentAmount;
     }
 }

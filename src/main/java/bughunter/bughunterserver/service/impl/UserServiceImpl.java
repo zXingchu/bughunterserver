@@ -68,8 +68,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(User user) {
-        if (userRepository.findFirstUserByEmail(user.getEmail()) != null) {
-            return userRepository.save(user).getId();
+        if (userRepository.findFirstUserByEmail(user.getEmail()) == null) {
+            try {
+                return userRepository.save(user).getId();
+            }catch (Exception e){
+                return -1;
+            }
         }
         return -1;
     }

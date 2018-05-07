@@ -13,13 +13,12 @@ public class BugInfoVO {
     private BugConsoleLogVO bugConsoleLog;
 
 
-
     public BugBaseInfoVO getBugBaseInfo() {
         return bugBaseInfo;
     }
 
     public void setBugBaseInfo(BugBaseInfo bugBaseInfo) {
-        this.bugBaseInfo = new BugBaseInfoVO(bugBaseInfo);
+        this.bugBaseInfo = new BugBaseInfoVO(bugBaseInfo, bugBaseInfo.getUser());
     }
 
 
