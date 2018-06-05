@@ -1,9 +1,6 @@
 package bughunter.bughunterserver.service.impl;
 
-import bughunter.bughunterserver.model.entity.AppBaseInfo;
-import bughunter.bughunterserver.model.entity.AppMember;
-import bughunter.bughunterserver.model.entity.AppMemberKeys;
-import bughunter.bughunterserver.model.entity.AppVersion;
+import bughunter.bughunterserver.model.entity.*;
 import bughunter.bughunterserver.model.repository.*;
 import bughunter.bughunterserver.service.AppService;
 import bughunter.bughunterserver.until.Constants;
@@ -102,7 +99,7 @@ public class AppServiceImpl implements AppService {
 
         for (AppMember appMember : appMemberList) {
             AppBaseInfo appBaseInfo = appBaseRepository.findOne(appMember.getAppKey());
-
+            System.out.println(appBaseInfo.getName());
             AppBaseInfoVO appBaseInfoVO = new AppBaseInfoVO(appBaseInfo);
             appBaseInfoVOList.add(appBaseInfoVO);
         }
@@ -137,7 +134,14 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
-    public Boolean addMember(AppMember appMember) {
+    public Boolean addMember(JSONObject jsonObject) {
+        AppMember appMember = new AppMember();
+        appMember.setAppKey(jsonObject.getString(Constants.APP_KEY));
+        appMember.setType(Constants.ORDINARY_MEMBER);
+        User user = userRepository.findFirstUserByEmail(jsonObject.getString(Constants.EMAIL));
+        if (user == null)
+            return false;
+        appMember.setUserId(user.getId());
         if (appMemberRepository.exists(new AppMemberKeys(appMember.getAppKey(), appMember.getUserId()))) {
             return false;
         } else {
@@ -163,7 +167,7 @@ public class AppServiceImpl implements AppService {
         List<AppMemberVO> appMemberVOList = new ArrayList<AppMemberVO>(appMemberList.size());
 
         for (AppMember appMember : appMemberList) {
-            AppMemberVO appMemberVO = new AppMemberVO(appMember.getType(),userRepository.getOne(appMember.getUserId()));
+            AppMemberVO appMemberVO = new AppMemberVO(appMember.getType(), userRepository.getOne(appMember.getUserId()));
             appMemberVOList.add(appMemberVO);
         }
         return appMemberVOList;

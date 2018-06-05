@@ -68,11 +68,8 @@ public class AppController {
     public @ResponseBody
     ResultMessage addMember(HttpServletRequest request, @RequestBody String jsonStr) {
         JSONObject jsonObject = new JSONObject(jsonStr);
-        AppMember appMember = new AppMember();
-        appMember.setAppKey(jsonObject.getString(Constants.APP_KEY));
-        appMember.setType(jsonObject.getString(Constants.TYPE));
-        appMember.setUserId(jsonObject.getInt(Constants.USER_ID));
-        return ResultMessageFactory.getResultMessage(appService.addMember(appMember), Constants.ERROR_EXIST);
+
+        return ResultMessageFactory.getResultMessage(appService.addMember(jsonObject), Constants.ERROR_EXIST);
     }
 
     @RequestMapping(value = "/{appKey}/{uId}/deleteMember", method = RequestMethod.GET)

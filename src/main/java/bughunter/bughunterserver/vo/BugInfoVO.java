@@ -18,6 +18,8 @@ public class BugInfoVO {
     }
 
     public void setBugBaseInfo(BugBaseInfo bugBaseInfo) {
+        if(bugBaseInfo==null)
+            return ;
         this.bugBaseInfo = new BugBaseInfoVO(bugBaseInfo, bugBaseInfo.getUser());
     }
 
@@ -27,6 +29,8 @@ public class BugInfoVO {
     }
 
     public void setBugOperateStep(BugOperateStep bugOperateStep) {
+        if(bugOperateStep==null)
+            return ;
         this.bugOperateStep = new BugOperateStepVO(bugOperateStep);
     }
 
@@ -35,6 +39,8 @@ public class BugInfoVO {
     }
 
     public void setBugDeviceInfo(BugDeviceInfo bugDeviceInfo) {
+        if(bugDeviceInfo==null)
+            return ;
         this.bugDeviceInfo = new BugDeviceInfoVO(bugDeviceInfo);
     }
 
@@ -43,6 +49,8 @@ public class BugInfoVO {
     }
 
     public void setBugConsoleLog(BugConsoleLog bugConsoleLog) {
+        if(bugConsoleLog==null)
+            return ;
         this.bugConsoleLog = new BugConsoleLogVO(bugConsoleLog);
     }
 }

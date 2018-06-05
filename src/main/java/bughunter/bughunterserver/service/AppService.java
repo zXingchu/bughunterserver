@@ -27,7 +27,7 @@ public interface AppService {
 
     Boolean deleteMember(String appkey, int uId);
 
-    Boolean addMember(AppMember appMember);
+    Boolean addMember(JSONObject jsonObject);
 
     List<String> findAppVersionByAppKey(String appKey);
     

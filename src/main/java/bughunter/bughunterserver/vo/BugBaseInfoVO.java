@@ -33,6 +33,8 @@ public class BugBaseInfoVO {
 
     private String mTime;
 
+    private String screenshotAdr;
+
     public BugBaseInfoVO(BugBaseInfo bugBaseInfo, User user) {
         this.bugId = bugBaseInfo.getBugId();
         this.appVersion = bugBaseInfo.getAppVersion();
@@ -43,6 +45,7 @@ public class BugBaseInfoVO {
         this.cTime = bugBaseInfo.getcTime().toString();
         this.mTime = bugBaseInfo.getmTime().toString();
         this.describe = bugBaseInfo.getBugDescribe();
+        this.screenshotAdr = bugBaseInfo.getScreenshotAdr();
         if (user != null)
             this.user = new UserVO(user);
     }
@@ -126,5 +129,13 @@ public class BugBaseInfoVO {
 
     public void setmTime(String mTime) {
         this.mTime = mTime;
+    }
+
+    public String getScreenshotAdr() {
+        return screenshotAdr;
+    }
+
+    public void setScreenshotAdr(String screenshotAdr) {
+        this.screenshotAdr = screenshotAdr;
     }
 }

@@ -62,10 +62,14 @@ public class BugServiceImpl implements BugService {
         }
         String bugId = getBugId();
         bugInfo.setBugId(bugId);
-        bugRepository.save(bugInfo.getBugBaseInfo());
-        bugDeviceRepository.save(bugInfo.getBugDeviceInfo());
-        bugConsoleLogRepository.save(bugInfo.getBugConsoleLog());
-        bugOperateStepRepository.save(bugInfo.getBugOperateStep());
+        if (bugInfo.getBugBaseInfo() != null)
+            bugRepository.save(bugInfo.getBugBaseInfo());
+        if (bugInfo.getBugDeviceInfo() != null)
+            bugDeviceRepository.save(bugInfo.getBugDeviceInfo());
+        if (bugInfo.getBugConsoleLog() != null)
+            bugConsoleLogRepository.save(bugInfo.getBugConsoleLog());
+        if (bugInfo.getBugOperateStep() != null)
+            bugOperateStepRepository.save(bugInfo.getBugOperateStep());
         return bugInfo.getBugInfoKeys();
     }
 
@@ -141,9 +145,12 @@ public class BugServiceImpl implements BugService {
             return null;
         BugInfoVO bugInfo = new BugInfoVO();
         bugInfo.setBugBaseInfo(bugRepository.findOne(bugInfoKeys));
-        bugInfo.setBugConsoleLog(bugConsoleLogRepository.findOne(bugInfoKeys));
-        bugInfo.setBugDeviceInfo(bugDeviceRepository.findOne(bugInfoKeys));
-        bugInfo.setBugOperateStep(bugOperateStepRepository.findOne(bugInfoKeys));
+        if (bugConsoleLogRepository.exists(bugInfoKeys))
+            bugInfo.setBugConsoleLog(bugConsoleLogRepository.findOne(bugInfoKeys));
+        if (bugDeviceRepository.exists(bugInfoKeys))
+            bugInfo.setBugDeviceInfo(bugDeviceRepository.findOne(bugInfoKeys));
+        if (bugOperateStepRepository.exists(bugInfoKeys))
+            bugInfo.setBugOperateStep(bugOperateStepRepository.findOne(bugInfoKeys));
         return bugInfo;
     }
 

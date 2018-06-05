@@ -6,11 +6,11 @@ public class BugOperateStepVO {
 
     private String bugId;
 
-    private String operateStep;
+    private String[] operateStep;
 
     public BugOperateStepVO(BugOperateStep bugOperateStep) {
         this.bugId=bugOperateStep.getBugId();
-        this.operateStep=bugOperateStep.getOperateStep();
+        this.operateStep=bugOperateStep.getOperateStep().split("\\\\n");
     }
 
     public String getBugId() {
@@ -21,11 +21,11 @@ public class BugOperateStepVO {
         this.bugId = bugId;
     }
 
-    public String getOperateStep() {
+    public String[] getOperateStep() {
         return operateStep;
     }
 
-    public void setOperateStep(String operateStep) {
+    public void setOperateStep(String[] operateStep) {
         this.operateStep = operateStep;
     }
 }

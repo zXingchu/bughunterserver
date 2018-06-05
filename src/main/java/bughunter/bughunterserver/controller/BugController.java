@@ -7,6 +7,7 @@ import bughunter.bughunterserver.model.entity.OldBugBaseInfo;
 import bughunter.bughunterserver.service.BugService;
 import bughunter.bughunterserver.until.Constants;
 import bughunter.bughunterserver.vo.*;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -74,7 +75,7 @@ public class BugController {
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public @ResponseBody
-    ResultMessage submitBug(@RequestParam(name = "bug") String jsonStr, @RequestParam(name = "screenshot", required = false) MultipartFile file) {
+    ResultMessage submitBug(@RequestParam(name = "screenshot", required = false) MultipartFile file, @RequestParam(name = "bug") String jsonStr) {
         String screenshotName = Constants.SCREENSHOT_NO_EXIST;
         if (file != null && !file.isEmpty()) {
             try {
@@ -96,10 +97,16 @@ public class BugController {
                 return new ResultMessage(1, e.getMessage());
             }
         }
-        JSONObject jsonObject = new JSONObject(jsonStr);
-        BugInfo bugInfo = new BugInfo(jsonObject, screenshotName);
-        BugInfoKeys bugInfoKey = bugService.addBug(bugInfo);
-        return ResultMessageFactory.getResultMessage(bugInfoKey);
+        System.out.println(jsonStr);
+        try {
+            JSONObject jsonObject = new JSONObject(jsonStr);
+            BugInfo bugInfo = new BugInfo(jsonObject, screenshotName);
+            BugInfoKeys bugInfoKey = bugService.addBug(bugInfo);
+            return ResultMessageFactory.getResultMessage(bugInfoKey);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new ResultMessage(1, Constants.ERROR);
     }
 
 

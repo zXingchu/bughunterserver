@@ -24,9 +24,9 @@ public class OldBugBaseInfoVO {
 
     private UserVO user;
 
-    private Timestamp cTime;
+    private String cTime;
 
-    private Timestamp mTime;
+    private String mTime;
 
     public OldBugBaseInfoVO(OldBugBaseInfo oldBugBaseInfo) {
         this.oldId = oldBugBaseInfo.getOldId();
@@ -35,8 +35,8 @@ public class OldBugBaseInfoVO {
         this.type = oldBugBaseInfo.getType();
         this.current = oldBugBaseInfo.getCurrent();
         this.priority = oldBugBaseInfo.getPriority();
-        this.cTime = oldBugBaseInfo.getcTime();
-        this.mTime = oldBugBaseInfo.getmTime();
+        this.cTime = oldBugBaseInfo.getcTime().toString();
+        this.mTime = oldBugBaseInfo.getmTime().toString();
         this.describe = oldBugBaseInfo.getBugDescribe();
         this.user = new UserVO(oldBugBaseInfo.getUser());
     }
@@ -106,19 +106,20 @@ public class OldBugBaseInfoVO {
         this.oldId = oldId;
     }
 
-    public Timestamp getcTime() {
+
+    public String getcTime() {
         return cTime;
     }
 
-    public void setcTime(Timestamp cTime) {
+    public void setcTime(String cTime) {
         this.cTime = cTime;
     }
 
-    public Timestamp getmTime() {
+    public String getmTime() {
         return mTime;
     }
 
-    public void setmTime(Timestamp mTime) {
+    public void setmTime(String mTime) {
         this.mTime = mTime;
     }
 }
